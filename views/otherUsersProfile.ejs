@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest Profile</title>
+  <link rel="stylesheet" href="/stylesheets/otherUsersProfile.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  
+    <%- include("partials/flash") %>
+    
+  <%- include("partials/header2") %>
+  
+
+
+  
+  
+  
+    <!-- Profile Section -->
+  <header class="profile-header">
+   <div class="profileImage" >
+    <img src="/images/uploads/<%= otherUser.profileImage %>" alt="Profile" class="profile-pic"/>
+    </div>
+    <h1> <%= otherUser.fullname %> </h1>
+    <h1 class="username"> @<%= otherUser.username %> </h1>
+    <p class="bio">Punjabi Singer | Legend Never Dies | 💪🏽🕊</p>
+    
+    
+
+<div class="divider"></div>
+  <!-- Pins Grid -->
+  
+  <h1 class="pin-heading"> Pins:</h1>
+<section class="pin-section">
+  
+  <div class="pin">
+    <img src="/images/uploads/c0b1b8ffacd473d9b77b609c.jpeg" alt="Coding Setup" />
+<a href="/showpins"><p class="category">Coding Pins <%= otherUser.pins.length %></p></a>
+  </div>
+  
+  
+  
+</section>
+  
+  
+    <h1 class="your-img">Your Creations:</h1>
+  <section class="masonry">
+
+<% if(otherUser.post.length > 0 ) { %>
+<% otherUser.post.forEach((eachPost)=>{ %>
+    <div class="masonry-item"><img src="/images/uploads/<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
+
+<% }) %>
+
+<% }else {%>
+<h1>No posts found</h1>
+<% } %>
+
+
+  </section>
+ 
+  
+  
+</body>
+</html>

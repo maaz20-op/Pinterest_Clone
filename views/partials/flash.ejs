@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flash Message Demo</title>
+  <style>
+    .alert {
+      padding: 15px 20px;
+      border-radius: 8px;
+      display:inline-block,
+      position:absolute;
+      top:0;
+      width: 80vw;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border-left: 6px solid #28a745;
+    }
+
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border-left: 6px solid #dc3545;
+    }
+
+    .alert strong {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Flash Messages Partial (No Tailwind) -->
+  <% if (success && success.length > 0) { %>
+    <% success.forEach(msg => { %>
+      <div class="alert alert-success">
+        <strong>Success:</strong>
+        <span><%= msg %></span>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <% if (error && error.length > 0) { %>
+    <% error.forEach(msg => { %>
+      <div class="alert alert-error">
+        <strong>Error:</strong>
+        <span><%= msg %></span>
+      </div>
+    <% }) %>
+  <% } %>
+  
+  <script>
+  let alertMsg = document.querySelectorAll(".alert");
+  
+  alertMsg.forEach((eachAlert)=>{
+    setTimeout(function(){
+  eachAlert.style.display  = "none"
+    },4000);
+  })
+  
+    
+  </script>
+
+</body>
+</html>

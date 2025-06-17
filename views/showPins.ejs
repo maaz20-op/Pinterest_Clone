@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest Vibe</title>
+  <link rel="stylesheet" href="/stylesheets/showPins.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Add this in <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  
+    <%- include("partials/flash") %>
+
+    <%- include("partials/header") %>
+
+  <div class="hero-banner">Your Daily Dose of Inspiration ❤️</div>
+
+  <section class="masonry">
+    
+<% if(user.pins.length > 0 ) { %>
+ <% user.pins.reverse().forEach((eachPin) => {  %>
+
+<!-- Inside masonry item -->
+<div class="masonry-item">
+  <img src="/images/uploads/<%= eachPin.image %>" alt="Pin Image">
+  <h3><%= eachPin.text %></h3>
+  
+  <div class="pin-actions">
+  <form action="/pins/deletepin/<%= eachPin._id %>" method="post" class="delete-form">
+  <button type="submit" class="delete-icon" title="Delete">
+    <i class="fas fa-trash"></i>
+  </button>
+</form>
+    </a>
+  </div>
+</div>
+  </div>
+</div>
+    
+  <% }) %>
+
+<% } else { %>
+<h1> No pins Saved Yet</h1>
+
+<% } %>
+  </section>
+
+</body>
+</html>

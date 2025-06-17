@@ -1,0 +1,132 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #000;
+      user-select: none;
+    }
+
+    .profile {
+      width: 32px;
+      height: 32px;
+      background: gray;
+      border-radius: 50%;
+    }
+
+    /* ==== MASONRY LAYOUT ==== */
+    .masonry {
+      column-count: 2;
+      column-gap: 10px;
+      padding: 1rem;
+    }
+
+/* Parent Masonry Container (just in case) */
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+}
+
+/* Upgraded Card Styling */
+.upgraded-card {
+  position: relative;
+  background-color: #121212;
+  border-radius: 16px;
+  padding: 12px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+/* Top Left Round User Avatar */
+.upgraded-card .user-avatar{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  overflow: hidden;
+  height:30px;
+  width:200px;
+  display:flex;
+}
+.user-avatar a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent; /* Mobile Chrome/Safari */
+  outline: none; /* Remove border on focus */
+  font-size:13px;
+  color:white;
+  margin-top:5px;
+  margin-left:5px;
+}
+a:hover {
+  color:red;
+}
+.user-avatar img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius:50%;
+}
+
+/* Main Post Image */
+.upgraded-card .main-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 45px;
+  object-fit: cover;
+}
+
+/* Post Text */
+.upgraded-card .post-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+/* Buttons Section */
+.upgraded-card .post-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Like + Save Buttons */
+.upgraded-card .like-btn,
+.upgraded-card .save-btn {
+  background-color: #272727;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 10px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.upgraded-card .like-btn:hover,
+.upgraded-card .save-btn:hover {
+  background-color: #444;
+}
+
+    @media (min-width: 600px) {
+      .masonry {
+        column-count: 3;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .masonry {
+        column-count: 4;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .masonry {
+        column-count: 2;
+      }
+    }

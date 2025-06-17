@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest Brick Layout</title>
+  <link rel="stylesheet" href="./stylesheets/feedPage.css">
+</head>
+<body>
+
+  <%- include("partials/flash") %>
+
+  <%- include("partials/header") %>
+
+  <!-- ===== IMAGES MASONRY GRID ===== -->
+  <div class="masonry">
+<% if(users.length > 0) { %>
+  <% users.forEach((user) => { %>
+    <% if(user.post && user.post.length > 0) { %>
+      <% user.post.forEach((eachPost) => { %>
+    <div class="masonry-item upgraded-card">
+  <!-- Top Left Round Profile -->
+  <div class="user-avatar">
+    <img src="/images/uploads/<%= user.profileImage %> " alt="User Avatar" />
+    <a href="/otherusersprofile/<%= user._id %>"><%= user.username %></a>
+  </div>
+
+  <!-- Main Image -->
+  <img src="/images/uploads/<%= eachPost.image %>" alt="<%= eachPost.postdata %>" class="main-image" />
+
+  <!-- Post Text -->
+  <p class="post-text"><%= eachPost.postdata %></p>
+
+  <!-- Action Buttons -->
+  <div class="post-actions">
+    
+        <form action="/posts/likepost/<%= eachPost._id %>" method="post" style="display:inline;">
+      <button class="like-btn"> 
+      <%= eachPost.likes.includes(user._id)? "Liked":"Likes" %> <%= eachPost.likes.length %></button>
+    </form>
+    
+    <form action="/pins/savepin" method="post" style="display:inline;">
+      <input hidden type="text" name="image" value="<%= eachPost.image %>"  required/>
+     <input hidden type="text" name="text" value="<%= eachPost.postdata %>"     required/>
+      <button class="save-btn">📌 Save</button>
+    </form>
+  </div>
+</div>
+      <% }) %>
+    <% } else { %>
+    <% } %>
+  <% }) %>
+<% } else { %>
+  <h1>No users found in feed</h1>
+<% } %>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account / Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #111;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+      width: 100%;
+      max-width: 400px;
+      transition: all 0.4s ease;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff0033;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 5px;
+      color: #ff4b5c;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ff0033;
+      background: transparent;
+      color: white;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #ff4b5c;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff0033;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #cc0029;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .toggle-link a {
+      color: #ff0033;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .toggle-link a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  
+
+
+<%- include("partials/flash") %>
+  <div class="container">
+    <form action="/users/register" method="post" id="signupForm">
+      <h2>Create Account</h2>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter full name" name="fullname" required />
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" placeholder="Choose a username" name="username" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="Enter your email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a password" name="password" required />
+      </div>
+      <button type="submit" class="btn">Create Account</button>
+      <div class="toggle-link">
+        Already have an account? <a href="#" onclick="toggleForms()">Login</a>
+      </div>
+    </form>
+
+    <form action="/users/login" method="post" id="loginForm" class="hidden">
+      <h2>Login</h2>
+      <div class="form-group">
+        <label>Email</label>
+     <input type="email" placeholder="Enter your email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" name="password" required />
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <div class="toggle-link">
+        Don't have an account? <a href="#" onclick="toggleForms()">Create One</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleForms() {
+      const signup = document.getElementById('signupForm');
+      const login = document.getElementById('loginForm');
+      signup.classList.toggle('hidden');
+      login.classList.toggle('hidden');
+    }
+  </script>
+
+</body>
+</html>

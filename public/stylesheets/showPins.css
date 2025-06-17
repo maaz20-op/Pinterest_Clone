@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  user-select: none;
+}
+
+.navbar {
+  background-color: #e60023;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  align-items: center;
+  box-shadow: 0 0 10px #e60023aa;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffe0e6;
+}
+
+.hero-banner {
+  text-align: center;
+  font-size: 26px;
+  padding: 30px 10px;
+  color: #ffccd5;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #e60023;
+}
+
+.masonry {
+  column-count: 2;
+  column-gap: 20px;
+  padding: 25px;
+}
+
+.masonry-item {
+  background-color: #1c1c1c;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.masonry-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+}
+
+.masonry-item img {
+  width: 100%;
+  display: block;
+  border-bottom: 2px solid #e60023;
+}
+
+.masonry-item h3 {
+  padding: 15px 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #ffb3bd;
+}
+
+.pin-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px 5px 15px;
+}
+
+.delete-icon {
+  text-decoration: none;
+  background-color: #2a2a2a;
+  padding: 8px;
+  border-radius: 8px;
+  outline:none;
+  border:none;
+  transition: background-color 0.3s ease;
+}
+
+.delete-icon i {
+  color: white;
+  font-size: 18px;
+}
+
+.delete-icon:hover {
+  background-color: #990000;
+}
