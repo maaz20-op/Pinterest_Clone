@@ -16,8 +16,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // 📁 Database Connection
-const db = require("./config/mongoose-connection");
-
 // 📁 Routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
