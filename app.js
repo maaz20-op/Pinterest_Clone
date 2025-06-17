@@ -29,9 +29,12 @@ app.use(cookieParser());
 
 // Session must come before flash
 app.use(session({
-  secret: process.env.EXPRESS_SESSION_SECRET,
+  secret: process.env.EXPRESS_SESSION_SECRET, // ✅ ENV se secret le rahe hain
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
 }));
 app.use(flash());
 
