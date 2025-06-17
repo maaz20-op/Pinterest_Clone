@@ -23,4 +23,4 @@ dist/
 build/
 
 # Uploaded images (optional)
-public/images/uploads/
+public/images/uploads/.env
