@@ -6,17 +6,7 @@ const postModel = require("../models/post-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
-router.get("/delete", async function(req,res){
-  let alluser = await userModel.deleteMany({});
-  let post = await postModel.deleteMany({})
-  
-  let pin = await pinModel.deleteMany({})
-  res.send({alluser,pin,post})
-});
-router.get("/read",async function(req,res){
-  const post = await postModel.find()
-  res.send(post)
-});
+
 
 router.get('/', function(req, res) {
   res.render("register")
