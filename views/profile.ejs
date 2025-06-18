@@ -8,93 +8,76 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  
-    <%- include("partials/flash") %>
-    
-  <%- include("partials/header") %>
-  
 
-  
+  <%- include("partials/flash") %>
+  <%- include("partials/header") %>
+
   <!-- Profile Section -->
   <header class="profile-header">
-   <div class="profileImage" >
-    <img src="/images/uploads/<%= user.profileImage %>" alt="Profile" class="profile-pic" />
-    <span class="editicon"><i class="fas fa-pencil-alt"></i></span>
+    <div class="profileImage">
+      <img src="<%= user.profileImage %>" alt="Profile" class="profile-pic" />
+      <span class="editicon"><i class="fas fa-pencil-alt"></i></span>
     </div>
-    <h1> <%= user.fullname %> </h1>
-    <h1 class="username"> @<%= user.username %> </h1>
+    <h1><%= user.fullname %></h1>
+    <h1 class="username">@<%= user.username %></h1>
     <p class="bio">Punjabi Singer | Legend Never Dies | 💪🏽🕊</p>
-    
-         <form class="editForm" hidden  action="/users/editprofpic" method="post" enctype="multipart/form-data">
-    <input type="file" name="profileImage" required />
-    <input type="text" name="postdata" required />
-    <button type="submit" ></button>
-  </form>
-    
-    
-     <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
-           <i class="upload-btn2 fas fa-camera"></i>
-    <input type="file" hidden name="image" required />
-    <input type="text" name="postdata" required placeholder="What's in your mind?" />
-    <button class="upload-btn" type="submit"><p>Upload</p> <i class="fas fa-upload"></i>        
-</button>
-  </form>
+
+    <!-- Profile Pic Upload Form -->
+    <form class="editForm" hidden action="/users/editprofpic" method="post" enctype="multipart/form-data">
+      <input type="file" name="profileImage" required />
+      <button type="submit"></button>
+    </form>
+
+    <!-- Post Upload Form -->
+    <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
+      <i class="upload-btn2 fas fa-camera"></i>
+      <input type="file" hidden name="image" required />
+      <input type="text" name="postdata" required placeholder="What's in your mind?" />
+      <button class="upload-btn" type="submit">
+        <p>Upload</p> <i class="fas fa-upload"></i>
+      </button>
+    </form>
   </header>
 
-<div class="divider"></div>
+  <div class="divider"></div>
+
   <!-- Pins Grid -->
-  
   <h1 class="pin-heading">Your Pins:</h1>
-<section class="pin-section">
-  
-  <div class="pin">
-    <img src="/images/uploads/c0b1b8ffacd473d9b77b609c.jpeg" alt="Coding Setup" />
-<a href="/showpins"><p class="category">Coding Pins <%= user.pins.length %></p></a>
-  </div>
-  
-  
-  
-</section>
-  
-  
-    <h1 class="your-img">Your Creations:</h1>
-  <section class="masonry">
-
-<% if(user.post.length > 0 ) { %>
-<% user.post.forEach((eachPost)=>{ %>
-    <div class="masonry-item"><img src="/images/uploads/<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
-
-<% }) %>
-
-<% }else {%>
-<h1>No posts found</h1>
-<% } %>
-
-
+  <section class="pin-section">
+    <div class="pin">
+      <img src="/images/uploads/c0b1b8ffacd473d9b77b609c.jpeg" alt="Coding Setup" />
+      <a href="/showpins"><p class="category">Coding Pins <%= user.pins.length %></p></a>
+    </div>
   </section>
-  
+
+  <h1 class="your-img">Your Creations:</h1>
+  <section class="masonry">
+    <% if (user.post.length > 0) { %>
+      <% user.post.forEach((eachPost) => { %>
+        <div class="masonry-item">
+          <img src="<%= eachPost.image %>" alt="" />
+          <h2><%= eachPost.postdata %></h2>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <h1>No posts found</h1>
+    <% } %>
+  </section>
+
   <script>
-    document.querySelector(".editicon").addEventListener("click",function(){
-      document.querySelector(".editForm input").click()
-      console.log("clicked")
+    // Edit Profile Pic
+    document.querySelector(".editicon").addEventListener("click", function () {
+      document.querySelector(".editForm input").click();
     });
-    
-    
-    document.querySelector(".editForm input").addEventListener("change",function(){
-    document.querySelector(".editForm").submit()
-    
-    console.log("changed")
+
+    document.querySelector(".editForm input").addEventListener("change", function () {
+      document.querySelector(".editForm").submit();
     });
-    
-    // other form 
-        document.querySelector(".upload-btn2").addEventListener("click",function(){
-      document.querySelector(".upload-box input").click()
-      console.log("clicked")
+
+    // Upload Post
+    document.querySelector(".upload-btn2").addEventListener("click", function () {
+      document.querySelector(".upload-box input[type='file']").click();
     });
-    
-    
-    
-    
   </script>
 </body>
 </html>

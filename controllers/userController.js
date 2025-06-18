@@ -13,7 +13,7 @@ if(!user) {
 return res.redirect("/profile")
 }
 
-user.profileImage = req.file.filename;
+user.profileImage = req.file.path;
 await user.save();
 
 
@@ -36,7 +36,7 @@ module.exports.uploadPost = async function(req,res){
   if(!user) return res.redirect("/profile");
   
   let post = await postModel.create({
-    image:req.file.filename,
+    image:req.file.path,
     postdata,
     user:user._id,
   });
