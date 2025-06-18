@@ -48,7 +48,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // 🖼️ View engine
 app.set('view engine', 'ejs');
-
+app.set('views', path.join(__dirname, 'views')); // make sure views folder ka path theek hai
 // 📁 Routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
