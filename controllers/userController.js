@@ -7,7 +7,6 @@ try{
 const user = await userModel.findOne({
   email:req.user.email,
 })
-
 if(!user) { 
   req.flash("error","Failed to Upload Profile Image");
 return res.redirect("/profile")

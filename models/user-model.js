@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
   fullname:String,
   profileImage:{
     type:String,
-    default: "default.png"
+    default: "https://iili.io/FnrRren.png"
   },
   email: String,
   password: String,
