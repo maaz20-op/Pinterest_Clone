@@ -16,7 +16,7 @@
   <!-- ===== IMAGES MASONRY GRID ===== -->
   <div class="masonry">
 <% if(users.length > 0) { %>
-  <% users.forEach((user) => { %>
+  <% users.reverse().forEach((user) => { %>
     <% if(user.post && user.post.length > 0) { %>
       <% user.post.forEach((eachPost) => { %>
     <div class="masonry-item upgraded-card">
@@ -57,6 +57,6 @@
 
 
 </div>
-
+    <%- include("partials/footer") %>
 </body>
 </html>
