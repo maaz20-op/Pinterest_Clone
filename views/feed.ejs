@@ -21,12 +21,12 @@
     <div class="masonry-item upgraded-card">
   <!-- Top Left Round Profile -->
   <div class="user-avatar">
-    <img src="/images/uploads/<%= user.profileImage %> " alt="User Avatar" />
+    <img src="<%= user.profileImage %> " alt="User Avatar" />
     <a href="/otherusersprofile/<%= user._id %>"><%= user.username %></a>
   </div>
 
   <!-- Main Image -->
-  <img src="/images/uploads/<%= eachPost.image %>" alt="<%= eachPost.postdata %>" class="main-image" />
+  <img src="<%= eachPost.image %>" alt="<%= eachPost.postdata %>" class="main-image" />
 
   <!-- Post Text -->
   <p class="post-text"><%= eachPost.postdata %></p>
