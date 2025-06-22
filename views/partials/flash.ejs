@@ -7,15 +7,17 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <style>
     .alert {
-      padding: 15px 20px;
-      border-radius: 8px;
-      display:inline-block,
-      position:absolute;
-      top:0;
-      width: 80vw;
-      max-width: 400px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+  position: fixed;
+  top:0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  padding: 15px 20px;
+  border-radius: 8px;
+  width: 80vw;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
     .alert-success {
       background-color: #d4edda;

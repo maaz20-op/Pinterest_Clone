@@ -60,6 +60,11 @@ width:22px;
 border-radius:3px;
 
 }
+h3 {
+  background-color: red;
+  padding:0;
+  margin:0;
+}
 .profile-pic {
   
   width: 120px;
@@ -100,14 +105,16 @@ h2{
       color: #fff;
     }
 
-    .upload-btn {
-      background: linear-gradient(135deg, #ff0055, #ff3366);
+    .block-btn {
+      background: linear-gradient(135deg, #ff1a1a, #cc0000);
       padding:14px 15px;
       border: none;
       font-size: 14px;
       color: #fff;
       margin-top:2px;
       height:27px;
+      width:60vw;
+      margin-left:1.5cm;
       border-radius: 30px;
       cursor: pointer;
       transition: 0.3s ease;
@@ -136,6 +143,13 @@ h2{
   font-size: 0.95rem;
   color: #aaa;
   margin-bottom: 1rem;
+    overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3 ; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  
 }
 .follow-btn {
   padding: 0.5rem 1rem;
@@ -159,11 +173,6 @@ h2{
 }
 
 
-.pin-heading, .your-img{
-  margin-top:2cm;
-  font-size:25px;
-  margin-left:0.6cm;
-}
 .pin-section::-webkit-scrollbar {
   height: 8px;
 }
@@ -172,7 +181,11 @@ h2{
   background-color: #444;
   border-radius: 4px;
 }
+.pin-section h4 {
+  margin-left:12px;
+  background-color: red;
 
+}
 .pin {
   width: 150px; /* Minimum width to prevent shrinking */
   height:150px;
@@ -207,7 +220,9 @@ h2{
 a{
   text-decoration: none;
 }
-
+.heading2 {
+  margin-top:1.5cm;
+}
 /* Masonry Layout */
 .masonry {
   column-count: 2;
@@ -238,3 +253,4 @@ a{
     column-count: 2;
   }
 }
+

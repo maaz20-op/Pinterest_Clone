@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Post</title>
+  <link rel="stylesheet" href="/stylesheets/createPost.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  
+  <%- include("partials/header2") %>
+  
+  <div class="create-post-container">
+    <h2>Create New Post</h2>
+    <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
+
+      <div class="previewImgCont">
+      <img id="preview" src="" >
+      </div>
+      <input type="file" hidden name="image" id="fileInput" required />
+      
+      <h1>Write description:</h1>
+    <div class="upload-section">
+            <i class="upload-btn2 fas fa-camera"></i>
+      <input type="text" name="postdata" required placeholder="What's in your mind?" />
+      </div>
+      <button class="upload-btn" type="submit">
+        <p>Upload</p> <i class="fas fa-upload"></i>
+      </button>
+    </form>
+    
+    
+</div>
+
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const previewImage = document.getElementById("preview");
+
+// Trigger file input when custom icon is clicked
+document.querySelector(".upload-btn2").addEventListener("click", function () {
+  fileInput.click();
+});
+
+// Show image preview when file is selected
+fileInput.addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      previewImage.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+</script>
+</body>
+</html>

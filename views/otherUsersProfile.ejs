@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
   <title>Pinterest Profile</title>
   <link rel="stylesheet" href="/stylesheets/otherUsersProfile.css"/>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -26,43 +32,55 @@
     </div>
     <h1> <%= otherUser.fullname %> </h1>
     <h1 class="username"> @<%= otherUser.username %> </h1>
-    <p class="bio">Punjabi Singer | Legend Never Dies | 💪🏽🕊</p>
+    <p class="bio"><%= otherUser.bio %></p>
+  
+  <button class="block-btn"><p>Block This User</p> <i class="fas fa-exclamation-triangle"></i></button>
+  
+  <!-- submit this form when user click on  block-btn -->
     
-    
+    <form hidden id="blockUserData" action="/users/blockuser" method="post">
+    <input type="text" name="id" value="<%= otherUser._id %>">
+    <button type="submit"></button>
+    </form>
 
 <div class="divider"></div>
   <!-- Pins Grid -->
   
-  <h1 class="pin-heading"> Pins:</h1>
+<h4 class="pin-heading"> Saved Posts:</h4>
 <section class="pin-section">
-  
+
   <div class="pin">
     <img src="https://iili.io/Fnryyhb.jpg" alt="Coding Setup" />
-<a href="/showpins"><p class="category">Coding Pins <%= otherUser.pins.length %></p></a>
+<a href="/otherUsersPin/<%= otherUser._id %>"><p class="category">Saved Posts <%= otherUser.pins.length %></p></a>
   </div>
   
-  
+
   
 </section>
   
   
-    <h1 class="your-img">Your Creations:</h1>
+      <h4 class="heading2">Posts By <%= otherUser.fullname %>:</h4>
   <section class="masonry">
 
 <% if(otherUser.post.length > 0 ) { %>
 <% otherUser.post.forEach((eachPost)=>{ %>
-    <div class="masonry-item"><img src="/images/uploads/<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
+    <div class="masonry-item"><img src="<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
 
 <% }) %>
 
 <% }else {%>
-<h1>No posts found</h1>
+<h1>No posts found...</h1>
 <% } %>
 
 
   </section>
  
-      <%- include("partials/footer") %>
+    
+  <script> 
+  document.querySelector(".block-btn").addEventListener("click",function(){
+    document.querySelector("#blockUserData").submit()
+  })
   
+  </script>
 </body>
 </html>

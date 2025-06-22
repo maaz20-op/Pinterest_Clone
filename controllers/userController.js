@@ -137,29 +137,171 @@ return res.redirect("/showpins")
 }
 
 module.exports.likePost = async function(req,res){
+try {
+  let post = await postModel.findById(req.body.id);
+  let loggedInUser = await userModel.findById(req.user.id);
+  
+  if(!post || !loggedInUser) {
+    return res.status(500)
+  };
+  
+  if(!post.likes.includes(loggedInUser._id.toString())) {
+  post.likes.push(loggedInUser._id);
+  await post.save();
+}
+res.json({
+  post,
+  loggedInUser,
+})
+
+} catch (err) {
+  console.log(err.message)
+  res.status(500).json({ error: "Something went wrong", message: err.message });
+}
+ 
+}
+
+
+
+module.exports.updateAccountSettings = async function(req, res) {
   try {
-  let user = await userModel.findById(req.user.id );
-  
-  let post = await postModel.findById(req.params.id);
-  
-  if(!post || !user) {
-    req.flash("error","cannot like post")
-    return res.redirect("/feed")
+    let dbuser = await userModel.findById(req.user.id);
+console.log(req.body)
+    let changedFields = [];
+    let updatedData = {};
+
+    for (let key in req.body) {
+      const newValue = req.body[key];
+      const oldValue = dbuser[key];
+
+      if (newValue && newValue !== oldValue) {
+        changedFields.push(key);
+        updatedData[key] = newValue; // ✅ build updated data
+      }
+    }
+
+
+    if (Object.keys(updatedData).length > 0) {
+      await userModel.findByIdAndUpdate(req.user.id, updatedData);
+      console.log("Updated fields:",updatedData);
+    }
+
+req.flash("success","your account updated succesfully ")
+   return res.redirect("/profile");
+  } catch (err) {
+    console.error("Error updating account:", err);
+    res.status(500).send("Something went wrong.");
+    req.flash("error","Error in account settngs")
+    res.redirect("/profile")
   }
-  if (post.likes.includes(user._id)) {
-  req.flash("error", "You've already liked this post");
-  return res.redirect("/feed");
-}
-post.likes.push(user._id);
-await post.save();
+};
+
+
+module.exports.blockOtherUser = async function(req,res){
+  try {
+  // blocked user
+  let blockedUser = await userModel.findById(req.body.id);
+  if(!blockedUser) {
+    req.flash("error","Error to Block the User")
+   return res.redirect("/feed")
+  }
+// logged in user 
+  let user = await userModel.findById(req.user.id);
   
   
-  req.flash("success","post Liked");
+user.blockedUserId.push(blockedUser._id)
+ await user.save()
   
-  return res.redirect("/feed");
-  } catch (err){
-      req.flash("error",`cannot like post beacuse of ${err.message}`)
-    return res.redirect("/feed")  
+  console.log(user)
+  
+  req.flash("success",`You blocked ${blockedUser.fullname}`);
+return res.redirect("/feed");
+  
+  } catch (err) {
+    req.flash("error",`Failed to block`);
+
+   return res.redirect("/feed");
+    
   }
   
 }
+
+module.exports.unblockUser = async function(req,res){
+  
+  try {
+  let blockedUser  = await userModel.findById(req.body.id);
+  
+  if(!blockedUser) return
+  
+  let user = await userModel.findById(req.user.id);
+  
+  
+   user.blockedUserId = user.blockedUserId.filter((id)=>{
+     return id.toString() !== blockedUser._id.toString()
+   })
+  
+await user.save();
+
+
+req.flash("success",`You unblocked ${blockedUser.fullname}`);
+return res.redirect("/feed");
+  } catch (err) {
+  req.flash("error","unable to unblock");
+    res.redirect("/feed");
+    
+  }
+};
+
+
+module.exports.deleteAccount = async function(req,res){
+  try {
+  let deletedUser = await userModel.findOneAndDelete({_id:req.user.id});
+  
+  let userPosts = await postModel.findOneAndDelete({
+    user:req.user.id,
+  })
+  
+  let userPins  = await userModel.findOneAndDelete({
+    createdBy:req.user.id,
+  });
+  
+  req.flash("success","Successfully your Account is Deleted, Create A new Account!")
+  return res.redirect("/")
+  } catch(err) {
+    req.flash("error","Cannot delete Your Account!")
+  res.redirect("/profile")
+  }
+};
+
+module.exports.searchPosts = async  function(req,res){
+  try {
+    let input = req.body.inputValue;
+if (!input) {
+  return res.status(400).json([]);
+}
+
+let regexp = new RegExp(input,"i");
+let posts = await postModel.find({
+  postdata:regexp,
+}).populate({
+  path:"user",
+  model:'User',
+  match : {
+    accountVisibility:"Public"
+  },
+  select:"-post -bio",
+})
+
+res.json(posts)
+    
+  } catch (err) {
+    req.flash("error","No posts")
+    
+  }
+  
+}
+
+
+
+
+

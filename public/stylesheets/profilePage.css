@@ -100,9 +100,9 @@ h2{
       color: #fff;
     }
 
-    .upload-btn {
+    .create-post {
       background: linear-gradient(135deg, #ff0055, #ff3366);
-      padding:14px 15px;
+      padding:17px 15px;
       border: none;
       font-size: 14px;
       color: #fff;
@@ -114,7 +114,32 @@ h2{
       display: flex;
       justify-content: center;
       align-items:center;
-      gap:6px
+      gap:6px;
+      width:150px;
+      font-weight:bold;
+    }
+    
+    .account-settings {
+ background: linear-gradient(135deg, #3366ff, #cc33ff);
+      padding:17px 15px;
+      border: none;
+      font-size: 14px;
+      color: #fff;
+      margin-top:2px;
+      height:27px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      gap:6px;
+      width:160px;  
+      font-weight:bold;
+    }
+    .btn-action {
+      display:flex;
+      gap:13px
     }
 .upload-btn i {
   font-size:12px;
@@ -136,6 +161,15 @@ h2{
   font-size: 0.95rem;
   color: #aaa;
   margin-bottom: 1rem;
+  min-height:34px;
+  width: 80vw;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3 ; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  
 }
 .follow-btn {
   padding: 0.5rem 1rem;

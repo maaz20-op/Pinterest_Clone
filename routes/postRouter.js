@@ -6,13 +6,16 @@ const userModel = require("../models/user-model");
 const upload = require("../config/multerConfig");
 const { uploadPost } = require("../controllers/userController");
 const { likePost } = require("../controllers/userController");
+const { searchPosts } = require("../controllers/userController");
+
+
 
 
 router.post("/upload", isLoggedIn, upload.single("image"), uploadPost );
 
-router.post("/likepost/:id", isLoggedIn 
-, likePost)
+router.post("/likepost", isLoggedIn, likePost)
 
 
+router.post("/search", isLoggedIn,searchPosts) 
 
 module.exports = router;

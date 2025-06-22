@@ -9,6 +9,18 @@ const mongoose = require("mongoose");
   },
   email: String,
   password: String,
+  bio:{
+    type:String,
+    default:"Nothing to see the details...",
+  },
+  accountVisibility:{
+    type:String,
+    default:"Public",
+  },
+  blockedUserId:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  }],
   post:[
     { 
     type:mongoose.Schema.Types.ObjectId,

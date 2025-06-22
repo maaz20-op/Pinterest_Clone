@@ -6,10 +6,18 @@ const postModel = require("../models/post-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
+router.get("/read", async function(req,res){
+  let posts = await postModel.find()
 
+posts.forEach( async (post) =>{
+post.likes = []
+await post.save()
+console.log(post)
+})
+})
 
 router.get('/', function(req, res) {
-  res.render("register")
+  res.render("register");
 });
 
 router.get("/profile",isLoggedIn, async function(req,res){
@@ -18,6 +26,10 @@ let user = await userModel.findOne({email:req.user.email})
 .populate("pins");
   res.render("profile",{user})
 });
+
+router.get("/createpost",isLoggedIn , function(req,res){
+  res.render("createPost")
+})
 
 router.get("/otherusersprofile/:id", isLoggedIn, async function(req,res){
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -42,11 +54,28 @@ if(otherUser._id.toString() === loggedInUser._id.toString()){
   res.render("otherUsersProfile",{otherUser})
 });
 
+router.get("/showaccountsettings",isLoggedIn, async function(req,res){
+  let user = await userModel.findById(req.user.id).populate("blockedUserId")
+  let array = []
+  user.blockedUserId.forEach((eachBlockedUser)=>{
+ array.push(eachBlockedUser.fullname)
+  })
+  console.log(array)
+  res.render("accountSettings",{user,array})
+})
+
+
+router.get("/showblockusers", isLoggedIn, async function(req,res){
+  let user = await userModel.findById(req.user.id).populate("blockedUserId")
+  res.render("showBlockedUsers",{user})
+})
 router.get("/feed", isLoggedIn, async function(req,res){
+  let loggedInUser = await userModel.findById(req.user.id);
   let users = await userModel.find()
   .populate("post");
-  res.render("feed", { users });
+  res.render("feed", { users, loggedInUser});
 });
+
 
 router.get("/showpins", isLoggedIn, async function(req,res){
 let user = await userModel.findOne({
@@ -58,6 +87,15 @@ let user = await userModel.findOne({
   res.render("showPins", { user });
 })
 
+router.get("/otherUsersPin/:id", isLoggedIn, async function(req,res){
+  const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
+  
+  if(!isValid) return res.redirect("/feed");
+  
+let otherUserPin = await userModel.findById(req.params.id).populate("pins")
+
+res.render("showOtherUsersPin",{otherUserPin})
+})
 
 
 

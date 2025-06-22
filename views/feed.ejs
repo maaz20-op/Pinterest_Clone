@@ -2,28 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <title>Pinterest Home</title>
+  <!-- FontAwesome Icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="./stylesheets/feedPage.css">
+  
 </head>
+
+
+
 <body>
+  
+  
+  
+    <%- include("partials/flash") %>
+    
+    <nav class="navbar">
+    <div class="logo">Pinterest 
+    <span class="svglogo"><!-- SVG Logo (Red Circle P - Original) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="#E60023">
+  <path d="M12.04 2.003C6.51 2.003 2 6.343 2 11.737c0 4.02 2.537 7.464 6.067 8.604-.084-.73-.16-1.848.034-2.645.176-.75 1.134-4.79 1.134-4.79s-.289-.58-.289-1.436c0-1.343.78-2.346 1.75-2.346.825 0 1.223.618 1.223 1.36 0 .83-.528 2.07-.8 3.22-.23.97.488 1.762 1.45 1.762 1.74 0 3.075-1.833 3.075-4.477 0-2.34-1.684-3.976-4.09-3.976-2.788 0-4.424 2.09-4.424 4.247 0 .83.32 1.72.72 2.2.08.1.09.19.07.29-.07.31-.23.97-.26 1.1-.04.18-.14.22-.33.13-1.24-.58-2.01-2.4-2.01-3.87 0-3.13 2.27-6 6.55-6 3.44 0 6.11 2.45 6.11 5.74 0 3.42-2.15 6.18-5.14 6.18-1 0-1.95-.52-2.27-1.14l-.62 2.36c-.23.9-.85 2.04-1.27 2.73.96.29 1.97.44 3.03.44 5.54 0 10.04-4.34 10.04-9.737 0-5.393-4.51-9.733-10.04-9.733z"/>
+</svg></span></div>
+    
+<div class="search-data-container">
+      <input type="text" name="searchValue" class="search" placeholder="Search Here...." />
+<button onclick="sendData()" class="search-btn" >
+  <i class="fas fa-search"></i> Search
+</button>
+</div>
+    <div class="nav-icons">
+      <a href="/feed">Home</a>
+      <a href="/profile">My Profile</a>
+  <a href="/showblockusers">Blocked Users</a>  
+    <a class="logout" href="/users/logout">Logout</a> 
+    </div>
+  </nav>
 
-  <%- include("partials/flash") %>
-
-  <%- include("partials/header") %>
 
   <!-- ===== IMAGES MASONRY GRID ===== -->
+<button class="normal button" ><i class="fas fa-arrow-left"></i>Back to Feed</button>
+<div class="container">
   <div class="masonry">
+  
 <% if(users.length > 0) { %>
-  <% users.reverse().forEach((user) => { %>
-    <% if(user.post && user.post.length > 0) { %>
-      <% user.post.forEach((eachPost) => { %>
+<% users.reverse().forEach((user) => {%>
+<% if(!loggedInUser.blockedUserId.includes(user._id.toString())){ %>
+    <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
+   <% user.post.reverse().forEach((eachPost) => { %>
     <div class="masonry-item upgraded-card">
   <!-- Top Left Round Profile -->
   <div class="user-avatar">
     <img src="<%= user.profileImage %> " alt="User Avatar" />
-    <a href="/otherusersprofile/<%= user._id %>"><%= user.username %></a>
+    <a href="/otherusersprofile/<%= user._id %>">@<%= user.username %></a>
   </div>
 
   <!-- Main Image -->
@@ -35,10 +73,16 @@
   <!-- Action Buttons -->
   <div class="post-actions">
     
-        <form action="/posts/likepost/<%= eachPost._id %>" method="post" style="display:inline;">
-      <button class="like-btn"> 
-      <%= eachPost.likes.includes(user._id)? "Liked":"Likes" %> <%= eachPost.likes.length %></button>
-    </form>
+
+ <button data-src="<%= eachPost._id %>" class="like-btn">
+<% if (eachPost.likes.includes(loggedInUser._id.toString())) { %>
+    ❤️ Liked <%= eachPost.likes.length %>
+  <% } else {%>
+  Likes <%= eachPost.likes.length %>
+<%  }  %>
+ </button>
+  
+  
     
     <form action="/pins/savepin" method="post" style="display:inline;">
       <input hidden type="text" name="image" value="<%= eachPost.image %>"  required/>
@@ -49,6 +93,8 @@
 </div>
       <% }) %>
     <% } else { %>
+    
+    <% } %>
     <% } %>
   <% }) %>
 <% } else { %>
@@ -57,6 +103,123 @@
 
 
 </div>
+</div>
+  
+<script>
+  const container = document.querySelector(".masonry");
+    let feedBtn = document.querySelector(".button");
+    
+  const sendData = async () => {
+
+    const searchedValue = document.querySelector(".search").value.trim();
+    if (!searchedValue) {
+      alert("Please enter something to search.");
+      return;
+    }
+
+    container.innerHTML = '<h2 style="color:white; margin-left:2.5cm;margin-top:1cm">Searching...</h2>';
+
+    try {
+      
+      const response = await fetch("/posts/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputValue: searchedValue,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Server Error");
+
+      const posts = await response.json();
+      feedBtn.classList.remove("normal")
+    feedBtn.classList.add("style")
+      container.innerHTML = ""; // Clear after successful fetch
+
+      if (posts.length > 0) {
+       posts.forEach((eachPost) => {
+           // protect from null post
+            // Optional: Double-check postdata matches (safe fallback)
+
+            const div = document.createElement("div");
+            div.classList.add("masonry-item", "upgraded-card");
+
+            div.innerHTML = `
+              <div class="user-avatar">
+                <img src="${eachPost.user.profileImage}" alt="User Avatar" />
+                <a href="/otherusersprofile/${eachPost.user._id}">@${eachPost.user.username}</a>
+              </div>
+
+              <img src="${eachPost.image}" alt="pic" class="main-image" />
+              <p class="post-text">${eachPost.postdata}</p>
+
+      <div class="post-actions">
+  
+  <button data-src="${eachPost._id}"   class="like-btn">Likes ${eachPost.likes.length} </button>
+            
+
+                <form action="/pins/savepin" method="post" style="display:inline;">
+                  <input hidden type="text" name="image" value="${eachPost.image}" required />
+                  <input hidden type="text" name="text" value="${eachPost.postdata}" required />
+                  <button class="save-btn">📌 Save</button>
+                </form>
+              </div>
+            `;
+
+            container.appendChild(div);
+          });
+      } else {
+        container.innerHTML = `<h1 style="color:white;font-size:20px;margin-left:2cm;width:60vw;">No Posts Found...</h1>`
+      }
+    } catch (error) {
+      console.error("Search Error:", error);
+      container.innerHTML = "<h2>Something went wrong. Try again later.</h2>";
+    }
+  };
+  
+  
+
+  feedBtn.addEventListener("click", function () {
+    window.location.href = "/feed";
+  });
+  
+  
+  container.addEventListener("click", async function(e) {
+  if (e.target.classList.contains("like-btn")) {
+    const id = e.target.getAttribute("data-src");
+
+    try {
+      const response = await fetch("/posts/likepost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+      });
+
+      const data = await response.json();
+
+      if (data.post && data.loggedInUser) {
+        if (data.post.likes.includes(data.loggedInUser._id.toString())) {
+          e.target.innerHTML = `❤️ Liked ${data.post.likes.length}`;
+        } else {
+          e.target.innerHTML = `Likes ${data.post.likes.length}`;
+        }
+      }
+    } catch (err) {
+      console.error("Like failed:", err);
+    }
+  }
+});
+
+  
+</script>
+
+
+
+
     <%- include("partials/footer") %>
 </body>
 </html>

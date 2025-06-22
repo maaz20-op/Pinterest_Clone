@@ -3,26 +3,181 @@
       padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
+      background-color: #1a1a1a;
       color: #000;
       user-select: none;
     }
+.container {
+  min-height:100vh;
+}
 
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 12px 20px;
+  border-bottom: 1px solid #333;
+  padding-bottom:20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: crimson;
+  letter-spacing: 1px;
+  display:flex;
+  column-gap:4.4cm;
+}
+
+.search {
+  flex: 1;
+  margin: 0 20px;
+  padding: 8px 12px;
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.95rem;
+}
+form {
+  display:flex;
+}
+
+button {
+  
+}
+.search::placeholder {
+  color: #aaa;
+}
+
+.nav-icons a {
+  margin-left:5px;
+  text-decoration: none;
+  color: #ccc;
+font-size:14px;
+  padding: 6px 8px;
+  border-radius: 18px;
+  transition: all 0.3s ease;
+  margin-top:20px;
+  
+}
+
+.nav-icons a:hover {
+  background-color: crimson;
+  color: white;
+}
+span{
+  height:40px;
+  width:40px;
+  border-radius: 50%;
+}
+
+.logout {
+  background-color: red;
+  padding:2px;
+  color:white;
+  font-weight:bold;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .search-data-container {
+    display:flex;
+    gap:6px;
+  }
+  .style {
+  background-color: #e50914;  /* Netflix Red */
+margin:1cm 0 1.5cm 2.5cm;
+  display:block;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(229, 9, 20, 0.3);
+}
+.button i {
+margin-right:6px;
+}
+.normal {
+  display:none;
+}
+
+.style:hover {
+  background-color: #c40812;
+  transform: scale(1.05);
+}
+
+
+  .search-btn {
+  background-color: #e60023; /* Pinterest red */
+  color: white;
+  border: none;
+  height:27px;
+  margin-top:14px;
+  width:auto;
+  font-size: 12px;
+  padding:7px 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.search-btn:hover {
+  background-color: #c9001e; /* darker red on hover */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+
+  .nav-icons {
+    width: 100%;
+    display: flex;
+
+
+  }
+}
     .profile {
       width: 32px;
       height: 32px;
       background: gray;
       border-radius: 50%;
     }
+    
 
+#changed{
+  display:block;
+  padding:12px 12px;
+  background-clip: red;
+  outline:none;
+  border-radius:50%;
+}
     /* ==== MASONRY LAYOUT ==== */
     .masonry {
       column-count: 2;
       column-gap: 10px;
       padding: 1rem;
+
     }
 
 /* Parent Masonry Container (just in case) */
@@ -100,7 +255,7 @@ a:hover {
   background-color: #272727;
   color: white;
   border: none;
-  padding: 6px 14px;
+  padding: 7px 11px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 10px;
@@ -111,6 +266,15 @@ a:hover {
 .upgraded-card .like-btn:hover,
 .upgraded-card .save-btn:hover {
   background-color: #444;
+}
+
+.footer {
+  position:relative;
+  bottom:0;
+}
+
+.flagBtn{
+  display:none;
 }
 
     @media (min-width: 600px) {

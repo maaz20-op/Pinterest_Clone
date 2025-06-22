@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
   <title>Pinterest Profile</title>
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="/stylesheets/profilePage.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
   <%- include("partials/flash") %>
-  <%- include("partials/header") %>
+  <%- include("partials/header2") %>
 
   <!-- Profile Section -->
   <header class="profile-header">
@@ -21,7 +29,7 @@
     </div>
     <h1><%= user.fullname %></h1>
     <h1 class="username">@<%= user.username %></h1>
-    <p class="bio">Punjabi Singer | Legend Never Dies | 💪🏽🕊</p>
+    <div class="bio"><p><%= user.bio %></p></div>
 
     <!-- Profile Pic Upload Form -->
     <form class="editForm" hidden action="/users/editprofpic" method="post" enctype="multipart/form-data">
@@ -30,14 +38,17 @@
     </form>
 
     <!-- Post Upload Form -->
-    <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
-      <i class="upload-btn2 fas fa-camera"></i>
-      <input type="file" hidden name="image" required />
-      <input type="text" name="postdata" required placeholder="What's in your mind?" />
-      <button class="upload-btn" type="submit">
-        <p>Upload</p> <i class="fas fa-upload"></i>
-      </button>
-    </form>
+    
+  <div class="btn-action">
+      <a href="/showaccountsettings" class="account-settings" type="submit">
+        <p>Account Settings</p><i class="fas fa-cog"></i>
+      </a>
+
+
+      <a href="/createpost" class="create-post" type="submit">
+        <p>Create Post</p> <i class="fas fa-upload"></i>
+      </a>
+      </div>
   </header>
 
   <div class="divider"></div>
@@ -47,21 +58,21 @@
   <section class="pin-section">
     <div class="pin">
       <img src="https://iili.io/Fnryyhb.jpg" alt="Coding Setup" />
-      <a href="/showpins"><p class="category">Coding Pins <%= user.pins.length %></p></a>
+      <a href="/showpins"><p class="category">Saved Posts <%= user.pins.length %></p></a>
     </div>
   </section>
 
-  <h1 class="your-img">Your Creations:</h1>
+  <h1 style="font-family: 'Montserrat', sans-serif;" class="your-img">Your Posts:</h1>
   <section class="masonry">
     <% if (user.post.length > 0) { %>
-      <% user.post.forEach((eachPost) => { %>
+      <% user.post.reverse().forEach((eachPost) => { %>
         <div class="masonry-item">
           <img src="<%= eachPost.image %>" alt="" />
           <h2><%= eachPost.postdata %></h2>
         </div>
       <% }) %>
     <% } else { %>
-      <h1>No posts found</h1>
+      <h1 style="margin-left:2.3cm;margin-top:3cm;width:60vw;padding-bottom:2cm;font-size:18px;">No posts found...</h1>
     <% } %>
   </section>
 
@@ -75,10 +86,7 @@
       document.querySelector(".editForm").submit();
     });
 
-    // Upload Post
-    document.querySelector(".upload-btn2").addEventListener("click", function () {
-      document.querySelector(".upload-box input[type='file']").click();
-    });
+
   </script>
   
       <%- include("partials/footer") %>
