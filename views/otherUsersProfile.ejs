@@ -77,13 +77,16 @@
   <section class="masonry">
 
 <% if(otherUser.post.length > 0 ) { %>
+ <% if(otherUser.accountVisibility === "Public") { %>
 <% otherUser.post.forEach((eachPost)=>{ %>
     <div class="masonry-item"><img src="<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
 
 <% }) %>
-
+<% } else { %>
+<h1 style="font-size:14px;margin:50px 0px 200px 70px;width:48vw;color:red;">This Account is Private due to Privacy Settings &nbsp; <i style="color:white" class="fas fa-lock"></i> </h1>
+<% } %>
 <% }else {%>
-<h1>No posts found...</h1>
+<h1>No posts Found...</h1>
 <% } %>
 
 

@@ -47,11 +47,11 @@ await user.save();
 
 req.flash("success","Your creation is Added!")
 
-return res.redirect("/profile")
-} catch(err) {
-  console.log(err.message)
-}
 
+} catch(err) {
+  req.flash("error","Unable to upload your Post...")
+ res.redirect("/profile");
+}
 }
 
 module.exports.savePin = async function(req,res){
@@ -151,7 +151,6 @@ res.json({
 })
 
 } catch (err) {
-  console.log(err.message)
   res.status(500).json({ error: "Something went wrong", message: err.message });
 }
  
@@ -162,7 +161,6 @@ res.json({
 module.exports.updateAccountSettings = async function(req, res) {
   try {
     let dbuser = await userModel.findById(req.user.id);
-console.log(req.body)
     let changedFields = [];
     let updatedData = {};
 
@@ -179,13 +177,11 @@ console.log(req.body)
 
     if (Object.keys(updatedData).length > 0) {
       await userModel.findByIdAndUpdate(req.user.id, updatedData);
-      console.log("Updated fields:",updatedData);
     }
 
 req.flash("success","your account updated succesfully ")
    return res.redirect("/profile");
   } catch (err) {
-    console.error("Error updating account:", err);
     res.status(500).send("Something went wrong.");
     req.flash("error","Error in account settngs")
     res.redirect("/profile")
@@ -222,8 +218,7 @@ await Promise.all([
   user.save(),
   blockedUser.save()
 ])
-   console.log(user,blockedUser)
-  
+   
   req.flash("success",`You blocked ${blockedUser.fullname}`);
 return res.redirect("/feed");
   
@@ -306,12 +301,9 @@ let posts = await postModel.find({
 })
 
 res.json(posts)
-    
   } catch (err) {
-    req.flash("error","No posts")
-    
+    req.status(404).json("Error From Server!")
   }
-  
 }
 
 
