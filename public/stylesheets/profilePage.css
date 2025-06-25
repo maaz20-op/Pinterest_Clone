@@ -19,6 +19,26 @@ body {
   text-align: center;
   padding: 2rem 1rem 1rem;
 }
+.containerFollowers{
+  display: flex;
+padding:20px;
+width:200px;
+  margin-left:1.6cm;
+  font-weight: 800;
+  column-gap:50px;
+}
+.followers,.following {
+  display:flex;
+  flex-direction: column;
+  height:36px;
+  width:40vw;
+    color:white;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+.count1 ,.count2 {
+  margin-left:12px;
+}
 
 .createPost{
   display:flex;
@@ -86,7 +106,7 @@ h2{
       max-width: 400px;
       margin-top:15px;
     }
-    
+
     .upload-btn2 {
       margin-top:20px;
     }
@@ -138,6 +158,7 @@ h2{
       font-weight:bold;
     }
     .btn-action {
+      margin-top:25px;
       display:flex;
       gap:13px
     }
@@ -157,9 +178,17 @@ h2{
   border: none;
   margin: 20px auto;
 }
+
+.containerBio{
+  width:90vw;
+  position: relative;
+}
 .bio {
   font-size: 0.95rem;
   color: #aaa;
+  margin-left:32px;
+padding-right:25px;
+  text-align: justify; 
   margin-bottom: 1rem;
   min-height:34px;
   width: 80vw;
@@ -168,9 +197,24 @@ h2{
   -webkit-line-clamp: 3 ; /* number of lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-  
 }
+.showText {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}
+.showMore {
+  position:absolute;
+  bottom:0;
+  left:288px;
+  font-size:18px;
+  color:white;
+  font-weight: 800;
+  border-radius:none;
+  width:17px;
+}
+
 .follow-btn {
   padding: 0.5rem 1rem;
   border: none;

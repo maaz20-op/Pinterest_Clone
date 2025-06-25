@@ -16,6 +16,16 @@ console.log(post)
 })
 })
 
+router.get("/readuser", async function(req,res){
+  let user = await userModel.findOne({
+    fullname:"M"
+  })
+  let use= await userModel.findOne({
+    fullname:"Maaz Javed"
+  })
+  console.log(user,use)
+  
+})
 router.get('/', function(req, res) {
   res.render("register");
 });
@@ -51,7 +61,7 @@ if(otherUser._id.toString() === loggedInUser._id.toString()){
   return res.redirect("/profile")
 }
   
-  res.render("otherUsersProfile",{otherUser})
+  res.render("otherUsersProfile",{otherUser,loggedInUser})
 });
 
 router.get("/showaccountsettings",isLoggedIn, async function(req,res){
@@ -97,7 +107,50 @@ let otherUserPin = await userModel.findById(req.params.id).populate("pins")
 res.render("showOtherUsersPin",{otherUserPin})
 })
 
+router.get("/showfollowers/:id", isLoggedIn, async function(req,res){
+  let user = await userModel.findById(req.params.id).populate("followers")
+    let loggedInUser = await userModel.findById(req.user.id);
+  if(!user) return res.redirect("/profile")
+  console.log(user)
+res.render("showFollowers", {user, loggedInUser});
+})
 
+router.get("/showfollowing/:id", isLoggedIn, async function(req,res){
+  let user = await userModel.findById(req.params.id).populate("following");
+  let loggedInUser = await userModel.findById(req.user.id);
+  
+  if(!user) return res.redirect("/profile")
+res.render("showFollowing", {user, loggedInUser});
+});
+
+
+
+
+router.get("/update",async function(req,res){
+await userModel.updateMany(
+  { $or: [{ followers: { $exists: false } }, { following: { $exists: false } }] },
+  {
+    $set: {
+      followers: [],
+      following: []
+    }
+  }
+);
+
+})
+
+router.get("/all",async function(req,res){
+  let users =  await userModel.find()
+  
+  users.forEach(async (user)=>{
+  user.followers = [ ]
+  user.following = []
+  await user.save()
+    
+  });
+
+console.log(users)
+});
 
 
 module.exports = router;

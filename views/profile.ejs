@@ -29,7 +29,18 @@
     </div>
     <h1><%= user.fullname %></h1>
     <h1 class="username">@<%= user.username %></h1>
-    <div class="bio"><p><%= user.bio %></p></div>
+    
+    
+    <div class="containerFollowers">
+  
+  <a href="/showfollowers/<%= user._id %>" class="followers"> <span>Followers</span> <span class="count2">|&nbsp; <%= user.followers.length %> &nbsp;|</span></a>
+  <a href="/showfollowing/<%= user._id %>" class="following"> <span>Following</span> <span class="count1">|&nbsp; <%= user.following.length %> &nbsp;|</span></a>
+  
+  
+</div>
+    
+    
+    <div class="containerBio"><p class="bio"><%= user.bio %></p><i class="showMore fa-solid fa-circle-chevron-down show-more-icon"></i></div>
 
     <!-- Profile Pic Upload Form -->
     <form class="editForm" hidden action="/users/editprofpic" method="post" enctype="multipart/form-data">
@@ -37,7 +48,15 @@
       <button type="submit"></button>
     </form>
 
-    <!-- Post Upload Form -->
+
+    <!-- showing follwers and follwing   -->
+
+
+
+
+
+
+    <!-- Post Upload Form and accoubt settings  -->
     
   <div class="btn-action">
       <a href="/showaccountsettings" class="account-settings" type="submit">
@@ -86,7 +105,29 @@
       document.querySelector(".editForm").submit();
     });
 
+let showMoreBtn = document.querySelector(".showMore");
+let containerBio = document.querySelector(".containerBio");
+let userDescription = document.querySelector(".bio");
+let flag = true
+showMoreBtn.addEventListener("click",function(){
 
+if(flag){
+  containerBio.style.cssText = "min-height:1vh"
+  userDescription.classList.add("showText");
+  showMoreBtn.classList.remove("fa-circle-chevron-down");
+  showMoreBtn.classList.add("fa-circle-chevron-up");
+   
+  showMoreBtn.style.cssText = "bottom:0;left:288px"
+  flag = false;
+} else {
+  containerBio.style.cssText = "min-height:2vh"
+
+  showMoreBtn.classList.remove("fa-circle-chevron-up");
+  showMoreBtn.classList.add("fa-circle-chevron-down");
+userDescription.classList.remove("showText");
+flag = true
+}
+})
   </script>
   
       <%- include("partials/footer") %>

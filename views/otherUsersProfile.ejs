@@ -32,11 +32,25 @@
     </div>
     <h1> <%= otherUser.fullname %> </h1>
     <h1 class="username"> @<%= otherUser.username %> </h1>
-    <p class="bio"><%= otherUser.bio %></p>
+    
+    
+        <div class="containerFollowers">
+  <a href="/showfollowers/<%= otherUser._id %>" class="followers"> <span>Followers</span> <span class="count2">|&nbsp; <%= otherUser.followers.length %>&nbsp; |</span></a>
+  <a href="/showfollowing/<%= otherUser._id %>" class="following"> <span>Following</span> <span class="count1">| &nbsp;<%= otherUser.following.length %>&nbsp; |</span></a>
+</div>
+    
+    
+  <div class="containerBio"><p class="bio"><%= otherUser.bio %></p><i class="showMore fa-solid fa-circle-chevron-down show-more-icon"></i></div>
+
   
+<!-- block or follow users btns -->
+<div class="btnsbox">
   <button class="block-btn"><p>Block This User</p> <i class="fas fa-exclamation-triangle"></i></button>
-  
-  <!-- submit this form when user click on  block-btn -->
+      <button  class="follow" type="submit">
+        <p><%= otherUser.followers.includes(loggedInUser._id)?"Followed" :"Follow" %></p> <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+
     
     <form hidden id="blockUserData" action="/users/blockuser" method="post">
     <input type="text" name="id" value="<%= otherUser._id %>">
@@ -81,6 +95,70 @@
     document.querySelector("#blockUserData").submit()
   })
   
+  let followUser =  function(){
+  
+  let btn =  document.querySelector(".follow");
+  if(!btn) return
+  btn.addEventListener("click",async function(){
+  try {
+        let user = <%- JSON.stringify(otherUser) %>
+   let response = await fetch("/users/followuser", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        id:user._id,
+      }),
+    })
+    
+let data = await response.json()
+
+if (typeof data.followersCount === "undefined" || typeof data.followingCount === "undefined") {
+  return console.log("error");
+}
+
+
+let followers = document.querySelector(".count2");
+let following = document.querySelector(".count1");
+
+
+followers.innerHTML = `|&nbsp; ${data.followersCount} &nbsp;|`;
+following.innerHTML = `|&nbsp; ${data.followingCount} &nbsp;|`
+btn.innerHTML = `        <p>Followed </p> <i class="fas fa-user-plus"></i>`
+  } catch (err) {
+  console.log(err.message)
+  }
+  });
+  };
+  
+  followUser()
+  
+
+
+let showMoreBtn = document.querySelector(".showMore");
+let containerBio = document.querySelector(".containerBio");
+let userDescription = document.querySelector(".bio");
+let flag = true
+showMoreBtn.addEventListener("click",function(){
+
+if(flag){
+  containerBio.style.cssText = "min-height:0vh"
+  userDescription.classList.add("showText");
+  showMoreBtn.classList.remove("fa-circle-chevron-down");
+  showMoreBtn.classList.add("fa-circle-chevron-up");
+   
+  showMoreBtn.style.cssText = "bottom:0;left:288px"
+  flag = false;
+} else {
+  containerBio.style.cssText = "min-height:2vh"
+
+  showMoreBtn.classList.remove("fa-circle-chevron-up");
+  showMoreBtn.classList.add("fa-circle-chevron-down");
+userDescription.classList.remove("showText");
+flag = true
+}
+})  
   </script>
 </body>
 </html>

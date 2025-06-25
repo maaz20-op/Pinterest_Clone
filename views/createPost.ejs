@@ -23,7 +23,7 @@
       <h1>Write description:</h1>
     <div class="upload-section">
             <i class="upload-btn2 fas fa-camera"></i>
-      <input type="text" name="postdata" required placeholder="What's in your mind?" />
+      <input type="text" name="postdata" required placeholder="What's in your mind?" class="input"/>
       </div>
       <button class="upload-btn" type="submit">
         <p>Upload</p> <i class="fas fa-upload"></i>
@@ -54,6 +54,17 @@ fileInput.addEventListener("change", function () {
     reader.readAsDataURL(file);
   }
 });
+
+let uploadBtn = document.querySelector(".upload-btn");
+let input = document.querySelector(".input");
+btn.addEventListener("click", function () {
+  setTimeOut(()=>{
+    input.disabled = true
+    fileInput.disabled = true
+    btn.disabled = true
+  },1)
+});
+
 
 </script>
 </body>

@@ -27,6 +27,10 @@ const mongoose = require("mongoose");
     ref:"Post",
   }
   ],
+  blockedBy:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+  }],
   pins:[
     {
       type:mongoose.Schema.Types.ObjectId,
@@ -34,6 +38,14 @@ const mongoose = require("mongoose");
     }
     
     ],
+    following: [{
+   type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    }],
+    followers:[{
+   type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    }],
 });
 
 

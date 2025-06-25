@@ -10,6 +10,8 @@ const { updateAccountSettings } = require("../controllers/userController");
 const  { blockOtherUser } = require("../controllers/userController");
 const  { unblockUser } = require("../controllers/userController");
 const  { deleteAccount  } = require("../controllers/userController");
+const  { followOtherUser  } = require("../controllers/followersController");
+const  { unfollowOtherUser  } = require("../controllers/followersController");
 
 
 
@@ -36,6 +38,10 @@ router.post("/editprofpic", isLoggedIn, upload.single("profileImage"), editprofp
 
 router.post("/update/account", isLoggedIn, updateAccountSettings);
 
+
+router.post("/followuser", isLoggedIn , followOtherUser)
+
+router.post("/unfollowuser", isLoggedIn, unfollowOtherUser)
 module.exports = router;
 
 

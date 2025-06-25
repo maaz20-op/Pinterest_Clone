@@ -105,11 +105,7 @@ return res.redirect("/feed")
     res.redirect("/feed")
     
   }
-  
-  
-  
-  
-}
+};
 
 module.exports.deletePin = async function(req,res){
   try {
@@ -208,11 +204,25 @@ module.exports.blockOtherUser = async function(req,res){
 // logged in user 
   let user = await userModel.findById(req.user.id);
   
+/* remove blocked user form following list*/
+if(user.following.includes(blockedUser._id) && blockedUser.followers.includes(user._id)){
   
+  blockedUser.followers = blockedUser.followers.filter((id)=>{
+    return id.toString() !== user._id.toString()
+  }); 
+  
+  user.following = user.following.filter((id)=>{
+    return id.toString() !== blockedUser._id.toString()
+  });
+}
+
 user.blockedUserId.push(blockedUser._id)
- await user.save()
-  
-  console.log(user)
+blockedUser.blockedBy.push(user._id)
+await Promise.all([
+  user.save(),
+  blockedUser.save()
+])
+   console.log(user,blockedUser)
   
   req.flash("success",`You blocked ${blockedUser.fullname}`);
 return res.redirect("/feed");
@@ -239,9 +249,12 @@ module.exports.unblockUser = async function(req,res){
    user.blockedUserId = user.blockedUserId.filter((id)=>{
      return id.toString() !== blockedUser._id.toString()
    })
+  blockedUser.blockedBy = blockedUser.blockedBy.filter((id)=>{
+    return id.toString() !== user.id.toString()
+  })
   
 await user.save();
-
+await blockedUser.save();
 
 req.flash("success",`You unblocked ${blockedUser.fullname}`);
 return res.redirect("/feed");
@@ -300,7 +313,6 @@ res.json(posts)
   }
   
 }
-
 
 
 

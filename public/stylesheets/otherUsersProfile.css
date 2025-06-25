@@ -95,10 +95,58 @@ h2{
     .upload-btn2 {
       margin-top:20px;
     }
+.containerFollowers{
+  display: flex;
+padding:20px;
+width:200px;
+  margin-left:1.6cm;
+  column-gap:50px;
+}
+.followers,.following {
+  display:flex;
+  flex-direction: column;
+  height:36px;
+  width:40vw;
+  font-weight:400;
+  color:white;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+.followers:hover,.following:hover {
+  font-weight:800;
+}
+
+.count1 ,.count2 {
+  margin-left:12px;
+}
 
     .upload-box h2 {
       margin-bottom: 20px;
       color: #ff0055;
+    }
+    
+    .btnsbox {
+      display: flex;
+      gap:14px;
+    }
+    
+  .follow {
+      background: linear-gradient(135deg, #ff0055, #ff3366);
+      padding:14px 15px;
+      border: none;
+      font-size: 14px;
+      color: #fff;
+      margin-top:2px;
+      height:27px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      gap:14px;
+      width:150px;
+      font-weight:bold;
     }
 
     input[type="file"] {
@@ -107,14 +155,14 @@ h2{
 
     .block-btn {
       background: linear-gradient(135deg, #ff1a1a, #cc0000);
-      padding:14px 15px;
+      padding:10px 15px;
       border: none;
+      font-weight:bold;
       font-size: 14px;
+    margin-left:12px;
       color: #fff;
       margin-top:2px;
-      height:27px;
-      width:60vw;
-      margin-left:1.5cm;
+      height:29px;
       border-radius: 30px;
       cursor: pointer;
       transition: 0.3s ease;
@@ -139,18 +187,45 @@ h2{
   border: none;
   margin: 20px auto;
 }
+
+.containerBio{
+  width:90vw;
+  position: relative;
+  margin-bottom:24px;
+}
 .bio {
+  padding-top:14px;
   font-size: 0.95rem;
   color: #aaa;
+  margin-left:32px; 
+  padding-right:25px;
+  text-align: justify; 
   margin-bottom: 1rem;
-    overflow: hidden;
+  min-height:34px;
+  width: 80vw;
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3 ; /* number of lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-  
 }
+.showText {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}
+.showMore {
+  position:absolute;
+  bottom:0;
+  left:288px;
+  font-size:18px;
+  color:white;
+  font-weight: 800;
+  border-radius:none;
+  width:17px;
+}
+
 .follow-btn {
   padding: 0.5rem 1rem;
   border: none;
