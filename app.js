@@ -11,7 +11,6 @@ const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo'); // ✅ add this
-
 const app = express();
 
 // 📁 Public folder
@@ -54,6 +53,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const postRouter = require("./routes/postRouter");
 const pinRouter = require("./routes/pinRouter");
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

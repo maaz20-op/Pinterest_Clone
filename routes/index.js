@@ -6,29 +6,10 @@ const postModel = require("../models/post-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
-router.get("/read", async function(req,res){
-  let posts = await postModel.find()
-
-posts.forEach( async (post) =>{
-post.likes = []
-await post.save()
-console.log(post)
-})
-})
-
-router.get("/readuser", async function(req,res){
-  let user = await userModel.findOne({
-    fullname:"M"
-  })
-  let use= await userModel.findOne({
-    fullname:"Maaz Javed"
-  })
-  console.log(user,use)
-  
-})
 router.get('/', function(req, res) {
   res.render("register");
 });
+
 
 router.get("/profile",isLoggedIn, async function(req,res){
 let user = await userModel.findOne({email:req.user.email})
@@ -37,15 +18,16 @@ let user = await userModel.findOne({email:req.user.email})
   res.render("profile",{user})
 });
 
+
 router.get("/createpost",isLoggedIn , function(req,res){
   res.render("createPost")
 })
+
 
 router.get("/otherusersprofile/:id", isLoggedIn, async function(req,res){
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).send("Invalid user ID");
   }
-  
   let loggedInUser =await userModel.findOne({
     _id:req.user.id,
   })
@@ -56,13 +38,12 @@ router.get("/otherusersprofile/:id", isLoggedIn, async function(req,res){
   })
   .populate("post")
   .populate("pins");
-  
 if(otherUser._id.toString() === loggedInUser._id.toString()){
   return res.redirect("/profile")
 }
-  
   res.render("otherUsersProfile",{otherUser,loggedInUser})
 });
+
 
 router.get("/showaccountsettings",isLoggedIn, async function(req,res){
   let user = await userModel.findById(req.user.id).populate("blockedUserId")
@@ -79,6 +60,8 @@ router.get("/showblockusers", isLoggedIn, async function(req,res){
   let user = await userModel.findById(req.user.id).populate("blockedUserId")
   res.render("showBlockedUsers",{user})
 })
+
+
 router.get("/feed", isLoggedIn, async function(req,res){
   let loggedInUser = await userModel.findById(req.user.id);
   let users = await userModel.find()
@@ -92,20 +75,17 @@ let user = await userModel.findOne({
   email:req.user.email,
 })
 .populate("pins");
-
-
   res.render("showPins", { user });
 })
 
+
 router.get("/otherUsersPin/:id", isLoggedIn, async function(req,res){
   const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
-  
   if(!isValid) return res.redirect("/feed");
-  
 let otherUserPin = await userModel.findById(req.params.id).populate("pins")
-
 res.render("showOtherUsersPin",{otherUserPin})
 })
+
 
 router.get("/showfollowers/:id", isLoggedIn, async function(req,res){
   let user = await userModel.findById(req.params.id).populate("followers")
@@ -115,41 +95,12 @@ router.get("/showfollowers/:id", isLoggedIn, async function(req,res){
 res.render("showFollowers", {user, loggedInUser});
 })
 
+
 router.get("/showfollowing/:id", isLoggedIn, async function(req,res){
   let user = await userModel.findById(req.params.id).populate("following");
   let loggedInUser = await userModel.findById(req.user.id);
-  
   if(!user) return res.redirect("/profile")
 res.render("showFollowing", {user, loggedInUser});
-});
-
-
-
-
-router.get("/update",async function(req,res){
-await userModel.updateMany(
-  { $or: [{ followers: { $exists: false } }, { following: { $exists: false } }] },
-  {
-    $set: {
-      followers: [],
-      following: []
-    }
-  }
-);
-
-})
-
-router.get("/all",async function(req,res){
-  let users =  await userModel.find()
-  
-  users.forEach(async (user)=>{
-  user.followers = [ ]
-  user.following = []
-  await user.save()
-    
-  });
-
-console.log(users)
 });
 
 
