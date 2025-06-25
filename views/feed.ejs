@@ -131,6 +131,9 @@
       if (!response.ok) throw new Error("Server Error");
 
       const posts = await response.json();
+      if(!posts)  return
+      
+      console.log(posts)
       feedBtn.classList.remove("normal")
     feedBtn.classList.add("style")
       container.innerHTML = ""; // Clear after successful fetch
@@ -138,6 +141,9 @@
       if (posts.length > 0) {
        posts.forEach((eachPost) => {
            // protect from null post
+           if(eachPost.user ===null){
+             return console.log("err")
+           }
             // Optional: Double-check postdata matches (safe fallback)
 
             const div = document.createElement("div");
@@ -171,7 +177,7 @@
         container.innerHTML = `<h1 style="color:white;font-size:20px;margin-left:2cm;width:60vw;">No Posts Found...</h1>`
       }
     } catch (error) {
-      console.error("Search Error:", error);
+      console.log("Search Error:", error);
       container.innerHTML = "<h2>Something went wrong. Try again later.</h2>";
     }
   };
