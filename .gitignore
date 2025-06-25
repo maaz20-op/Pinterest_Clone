@@ -18,6 +18,8 @@ Thumbs.db
 config/development.json
 config/production.json
 
+# views file of ejs
+views/index2.ejs
 # Build files (if any)
 dist/
 build/
