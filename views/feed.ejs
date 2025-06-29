@@ -123,8 +123,10 @@
    <% user.post.forEach((eachPost) => { %>
   <% if(eachPost.mediaType.toLowerCase() === "video") {%>
 
-  <div class="video">
+  <div data-postid="<%= eachPost._id %>" class="video">
   <video src="<%=eachPost.mediaUrl %>"  ></video>
+  
+<div class="video-title"><%= eachPost.postdata %> #reelNest</div>
 <div class="video-action">
 <div class="play-pause" >
   <i class="fa-solid fa-play"></i>
@@ -147,9 +149,10 @@
 
 
 <div class="share-video">
-  <i class="fa-solid fa-share-nodes"></i>
+  <i data-url="http://localhost:3000/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
   <p>Share</p>
 </div>
+
 </div>
 
 <div class="post-data">
@@ -160,8 +163,8 @@
 
 <div class="progress-bar">
 <div class="bar"></div>
-
 </div>
+
     <div class="comments-container">
   <div class="heading">
   <h1>Comments</h1> <i class="crossIcon fa fa-times"></i>
@@ -349,6 +352,7 @@ let currentActionVideo = null;
 let currentProgressBar = null;
 let innerProgressBar = null;
 let commentInput = null;
+let currentVideoTitle = null;
 let isDragging = false;
 
 let videos = document.querySelectorAll(".video");
@@ -369,6 +373,7 @@ videos.forEach((videoDiv) => {
     currentPlayPause = videoDiv.querySelector(".play-pause");
     currentProgressBar = videoDiv.querySelector(".progress-bar");
     commentInput = videoDiv.querySelector(".commentInput")
+    currentVideoTitle = videoDiv.querySelector(".video-title")
     innerProgressBar = videoDiv.querySelector(".bar");
     if (!currentPlayPause.classList.contains("listener-attached")) {
       currentPlayPause.classList.add("listener-attached");
@@ -470,7 +475,7 @@ commentSection.innerHTML = `<p style="color:white;margin: 70px 0px 0px 80px">Loa
 
 if(post && post.comments.length > 0){
 commentSection.innerHTML = "";
-post.comments.forEach((comment) => {
+post.comments.reverse().forEach((comment) => {
 let div = document.createElement("div");
 div.classList.add('comment');
  div.innerHTML = `
@@ -549,6 +554,22 @@ commentContainerBox.prepend(div)
 
 createComments();
 }
+else if(e.target.closest(".share-icon")){
+  let postUrl = e.target.getAttribute("data-url");
+
+  const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
+if(navigator.share){
+  navigator.share({
+  title:"ReelNest video",
+  text:postText,
+  url:postUrl,
+  })
+} else {
+  alert("Sharing not supported. Copy the link manually: " + postUrl);
+}
+  
+  
+}
 
 });
 
@@ -592,13 +613,18 @@ function seek(clientX) {
 
 
 
-
 // Fullscreen change
 document.addEventListener("fullscreenchange", function () {
   if (currentActionBar && document.fullscreenElement) {
     currentActionBar.style.display = "block";
+    if(currentVideoTitle){
+    currentVideoTitle.style.display = "none";
+    }
   } else if (currentActionBar) {
     currentActionBar.style.display = "none";
+        if(currentVideoTitle){
+    currentVideoTitle.style.display = "block";
+    }
     if(commentContainer){
     commentContainer.style.display = "none"
     }

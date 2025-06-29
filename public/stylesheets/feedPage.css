@@ -404,6 +404,16 @@ video  {
       height:100%;
       width:100%;
     border-radius:12px;
+    position:relative;
+    }
+    .video-title {
+      color:white;
+      position: absolute;
+      bottom:4px;
+    overflow:hidden;
+    font-weight:600;
+padding:4px;
+      
     }
     .column-action div {
       margin-top:50px;
@@ -567,6 +577,7 @@ border-radius:12px;
   height:40px;
   width:40px;
   border-radius:50%;
+  object-fit: cover;
 }
 
 .comment .user-info h1 {
@@ -585,4 +596,3 @@ border-radius:12px;
   font-size:14px;
   padding-bottom: 14px;
 }
-
