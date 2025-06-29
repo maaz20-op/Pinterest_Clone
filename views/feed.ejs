@@ -149,7 +149,7 @@
 
 
 <div class="share-video">
-  <i data-url="http://localhost:3000/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
+  <i data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
   <p>Share</p>
 </div>
 
@@ -556,7 +556,7 @@ createComments();
 }
 else if(e.target.closest(".share-icon")){
   let postUrl = e.target.getAttribute("data-url");
-
+document.body.style.backgroundColor = "red"
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
 if(navigator.share){
   navigator.share({
