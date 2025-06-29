@@ -614,10 +614,15 @@ window.addEventListener("DOMContentLoaded", () => {
     const targetVideo = document.querySelector(`[data-postid="${postId}"]`);
     if (targetVideo) {
       targetVideo.scrollIntoView({ behavior: "smooth", block: "nearest" });
+if (postId) {
+  // Show video section
+  container2.style.cssText = "display:block;min-height:100vh;";
+  container1.style.cssText = "display:none";
 
       // Simulate click to trigger fullscreen and show UI
       targetVideo.click(); 
     }
+  }
   }
 });
 
