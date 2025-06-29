@@ -149,7 +149,7 @@
 
 
 <div class="share-video">
-  <i data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
+  <i onclick="shareVideo(this)" data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
   <p>Share</p>
 </div>
 
@@ -554,9 +554,12 @@ commentContainerBox.prepend(div)
 
 createComments();
 }
-else if(e.target.closest(".share-icon")){
-  let postUrl = e.target.getAttribute("data-url");
-document.body.style.backgroundColor = "red"
+
+
+});
+
+function shareVideo(element){
+    let postUrl = element.getAttribute("data-url");
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
 navigator.share({
   title: "ReelNest video",
@@ -568,12 +571,7 @@ navigator.share({
   alert("Sharing failed: " + error.message);
 });
   
-  
 }
-
-});
-
-
 
 // Mouse move
 window.addEventListener("mousemove", function (e) {
@@ -607,8 +605,21 @@ function seek(clientX) {
 }
 
 
+/* show video on click of share link example share to wattsapp  */ 
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get("postId");
 
+  if (postId) {
+    const targetVideo = document.querySelector(`[data-postid="${postId}"]`);
+    if (targetVideo) {
+      targetVideo.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
+      // Simulate click to trigger fullscreen and show UI
+      targetVideo.click(); 
+    }
+  }
+});
 
 
 
