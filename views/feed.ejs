@@ -558,15 +558,15 @@ else if(e.target.closest(".share-icon")){
   let postUrl = e.target.getAttribute("data-url");
 document.body.style.backgroundColor = "red"
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
-if(navigator.share){
-  navigator.share({
-  title:"ReelNest video",
-  text:postText,
-  url:postUrl,
-  })
-} else {
-  alert("Sharing not supported. Copy the link manually: " + postUrl);
-}
+navigator.share({
+  title: "ReelNest video",
+  text: postText,
+  url: postUrl,
+}).then(() => {
+  console.log("Share successful!");
+}).catch((error) => {
+  alert("Sharing failed: " + error.message);
+});
   
   
 }
