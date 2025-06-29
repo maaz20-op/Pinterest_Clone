@@ -1,6 +1,10 @@
 const userModel = require("../models/user-model");
 const postModel = require("../models/post-model");
 const pinModel = require("../models/pin-model");
+const cloudinary = require("../config/cloudinary")
+const upload = require("../config/multerConfig")
+
+
 
 module.exports.editprofpic = async function(req,res){
 try{
@@ -26,7 +30,6 @@ return res.redirect("/profile")
 
 module.exports.uploadPost = async function(req,res){
   try {
-  let { postdata } = req.body;
   
     let user = await userModel.findOne({
       email:req.user.email,
@@ -34,19 +37,31 @@ module.exports.uploadPost = async function(req,res){
   
   if(!user) return res.redirect("/profile");
   
+let file = req.file
+
+if(!file) {
+  req.flash("error","error");
+  return res.redirect("/profile")
+}
+let type =  file.mimetype.startsWith("video/")?"video":"image";
+
+let result = await cloudinary.uploader.upload(file.path,{
+  resource_type:type,
+});
+
   let post = await postModel.create({
-    image:req.file.path,
-    postdata,
+    mediaUrl:result.secure_url,
+    mediaType:type,
     user:user._id,
+    postdata:req.body.postdata,
   });
   
 user.post.push(post._id);
 await user.save();
-  
 
-
+console.log(post)
 req.flash("success","Your creation is Added!")
-
+res.redirect("/profile")
 
 } catch(err) {
   req.flash("error","Unable to upload your Post...")
@@ -265,11 +280,11 @@ module.exports.deleteAccount = async function(req,res){
   try {
   let deletedUser = await userModel.findOneAndDelete({_id:req.user.id});
   
-  let userPosts = await postModel.findOneAndDelete({
+  let userPosts = await postModel.findAndDelete({
     user:req.user.id,
   })
   
-  let userPins  = await userModel.findOneAndDelete({
+  let userPins  = await userModel.findAndDelete({
     createdBy:req.user.id,
   });
   

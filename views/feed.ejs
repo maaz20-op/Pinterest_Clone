@@ -35,6 +35,8 @@
   <i class="fas fa-search"></i> Search
 </button>
 </div>
+
+
     <div class="nav-icons">
       <a href="/feed">Home</a>
       <a href="/profile">My Profile</a>
@@ -43,9 +45,17 @@
     </div>
   </nav>
 
-
+<div class="sections">
+<ul>
+  <li class="images">Images</li>
+  <li class="videos">Videos</li>
+</ul>
+</div>
   <!-- ===== IMAGES MASONRY GRID ===== -->
 <button class="normal button" ><i class="fas fa-arrow-left"></i>Back to Feed</button>
+
+<!-- For images --> 
+
 <div class="container">
   <div class="masonry">
   
@@ -53,7 +63,8 @@
 <% users.reverse().forEach((user) => {%>
 <% if(!loggedInUser.blockedUserId.includes(user._id.toString()) &&  !loggedInUser.blockedBy.includes(user._id.toString())){ %>
     <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
-   <% user.post.slice(0,2).reverse().forEach((eachPost) => { %>
+   <% user.post.reverse().forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "image") {%>
     <div class="masonry-item upgraded-card">
   <!-- Top Left Round Profile -->
   <div class="user-avatar">
@@ -62,7 +73,7 @@
   </div>
 
   <!-- Main Image -->
-  <img src="<%= eachPost.image %>" alt="<%= eachPost.postdata %>" class="main-image" />
+  <img src="<%= eachPost.mediaUrl %>" alt="<%= eachPost.postdata %>" class="main-image" />
 
   <!-- Post Text -->
   <p class="post-text"><%= eachPost.postdata %></p>
@@ -82,12 +93,13 @@
   
     
     <form action="/pins/savepin" method="post" style="display:inline;">
-      <input hidden type="text" name="image" value="<%= eachPost.image %>"  required/>
+      <input hidden type="text" name="image" value="<%= eachPost.mediaUrl %>"  required/>
      <input hidden type="text" name="text" value="<%= eachPost.postdata %>"     required/>
       <button class="save-btn">📌 Save</button>
     </form>
   </div>
 </div>
+<% } %>
       <% }) %>
     <% } else { %>
     
@@ -101,11 +113,97 @@
 
 </div>
 </div>
+  <!-- For videos--> 
+  <div class="container2">
+      <div class="video-container">
+<% if(users.length > 0) { %>
+<% users.reverse().forEach((user) => {%>
+<% if(!loggedInUser.blockedUserId.includes(user._id.toString()) &&  !loggedInUser.blockedBy.includes(user._id.toString())){ %>
+    <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
+   <% user.post.forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "video") {%>
+
+  <div class="video">
+  <video src="<%=eachPost.mediaUrl %>"  ></video>
+<div class="video-action">
+<div class="play-pause" >
+  <i class="fa-solid fa-play"></i>
+</div>
+  <div class="column-action">
+<div  class="like-video">
+<% if(eachPost.likes.includes(loggedInUser._id.toString())){ %>
+<i data-src="<%= eachPost._id%>" class="heart fa-solid fa-heart" style="color: red;"></i>
+<% } else { %>
+  <i  data-src="<%= eachPost._id%>" class="heart fa-regular fa-heart"></i> 
+<% } %>
+
+  <p class="show-video-likes"><%= eachPost.likes.length %></p>
+</div>
+
+ <div class="comment-video">
+  <i class="fa-solid fa-comment-dots"></i>
+  <P><%= eachPost.comments.length%></P>
+</div>
+
+
+<div class="share-video">
+  <i class="fa-solid fa-share-nodes"></i>
+  <p>Share</p>
+</div>
+</div>
+
+<div class="post-data">
+<div class="text">
+  <p><%= eachPost.postdata%> #reelNest</p>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="bar"></div>
+
+</div>
+    <div class="comments-container">
+  <div class="heading">
+  <h1>Comments</h1> <i class="crossIcon fa fa-times"></i>
+</div>
+<div class="divider-line"></div>
+<div class="inner">
+<textarea data-src="<%=eachPost._id %>" placeholder="Share your thought's..." class="commentInput" name="message" rows="5" cols="30"></textarea>
+  <i class="send fa-solid fa-paper-plane"></i>
+</div>
+<div class="wrapper">
+<div class="actual-comments-box">
+  
+</div>
+</div>
+  </div>
+ </div>
+</div>  
+
+
+<% } %>
+      <% }) %>
+    <% } else { %>
+    
+    <% } %>
+    <% } %>
+  <% }) %>
+<% } else { %>
+  <h1>No users found in feed</h1>
+<% } %>
+
+
+</div>
+ </div>
+
+
+
+
   
 <script>
   const container = document.querySelector(".masonry");
     let feedBtn = document.querySelector(".button");
-    
+  // search logic 
   const sendData = async () => {
 
     const searchedValue = document.querySelector(".search").value.trim();
@@ -144,8 +242,10 @@
            if(eachPost.user ===null){
              return console.log("err")
            }
-            // Optional: Double-check postdata matches (safe fallback)
-
+            // Optional: Double-check postdata matches fallback)
+if(eachPost.mediaType!== "image") {
+  return console.log(video)
+}
             const div = document.createElement("div");
             div.classList.add("masonry-item", "upgraded-card");
 
@@ -155,7 +255,7 @@
                 <a href="/otherusersprofile/${eachPost.user._id}">@${eachPost.user.username}</a>
               </div>
 
-              <img src="${eachPost.image}" alt="pic" class="main-image" />
+              <img src="${eachPost.mediaUrl}" alt="pic" class="main-image" />
               <p class="post-text">${eachPost.postdata}</p>
 
       <div class="post-actions">
@@ -164,7 +264,7 @@
             
 
                 <form action="/pins/savepin" method="post" style="display:inline;">
-                  <input hidden type="text" name="image" value="${eachPost.image}" required />
+                  <input hidden type="text" name="image" value="${eachPost.mediaUrl}" required />
                   <input hidden type="text" name="text" value="${eachPost.postdata}" required />
                   <button class="save-btn">📌 Save</button>
                 </form>
@@ -181,17 +281,18 @@
       container.innerHTML = "<h2>Something went wrong. Try again later.</h2>";
     }
   };
-  
-  
 
   feedBtn.addEventListener("click", function () {
     window.location.href = "/feed";
   });
   
   
+
+  // image likes logic 
   container.addEventListener("click", async function(e) {
   if (e.target.classList.contains("like-btn")) {
     const id = e.target.getAttribute("data-src");
+    
 
     try {
       const response = await fetch("/posts/likepost", {
@@ -217,12 +318,295 @@
   }
 });
 
+
+// for setions of images videos
+let sections = document.querySelector("ul");
+let container1 = document.querySelector(".container");
+let container2 = document.querySelector(".container2");
+sections.addEventListener("click",function(e){
+  if(e.target.classList.contains("videos")){
+container2.style.cssText = "display:block;min-height:100vh;"
+container1.style.cssText ="display:none"
+    
+  } else {
+container2.style.cssText = "display:none;"
+container1.style.cssText ="display:block;min-height:100vh;"
+      
+  }
+})
+
   
 </script>
 
 
+<script>
+// for video controls 
 
 
-    <%- include("partials/footer") %>
+let currentActionBar = null;
+let currentPlayPause = null;
+let currentActionVideo = null;
+let currentProgressBar = null;
+let innerProgressBar = null;
+let commentInput = null;
+let isDragging = false;
+
+let videos = document.querySelectorAll(".video");
+
+videos.forEach((videoDiv) => {
+  videoDiv.addEventListener("click", function (e) {
+    // Fullscreen
+    if (videoDiv.requestFullscreen) {
+      videoDiv.requestFullscreen();
+    } else if (videoDiv.webkitRequestFullscreen) {
+      videoDiv.webkitRequestFullscreen();
+    } else if (videoDiv.msRequestFullscreen) {
+      videoDiv.msRequestFullscreen();
+    }
+
+    currentActionBar = videoDiv.querySelector(".video-action");
+    currentActionVideo = videoDiv.querySelector("video");
+    currentPlayPause = videoDiv.querySelector(".play-pause");
+    currentProgressBar = videoDiv.querySelector(".progress-bar");
+    commentInput = videoDiv.querySelector(".commentInput")
+    innerProgressBar = videoDiv.querySelector(".bar");
+    if (!currentPlayPause.classList.contains("listener-attached")) {
+      currentPlayPause.classList.add("listener-attached");
+
+      currentPlayPause.addEventListener("click", function (event) {
+        event.stopPropagation();
+        if (!currentActionVideo) return;
+
+        if (currentActionVideo.paused) {
+          currentActionVideo.play();
+          currentPlayPause.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+        } else {
+          currentActionVideo.pause();
+          currentPlayPause.innerHTML = `<i class="fa-solid fa-play"></i>`;
+        }
+      });
+      
+      
+      
+
+      // Click seek
+      currentProgressBar.addEventListener("click", function (e) {
+        seek(e.clientX);
+      });
+
+      // Mouse drag
+      currentProgressBar.addEventListener("mousedown", function (e) {
+        isDragging = true;
+        seek(e.clientX);
+      });
+
+      // Touch drag start
+      currentProgressBar.addEventListener("touchstart", function (e) {
+        isDragging = true;
+        seek(e.touches[0].clientX);
+      });
+
+      // Progress update
+      currentActionVideo.addEventListener("timeupdate", function () {
+        let percent = (currentActionVideo.currentTime / currentActionVideo.duration) * 100;
+        innerProgressBar.style.width = percent + "%";
+      });
+    }
+  });
+});
+let commentContainer = null;
+// like video
+document.addEventListener("click", async function (e) {
+  if (e.target.classList.contains("heart")) {
+    const heartIcon = e.target;
+    const postId = heartIcon.getAttribute("data-src");
+    const likeCountEl = heartIcon.closest(".like-video").querySelector(".show-video-likes");
+
+    try {
+      const res = await fetch("/posts/likepost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: postId }),
+      });
+
+      const data = await res.json();
+      if (data.post && data.loggedInUser) {
+        likeCountEl.textContent = data.post.likes.length;
+
+        if (data.post.likes.includes(data.loggedInUser._id)) {
+          heartIcon.classList.remove("fa-regular");
+          heartIcon.classList.add("fa-solid", "liked");
+          heartIcon.style.color = "red"; // Optional: Add red color on like
+        } else {
+          heartIcon.classList.remove("fa-solid", "liked");
+          heartIcon.classList.add("fa-regular");
+          heartIcon.style.color = ""; // Optional: Reset color on unlike
+        }
+      }
+    } catch (err) {
+      console.error("Video like failed:", err);
+    } } else if(e.target.closest(".comment-video")){
+  commentContainer = e.target.closest(".video").querySelector(".comments-container")
+  commentContainer.style.display = "block"
+  
+  let showComments = async function(){
+  let input = commentContainer.querySelector("textarea")
+  let commentSection = commentContainer.querySelector(".actual-comments-box");
+
+// Pehle loading message dikhao
+commentSection.innerHTML = `<p style="color:white;margin: 70px 0px 0px 80px">Loading comments...</p>`;
+  let id = input.getAttribute("data-src");
+  try {
+    
+   let response = await fetch(`/comments/showcomments?postId=${id}`, {
+      method:"GET",
+      headers:{
+        "Content-Type":"application/json"
+      },
+    });
+  
+  let post = await response.json()
+  
+
+if(post && post.comments.length > 0){
+commentSection.innerHTML = "";
+post.comments.forEach((comment) => {
+let div = document.createElement("div");
+div.classList.add('comment');
+ div.innerHTML = `
+  <div class="user-info">
+    <img src="${comment.userId.profileImage}">
+    <h1>@${comment.userId.username}</h1>
+    <h2>1 min ago</h2>
+  </div>
+<div class="text"><p>${comment.text}</p></div>`
+
+commentSection.appendChild(div)
+  
+})
+  } else {
+    commentSection.innerHTML = `<p style="color:white;margin: 70px 0px 0px 80px">No comments...</p>`;
+  }
+  
+  
+    
+  } catch(err) {
+    console.log(err.message)
+  }
+    };
+  showComments();
+  
+  }
+  else if (e.target.closest(".crossIcon")){
+  commentContainer.style.display = "none"
+  }
+  else if(e.target.classList.contains("send")){
+
+let input = e.target.previousElementSibling;
+let id = input.getAttribute("data-src");
+
+let createComments = async ()=>{
+  
+if(!input) return;
+
+try {
+
+let response = await fetch("/comments/createcomment",{
+  method:"POST",
+  headers:{
+    "Content-Type":"application/json"
+  },
+  body: JSON.stringify({
+    inputText:input.value,
+    postId:id,
+  })
+});
+
+let data = await response.json();
+
+let commentContainerBox = input.closest(".comments-container").querySelector(".actual-comments-box");
+  if(data.comment && data.loggedInUser){
+let div = document.createElement("div")
+div.classList.add("comment");
+div.innerHTML = `
+    <div class="user-info">
+    <img src="${data.loggedInUser.profileImage}">
+    <h1>@${data.loggedInUser.username}</h1>
+    <h2>1 min ago</h2>
+  </div>
+<div class="text"><p>${data.comment.text}</p></div>
+`
+commentContainerBox.prepend(div)
+  }
+  
+  
+  
+} catch (err) {
+  console.log(`Server error is ${err.message}`)
+}
+
+};
+
+createComments();
+}
+
+});
+
+
+
+// Mouse move
+window.addEventListener("mousemove", function (e) {
+  if (isDragging) {
+    seek(e.clientX);
+  }
+});
+
+// Touch move
+window.addEventListener("touchmove", function (e) {
+  if (isDragging) {
+    seek(e.touches[0].clientX);
+  }
+});
+
+// End dragging
+window.addEventListener("mouseup", () => isDragging = false);
+window.addEventListener("touchend", () => isDragging = false);
+
+function seek(clientX) {
+  if (!currentProgressBar || !innerProgressBar || !currentActionVideo) return;
+
+  let barStart = currentProgressBar.getBoundingClientRect().left;
+  let barWidth = currentProgressBar.clientWidth;
+  let offsetX = clientX - barStart;
+  let percent = Math.max(0, Math.min(1, offsetX / barWidth));
+
+  innerProgressBar.style.width = percent * 100 + "%";
+  innerProgressBar.style.backgroundColor = "red";
+  currentActionVideo.currentTime = percent * currentActionVideo.duration;
+}
+
+
+
+
+
+
+
+
+
+// Fullscreen change
+document.addEventListener("fullscreenchange", function () {
+  if (currentActionBar && document.fullscreenElement) {
+    currentActionBar.style.display = "block";
+  } else if (currentActionBar) {
+    currentActionBar.style.display = "none";
+    if(commentContainer){
+    commentContainer.style.display = "none"
+    }
+    if (currentActionVideo) currentActionVideo.pause();
+  }
+});
+</script>
+
+
 </body>
 </html>

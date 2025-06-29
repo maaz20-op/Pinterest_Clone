@@ -79,7 +79,13 @@
 <% if(otherUser.post.length > 0 ) { %>
  <% if(otherUser.accountVisibility === "Public") { %>
 <% otherUser.post.forEach((eachPost)=>{ %>
-    <div class="masonry-item"><img src="<%= eachPost.image %>" alt=""><h2><%= eachPost.postdata %> </h2></div>
+    <div class="masonry-item">
+   <%   if(eachPost.mediaType === "image"){ %>
+      <img src="<%= eachPost.mediaType %>" alt="">
+  <% } else { %>
+    <video src="<%= eachPost.mediaUrl %>"></video>
+   <%   } %>
+      <h2><%= eachPost.postdata %> </h2></div>
 
 <% }) %>
 <% } else { %>

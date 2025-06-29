@@ -3,12 +3,43 @@ var router = express.Router();
 const userModel = require("../models/user-model");
 const mongoose = require("mongoose");
 const postModel = require("../models/post-model");
+const commentModel = require("../models/comment-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
-router.get('/', function(req, res) {
-  res.render("register");
+router.get("/deletepost",async function(req,res){
+  let post = await pinModel.deleteMany({});
+  console.log(post)
+})
+
+router.get("/read", async function(req,res){
+let comment = await commentModel.find()
+console.log(comment)
+  res.send(post)
 });
+
+
+router.get("/delete", async function (req, res){
+  let comment= await commentModel.deleteMany()
+  let posts = await postModel.deleteMany({});
+  let users= await userModel.find()
+  
+  console.log(comment,posts)
+  users.forEach(async (user) =>{
+  user.userCommented = []
+  user.post = []
+  user.likes = [] 
+  user.pins = []
+await  user.save()
+  })
+  
+  console.log(users)
+  
+})
+router.get("/", function (req, res){
+  res.render("register")
+})
+
 
 
 router.get("/profile",isLoggedIn, async function(req,res){

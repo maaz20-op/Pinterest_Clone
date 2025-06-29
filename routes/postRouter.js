@@ -11,7 +11,7 @@ const { searchPosts } = require("../controllers/userController");
 
 
 
-router.post("/upload", isLoggedIn, upload.single("image"), uploadPost );
+router.post("/upload", isLoggedIn, upload.single("media"), uploadPost );
 
 router.post("/likepost", isLoggedIn, likePost)
 

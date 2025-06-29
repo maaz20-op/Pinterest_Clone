@@ -46,6 +46,10 @@ const mongoose = require("mongoose");
    type:mongoose.Schema.Types.ObjectId,
     ref:"User",
     }],
+    userCommented:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Comment',
+    }],
 });
 
 

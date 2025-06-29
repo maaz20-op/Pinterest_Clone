@@ -18,7 +18,7 @@
       <div class="previewImgCont">
       <img id="preview" src="" >
       </div>
-      <input type="file" hidden name="image" id="fileInput" required />
+      <input type="file" hidden name="media" accept="image/*,video/*" id="fileInput" required />
       
       <h1>Write description:</h1>
     <div class="upload-section">
@@ -57,7 +57,7 @@ fileInput.addEventListener("change", function () {
 
 let uploadBtn = document.querySelector(".upload-btn");
 let input = document.querySelector(".input");
-btn.addEventListener("click", function () {
+uploadBtn.addEventListener("click", function () {
   setTimeOut(()=>{
     input.disabled = true
     fileInput.disabled = true

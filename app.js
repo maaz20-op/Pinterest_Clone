@@ -53,12 +53,13 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const postRouter = require("./routes/postRouter");
 const pinRouter = require("./routes/pinRouter");
-
+const commentRouter = require("./routes/commentRouter")
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postRouter);
 app.use('/pins', pinRouter);
+app.use('/comments',commentRouter)
 
 // 🚀 Start Server
 const PORT = process.env.PORT || 3000;

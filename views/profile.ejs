@@ -86,7 +86,11 @@
     <% if (user.post.length > 0) { %>
       <% user.post.reverse().forEach((eachPost) => { %>
         <div class="masonry-item">
-          <img src="<%= eachPost.image %>" alt="" />
+     <% if(eachPost.media === "image"){ %>
+          <img src="<%= eachPost.mediaUrl %>" />
+    <% } else { %>
+      <video src="<%= eachPost.mediaUrl%>" controls></video>
+   <%  }%>
           <h2><%= eachPost.postdata %></h2>
         </div>
       <% }) %>

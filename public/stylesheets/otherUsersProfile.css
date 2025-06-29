@@ -315,6 +315,9 @@ a{
   width: 100%;
   display: block;
 }
+.masonry-item video {
+  width:100%;
+}
 .masonry-item:hover {
   transform: scale(1.02);
 }
