@@ -82,22 +82,144 @@
   </section>
 
   <h1 style="font-family: 'Montserrat', sans-serif;" class="your-img">Your Posts:</h1>
-  <section class="masonry">
-    <% if (user.post.length > 0) { %>
-      <% user.post.reverse().forEach((eachPost) => { %>
-        <div class="masonry-item">
-     <% if(eachPost.media === "image"){ %>
-          <img src="<%= eachPost.mediaUrl %>" />
-    <% } else { %>
-      <video src="<%= eachPost.mediaUrl%>" controls></video>
-   <%  }%>
-          <h2><%= eachPost.postdata %></h2>
-        </div>
+  
+  
+  
+  <div class="sections">
+<ul>
+  <li class="images">Images</li>
+  <li class="videos">Videos</li>
+</ul>
+</div>
+  
+  <div class="container masonry">
+  
+
+
+<% if(user.post.length > 0 ) { %>
+   <% user.post.reverse().forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "image") {%>
+    <div class="masonry-item">
+  
+
+  <!-- Main Image -->
+  <img src="<%= eachPost.mediaUrl %>" alt="<%= eachPost.postdata %>" class="main-image" />
+
+  <!-- Post Text -->
+  <p class="post-text"><%= eachPost.postdata %></p>
+
+  
+  </div>
+<% } %>
+      <% }) %>
+    <% } else { %> 
+    
+    <% } %>
+
+
+</div>
+
+  <div class="container2">
+      <div class="video-container">
+      <% if(user.post.length > 0 ){  %>
+   <% user.post.forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "video") {%>
+
+  <div data-postid="<%= eachPost._id %>" class="video">
+  <video src="<%=eachPost.mediaUrl %>"  ></video>
+  
+<div class="video-title"><%= eachPost.postdata %> #reelNest</div>
+<div class="video-action">
+<div class="play-pause" >
+  <i class="fa-solid fa-play"></i>
+</div>
+  <div class="column-action">
+<div  class="like-video">
+<% if(eachPost.likes.includes(user._id.toString())){ %>
+<i data-src="<%= eachPost._id%>" class="heart fa-solid fa-heart" style="color: red;"></i>
+<% } else { %>
+  <i  data-src="<%= eachPost._id%>" class="heart fa-regular fa-heart"></i> 
+<% } %>
+
+  <p class="show-video-likes"><%= eachPost.likes.length %></p>
+</div>
+
+ <div class="comment-video">
+  <i class="fa-solid fa-comment-dots"></i>
+  <P><%= eachPost.comments.length%></P>
+</div>
+
+
+<div class="share-video">
+  <i onclick="shareVideo(this)" data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
+  <p>Share</p>
+</div>
+
+</div>
+
+<div class="post-data">
+<div class="text">
+  <p><%= eachPost.postdata%> #reelNest</p>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="bar"></div>
+</div>
+
+    <div class="comments-container">
+  <div class="heading">
+  <h1>Comments</h1> <i class="crossIcon fa fa-times"></i>
+</div>
+<div class="divider-line"></div>
+<div class="inner">
+<textarea data-src="<%=eachPost._id %>" placeholder="Share your thought's..." class="commentInput" name="message" rows="5" cols="30"></textarea>
+  <i class="send fa-solid fa-paper-plane"></i>
+</div>
+<div class="wrapper">
+<div class="actual-comments-box">
+  
+</div>
+</div>
+  </div>
+ </div>
+</div>  
+
+
+<% } %>
       <% }) %>
     <% } else { %>
-      <h1 style="margin-left:2.3cm;margin-top:3cm;width:60vw;padding-bottom:2cm;font-size:18px;">No posts found...</h1>
-    <% } %>
-  </section>
+    <h1> No videos...</h1>
+<% } %>
+
+
+
+
+</div>
+ </div>
+
+
+
+
+
+
+
+<script>
+  let sections = document.querySelector("ul");
+let container1 = document.querySelector(".container");
+let container2 = document.querySelector(".container2");
+sections.addEventListener("click",function(e){
+  if(e.target.classList.contains("videos")){
+container2.style.cssText = "display:block;min-height:100vh;"
+container1.style.cssText ="display:none"
+    
+  } else {
+container2.style.cssText = "display:none;"
+container1.style.cssText ="display:block;min-height:100vh;"
+      
+  }
+})
+</script>
 
   <script>
     // Edit Profile Pic
@@ -133,7 +255,7 @@ flag = true
 }
 })
   </script>
-  
+  <script type="module" src="/javascripts/videoControllers.js"></script>
       <%- include("partials/footer") %>
   
 </body>

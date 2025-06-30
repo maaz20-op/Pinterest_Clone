@@ -274,6 +274,10 @@ a:hover {
   object-fit: cover;
 }
 
+.masonry-item  video {
+  height:100%;
+  width:100%;
+}
 video  {
   height:170px;
   width:100px;
