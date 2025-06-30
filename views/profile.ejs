@@ -255,7 +255,14 @@ flag = true
 }
 })
   </script>
-  <script type="module" src="/javascripts/videoControllers.js"></script>
+  
+  <script type="module">
+  import { videoControlsSetup } from "/javascripts/videoControllers.js";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    videoControlsSetup();
+  });
+</script>
       <%- include("partials/footer") %>
   
 </body>
