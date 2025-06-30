@@ -263,26 +263,6 @@ function seek(clientX) {
 
 
 /* show video on click of share link example share to wattsapp  */ 
-window.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const postId = params.get("postId");
-
-  if (postId) {
-    // 🛠️ FIRST: show video container
-    container2.style.cssText = "display:block;min-height:100vh;";
-    container1.style.cssText = "display:none";
-
-    // ✅ THEN: query video
-    const targetVideo = document.querySelector(`[data-postid="${postId}"]`);
-
-    if (targetVideo) {
-      targetVideo.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      targetVideo.click(); // Fullscreen and UI trigger
-    } else {
-      console.warn("Target video not found for postId:", postId);
-    }
-  }
-});
 
 
 
