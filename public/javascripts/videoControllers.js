@@ -1,6 +1,6 @@
 
 // for video controls 
-
+console.log("video controls working")
 export function videoControlsSetup(){
 let currentActionBar = null;
 let currentPlayPause = null;
