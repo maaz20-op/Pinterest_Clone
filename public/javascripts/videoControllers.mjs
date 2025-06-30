@@ -2,7 +2,7 @@
 // for video controls 
 
 export function videoControlsSetup(){
-  alert("working maaz")
+  
 let currentActionBar = null;
 let currentPlayPause = null;
 let currentActionVideo = null;
@@ -288,4 +288,5 @@ document.addEventListener("fullscreenchange", function () {
 });
 
 }
+
 
