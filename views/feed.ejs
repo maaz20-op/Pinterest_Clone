@@ -344,8 +344,13 @@ container1.style.cssText ="display:block;min-height:100vh;"
 
 
 <!-- for video controls -->
-<script type="module" src="/javascripts/videoControllers.js"></script>
+<script type="module">
+  import { videoControlsSetup } from "/javascripts/videoControllers.js";
 
+  document.addEventListener("DOMContentLoaded", () => {
+    videoControlsSetup();
+  });
+</script>
 
 </body>
 </html>

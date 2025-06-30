@@ -308,6 +308,3 @@ document.addEventListener("fullscreenchange", function () {
 
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-  videoControlsSetup()
-})
