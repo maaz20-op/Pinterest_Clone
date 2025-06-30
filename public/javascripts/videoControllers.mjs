@@ -216,6 +216,7 @@ createComments();
 });
 
 function shareVideo(element){
+  
     let postUrl = element.getAttribute("data-url");
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
 navigator.share({
@@ -289,4 +290,4 @@ document.addEventListener("fullscreenchange", function () {
 
 }
 
-
+window.videoControlsSetup = videoControlsSetup;

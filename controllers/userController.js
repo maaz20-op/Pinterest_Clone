@@ -319,6 +319,7 @@ posts = posts.filter((post)=>{
   return post.user !== null;
 })
 
+console.log(posts)
 res.json(posts)
   } catch (err) {
     req.status(404).json("Error From Server!")
