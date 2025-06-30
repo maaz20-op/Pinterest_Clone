@@ -1,7 +1,8 @@
 
 // for video controls 
-alert("✅ videoControllers.js loaded");
+
 export function videoControlsSetup(){
+  alert("working maaz")
 let currentActionBar = null;
 let currentPlayPause = null;
 let currentActionVideo = null;
