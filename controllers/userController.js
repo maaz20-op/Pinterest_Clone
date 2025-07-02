@@ -40,7 +40,7 @@ module.exports.uploadPost = async function(req,res){
 let file = req.file
 
 if(!file) {
-  req.flash("error","error");
+  req.flash("error","something went wrong!");
   return res.redirect("/profile")
 }
 let type =  file.mimetype.startsWith("video/")?"video":"image";
@@ -61,13 +61,37 @@ await user.save();
 
 console.log(post)
 req.flash("success","Your creation is Added!")
-res.redirect("/profile")
+return res.redirect("/profile")
 
 } catch(err) {
   req.flash("error","Unable to upload your Post...")
  res.redirect("/profile");
 }
 }
+
+module.exports.deletePost = async function(req,res){
+  let id = req.params.id;
+
+  if(!id) {
+    return res.status(404).json({ message: "Something went wrong!" }); 
+  }
+
+  try {
+    let post = await postModel.findByIdAndDelete(id);
+    let user = await userModel.findById(req.user.id);
+  
+  user.post = user.post.filter((eachId)=>{
+  return  eachId  !== post._id
+  })
+  await user.save();
+    return res.status(200).json({ message: "success" }); 
+  } catch(err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error!" }); 
+  }
+};
+
+
 
 module.exports.savePin = async function(req,res){
   try{

@@ -77,9 +77,18 @@ img{
   margin-left:18px;
 }
 
+.fname, .uname{
+      overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 h1 {
   font-size:1rem;
   margin-top:28px;
+  width:150px;
 }
 h2 {
   font-size:0.8rem;

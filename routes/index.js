@@ -40,7 +40,16 @@ router.get("/", function (req, res){
   res.render("register")
 })
 
-
+router.get("/u",async function(req,res){
+  let user = await userModel.deleteMany({});
+  let comment = await commentModel.deleteMany()
+  let pin = await pinModel.deleteMany()
+  let post = await postModel.deleteMany()
+  console.log(post)
+  console.log(pin)
+  console.log(comment)
+  console.log(user)
+})
 
 router.get("/profile",isLoggedIn, async function(req,res){
 let user = await userModel.findOne({email:req.user.email})
@@ -77,13 +86,14 @@ if(otherUser._id.toString() === loggedInUser._id.toString()){
 
 
 router.get("/showaccountsettings",isLoggedIn, async function(req,res){
+  let loggedInUser = await userModel.findById(req.user.id);
   let user = await userModel.findById(req.user.id).populate("blockedUserId")
   let array = []
   user.blockedUserId.forEach((eachBlockedUser)=>{
  array.push(eachBlockedUser.fullname)
   })
   console.log(array)
-  res.render("accountSettings",{user,array})
+  res.render("accountSettings",{user,array,loggedInUser})
 })
 
 

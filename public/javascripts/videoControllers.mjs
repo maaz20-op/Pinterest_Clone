@@ -8,9 +8,12 @@ let currentPlayPause = null;
 let currentActionVideo = null;
 let currentProgressBar = null;
 let innerProgressBar = null;
+let currentFollowContainer = null;
 let commentInput = null;
+let currentDeleteBtn = null;
 let currentVideoTitle = null;
 let isDragging = false;
+
 
 let videos = document.querySelectorAll(".video");
 
@@ -27,9 +30,11 @@ videos.forEach((videoDiv) => {
 
     currentActionBar = videoDiv.querySelector(".video-action");
     currentActionVideo = videoDiv.querySelector("video");
+    currentFollowContainer = videoDiv.querySelector(".follow-container-video");
     currentPlayPause = videoDiv.querySelector(".play-pause");
     currentProgressBar = videoDiv.querySelector(".progress-bar");
     commentInput = videoDiv.querySelector(".commentInput")
+  currentDeleteBtn = videoDiv.querySelector(".delete-icon-video")
     currentVideoTitle = videoDiv.querySelector(".video-title")
     innerProgressBar = videoDiv.querySelector(".bar");
     if (!currentPlayPause.classList.contains("listener-attached")) {
@@ -139,7 +144,7 @@ div.classList.add('comment');
   <div class="user-info">
     <img src="${comment.userId.profileImage}">
     <h1>@${comment.userId.username}</h1>
-    <h2>1 min ago</h2>
+    <h2>${moment(comment.createdAt).fromNow()}</h2>
   </div>
 <div class="text"><p>${comment.text}</p></div>`
 
@@ -147,7 +152,7 @@ commentSection.appendChild(div)
   
 })
   } else {
-    commentSection.innerHTML = `<p style="color:white;margin: 70px 0px 0px 80px">No comments...</p>`;
+    commentSection.innerHTML = `<p class="msg" style="color:white;margin: 70px 0px 0px 80px">No comments...</p>`;
   }
   
   
@@ -170,6 +175,12 @@ let id = input.getAttribute("data-src");
 let createComments = async ()=>{
   
 if(!input) return;
+
+let commentContainerBox = input.closest(".comments-container").querySelector(".actual-comments-box"); 
+
+if(commentContainerBox.querySelector(".msg")){
+  commentContainerBox.innerHTML = ""
+}
 
 try {
 
@@ -194,7 +205,7 @@ div.innerHTML = `
     <div class="user-info">
     <img src="${data.loggedInUser.profileImage}">
     <h1>@${data.loggedInUser.username}</h1>
-    <h2>1 min ago</h2>
+    <h2>${moment(data.comment.createdAt).fromNow()}</h2>
   </div>
 <div class="text"><p>${data.comment.text}</p></div>
 `
@@ -204,7 +215,7 @@ commentContainerBox.prepend(div)
   
   
 } catch (err) {
-  console.log(`Server error is ${err.message}`)
+  
 }
 
 };
@@ -214,6 +225,7 @@ createComments();
 
 
 });
+
 
 function shareVideo(element){
   
@@ -269,17 +281,37 @@ function seek(clientX) {
 
 
 // Fullscreen change
+
 document.addEventListener("fullscreenchange", function () {
   if (currentActionBar && document.fullscreenElement) {
     currentActionBar.style.display = "block";
     currentActionVideo.currentTime = 0;
+    if(currentFollowContainer){
+    currentFollowContainer.style.display = "block"
+    }
+    if(currentDeleteBtn){
+      currentDeleteBtn.style.display = "block";
+    }
+    
     if(currentVideoTitle){
     currentVideoTitle.style.display = "none";
     }
+    
+    if(currentPlayPause){
+    currentPlayPause.innerHTML =  `<i class="fa-solid fa-play"></i>`
+    }
+    
   } else if (currentActionBar) {
     currentActionBar.style.display = "none";
         if(currentVideoTitle){
     currentVideoTitle.style.display = "block";
+  currentVideoTitle.style.cssText = "overflow:hidden;font-weight:600;padding:6px; overflow: hidden; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical;"
+    }
+        if(currentFollowContainer){
+    currentFollowContainer.style.display = "none"
+    }
+        if(currentDeleteBtn){
+      currentDeleteBtn.style.display="none"
     }
     if(commentContainer){
     commentContainer.style.display = "none"
@@ -287,6 +319,7 @@ document.addEventListener("fullscreenchange", function () {
     if (currentActionVideo) currentActionVideo.pause();
   }
 });
+
 
 }
 

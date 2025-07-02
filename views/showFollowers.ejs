@@ -24,17 +24,17 @@
 <img src="<%= follower.profileImage %>">
 <div class="text">
 <div class="identityBox">
-<h1><%= follower.fullname %></h1>
-<h3> <%= loggedInUser._id.toString() === follower._id.toString()?"( You )":""%> </h3>
+<h1 class="fname"><%= follower.fullname %></h1>
+<h3 class="symbol"> <%= loggedInUser._id.toString() === follower._id.toString()?"( You )":""%> </h3>
 </div>
-<h2>@<%= follower.username %></h2>
+<h2 class="uname">@<%= follower.username %></h2>
 <a class="view-profile" href="/otherusersprofile/<%=follower._id %>">View Profile</a>
 </div>
 </div>
 <% }) %>
 <% } else { %>
 <% if(user._id.toString()=== loggedInUser._id.toString()){ %>
-<h1 style="color:red;margin-left:2cm;margin-top:3cm;">No followers Yet... &nbsp; <i style="font-size:25px;color:yellow;" class="fas fa-sad-tear"></i></h1>
+<h1 style="color:red;margin-left:2cm;margin-top:3cm;width:60vw;">No followers Yet... &nbsp; <i style="font-size:25px;color:yellow;" class="fas fa-sad-tear"></i></h1>
 <% } else { %>
 <h1 style="color:red;margin-left:2.6cm;margin-top:3cm;">No followers Yet... </h1>
 <% } %>

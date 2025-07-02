@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
   const userSchema = new mongoose.Schema({
-  username: String,
-  fullname:String,
+  fullname: {
+    type: String,
+  },
+  username: {
+    type: String,
+  },
   profileImage:{
     type:String,
     default: "https://iili.io/FnrRren.png"

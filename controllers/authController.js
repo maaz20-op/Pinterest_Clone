@@ -8,6 +8,19 @@ module.exports.signupUser = async function(req,res){
   try {
   let {fullname, username, email, password} = req.body
   
+if(!fullname || !username || !email || !password){
+  req.flash("error","Some field is Missing fill properly!")
+  return res.redirect("/")
+}
+
+if(fullname.trim().length > 18){
+  req.flash("error","Full name must not exceed 18 characters")
+  return res.redirect("/")
+}
+  if(username.trim().length > 12){
+  req.flash("error","Username must not exceed 12 characters")
+  return res.redirect("/")
+}
   let isUserExists = await userModel.findOne({
     email,
   })
@@ -18,24 +31,20 @@ module.exports.signupUser = async function(req,res){
  return res.redirect("/");
   }
   
-  bcrypt.genSalt(10, function(err, salt){
-    bcrypt.hash(password, salt, async function(err, hash){
+const hash = await bcrypt.hash(password, 10);
+
     let createdUser = await userModel.create({
         fullname,
         username,
         email,
         password:hash,
       })
-      
+      console.log(createdUser)
 const  token = generateToken(email)
 
 res.cookie("token",token)
  return res.redirect("/profile")
-    });
-  });
   } catch(err) {
-    req.flash("error","Something went wrong!");
-    return res.redirect("/");
   }
 };
 

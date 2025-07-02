@@ -17,6 +17,7 @@
     height:40px;
     width:100vw;
     margin-top:12px;
+    margin-bottom:25px;
   }
   
 
@@ -32,10 +33,7 @@
     color:white;
     padding-bottom:4px;
   }
-  li:hover{
-  border-bottom:2px solid red;
-  transition: border ease 0.4s;
-  }
+
   
 
 .container {
@@ -54,6 +52,13 @@
   padding-bottom:20px;
 }
 
+.profileRefrence {
+        overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
@@ -273,7 +278,26 @@ a:hover {
   margin-top: 45px;
   object-fit: cover;
 }
-
+.you-btn {
+        background: linear-gradient(135deg, #ff0055, #ff3366);
+      padding:14px 15px;
+      border: none;
+      font-size: 14px;
+      color: #fff;
+      margin-top:2px;
+      margin-left:9px;
+      height:27px;
+      margin-top:12px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      gap:14px;
+      width:120px;
+      font-weight:bold;
+}
 .masonry-item  video {
   height:100%;
   width:100%;
@@ -281,6 +305,10 @@ a:hover {
 video  {
   height:170px;
   width:100px;
+}
+
+.follow-container-video {
+  display:none;
 }
 
 /* Post Text */
@@ -358,7 +386,7 @@ video  {
      width:93vw;
       display:grid;
       grid-auto-rows: 100px;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-columns: repeat(2, 1fr);
   column-gap:14px;
   row-gap: 170px;
   margin-left:11px;
@@ -376,7 +404,73 @@ video  {
       height:100%;
     }
     
-    
+    .follow-user {
+  position:absolute;
+  top:24px;
+  
+  height:60px;
+  width:90%;
+  margin:23px;
+  display:flex;
+}
+.follow-user .user-data {
+  margin-left:9px;
+  display: flex;
+  margin-top:3px;
+  flex-direction: column;
+  width:115px;
+
+}
+
+.follow-user a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+.follow-user img {
+  height: 50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+
+.follow-user h1{
+  font-size:17px;
+  margin-left:8px;
+  margin-top:5px;
+  color:white;
+            overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines */
+  -webkit-box-orient: vertical;
+}
+.follow-user  h2 {
+  font-size:12px;
+  color:white;
+  margin-left:8px;
+            overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines */
+  -webkit-box-orient: vertical;
+}
+.follow-user .follow {
+      background: linear-gradient(135deg, #ff0055, #ff3366);
+      padding:14px 15px;
+      border: none;
+      font-size: 14px;
+      color: #fff;
+      margin-top:16px;
+      height:27px;
+      margin-left:9px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      gap:14px;
+      width:120px;
+      font-weight:bold;
+    }
     
     .play-pause {
       position: absolute;
@@ -416,8 +510,11 @@ video  {
       bottom:4px;
     overflow:hidden;
     font-weight:600;
-padding:4px;
-      
+padding:6px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines */
+  -webkit-box-orient: vertical;
     }
     .column-action div {
       margin-top:50px;

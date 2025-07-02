@@ -30,7 +30,7 @@
    <div class="profileImage" >
     <img src="<%= otherUser.profileImage %>" alt="Profile" class="profile-pic"/>
     </div>
-    <h1> <%= otherUser.fullname %> </h1>
+    <h1 class="fullname"> <%= otherUser.fullname %> </h1>
     <h1 class="username"> @<%= otherUser.username %> </h1>
     
     
@@ -46,15 +46,14 @@
 <!-- block or follow users btns -->
 <div class="btnsbox">
   <button class="block-btn"><p>Block This User</p> <i class="fas fa-exclamation-triangle"></i></button>
-      <button  class="follow" type="submit">
+      <button  class="follow" >
         <p><%= otherUser.followers.includes(loggedInUser._id)?"Followed" :"Follow" %></p> <i class="fas fa-user-plus"></i>
       </button>
     </div>
 
     
-    <form hidden id="blockUserData" action="/users/blockuser" method="post">
-    <input type="text" name="id" value="<%= otherUser._id %>">
-    <button type="submit"></button>
+    <form  id="blockUserData" action="/users/blockuser" method="post">
+    <input type="hidden" name="id" value="<%= otherUser._id %>">
     </form>
 
 <div class="divider"></div>
@@ -62,12 +61,12 @@
   
 <h4 class="pin-heading"> Saved Posts:</h4>
 <section class="pin-section">
-
+<a href="/otherUsersPin/<%= otherUser._id %>">
   <div class="pin">
     <img src="https://iili.io/Fnryyhb.jpg" alt="Coding Setup" />
-<a href="/otherUsersPin/<%= otherUser._id %>"><p class="category">Saved Posts <%= otherUser.pins.length %></p></a>
+<p class="category">Saved Posts <%= otherUser.pins.length %></p>
   </div>
-  
+  </a>
 
   
 </section>
@@ -91,8 +90,12 @@
 <% if(otherUser.post.length > 0 ) { %>
    <% otherUser.post.reverse().forEach((eachPost) => { %>
   <% if(eachPost.mediaType.toLowerCase() === "image") {%>
-    <div class="masonry-item">
-  
+      <div class="masonry-item upgraded-card">
+  <!-- Top Left Round Profile -->
+  <div class="user-avatar">
+  <img src="<%= otherUser.profileImage %>" />
+   <a> @<%= otherUser.username %></a>
+  </div>
 
   <!-- Main Image -->
   <img src="<%= eachPost.mediaUrl %>" alt="<%= eachPost.postdata %>" class="main-image" />
@@ -100,12 +103,32 @@
   <!-- Post Text -->
   <p class="post-text"><%= eachPost.postdata %></p>
 
+  <!-- Action Buttons -->
+  <div class="post-actions">
+    
+
+ <button data-src="<%= eachPost._id %>" class="like-btn">
+<% if (eachPost.likes.includes(loggedInUser._id.toString())) { %>
+    ❤️ Liked <%= eachPost.likes.length %>
+  <% } else {%>
+  Likes <%= eachPost.likes.length %>
+<%  }  %>
+ </button>
   
+  
+    
+    <form action="/pins/savepin" method="post" style="display:inline;">
+      <input hidden type="text" name="image" value="<%= eachPost.mediaUrl %>"  required/>
+     <input hidden type="text" name="text" value="<%= eachPost.postdata %>"     required/>
+      <button class="save-btn">📌 Save</button>
+    </form>
   </div>
+</div>
+<% } else {%>
+  
 <% } %>
       <% }) %>
     <% } else { %> 
-    
     <% } %>
 
 
@@ -120,7 +143,22 @@
 
   <div data-postid="<%= eachPost._id %>" class="video">
   <video src="<%=eachPost.mediaUrl %>"  ></video>
-  
+<div class="follow-container-video">
+  <div class="follow-user">
+  <img src="<%=otherUser.profileImage %>">
+  <div class="user-data">
+    <h1><%= otherUser.fullname %></h1>
+    <h2>@<%= otherUser.username %></h2>
+  </div>
+
+  <% if(otherUser.followers.includes(loggedInUser._id.toString())){ %>
+            <button  class="follow" >    <p>Followed</p>   <i class="fas fa-user-plus"></i> </button>
+        <% } else { %>
+       <button  class="follow" > <p>Follow</p> </button>  
+        <% } %>
+</div>
+</div>
+
 <div class="video-title"><%= eachPost.postdata %> #reelNest</div>
 <div class="video-action">
 <div class="play-pause" >
@@ -144,7 +182,7 @@
 
 
 <div class="share-video">
-  <i onclick="shareVideo(this)" data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
+  <i onclick="shareVideo(this)" data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"dclass="share-icon fa-solid fa-share-nodes"></i>
   <p>Share</p>
 </div>
 
@@ -179,10 +217,12 @@
 </div>  
 
 
+<% } else {%>
+
 <% } %>
       <% }) %>
     <% } else { %>
-    <h1> No videos...</h1>
+  
 <% } %>
 
 
@@ -190,71 +230,108 @@
 
 </div>
  </div>
-    
-    
-   
-<script>
+ 
+ 
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+   <script>
   let sections = document.querySelector("ul");
 let container1 = document.querySelector(".container");
 let container2 = document.querySelector(".container2");
+let imagesBar = sections.querySelector(".images");
+let videoBar = sections.querySelector(".videos");
+
+imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
+
 sections.addEventListener("click",function(e){
   if(e.target.classList.contains("videos")){
+imagesBar.style.cssText = "border-bottom:none"
+videoBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
 container2.style.cssText = "display:block;min-height:100vh;"
 container1.style.cssText ="display:none"
     
-  } else {
+  } else if(e.target.classList.contains("images")) {
+    
+videoBar.style.cssText = "border-bottom:none"
+imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
 container2.style.cssText = "display:none;"
 container1.style.cssText ="display:block;min-height:100vh;"
       
   }
 })
-</script> 
-  <script> 
-  document.querySelector(".block-btn").addEventListener("click",function(){
-    document.querySelector("#blockUserData").submit()
-  })
-  
-  let followUser =  function(){
-  
-  let btn =  document.querySelector(".follow");
-  if(!btn) return
-  btn.addEventListener("click",async function(){
-  try {
-        let user = <%- JSON.stringify(otherUser) %>
-   let response = await fetch("/users/followuser", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        id:user._id,
-      }),
-    })
+</script>
+
+  <script>
+    let conainerLikePost = document.querySelector(".masonry");
+
+conainerLikePost.addEventListener("click", async function(e) {
+  const likeBtn = e.target.closest(".like-btn");
+  if (likeBtn) {
+    const id = likeBtn.getAttribute("data-src");
     
-let data = await response.json()
+    try {
+      const response = await fetch("/posts/likepost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+      });
 
-if (typeof data.followersCount === "undefined" || typeof data.followingCount === "undefined") {
-  return console.log("error");
-}
+      const data = await response.json();
+    
 
-
-let followers = document.querySelector(".count2");
-let following = document.querySelector(".count1");
-
-
-followers.innerHTML = `|&nbsp; ${data.followersCount} &nbsp;|`;
-following.innerHTML = `|&nbsp; ${data.followingCount} &nbsp;|`
-btn.innerHTML = `        <p>Followed </p> <i class="fas fa-user-plus"></i>`
-  } catch (err) {
-  console.log(err.message)
+      if (data.post && data.loggedInUser) {
+        if (data.post.likes.includes(data.loggedInUser._id.toString())) {
+          likeBtn.innerHTML = `❤️ Liked ${data.post.likes.length}`;
+        } else {
+          likeBtn.innerHTML = `Likes ${data.post.likes.length}`;
+        }
+      }
+    } catch (err) {
+      console.error("Like failed:", err);
+    }
   }
-  });
-  };
+});
+  </script>
   
-  followUser()
-  
+<script>
+  document.addEventListener("click", async function(e) {
+  // Block Logic
+  const blockBtn = e.target.closest(".block-btn");
+  if (blockBtn) {
+    document.querySelector("#blockUserData").submit();
+    return;
+  }
 
+  // Follow Logic
+  const followBtn = e.target.closest(".follow");
+  if (followBtn) {
+    try {
+      const user = <%- JSON.stringify(otherUser) %>;
+      const res = await fetch("/users/followuser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user._id })
+      });
 
+      const data = await res.json();
+      if (!data.followersCount || !data.followingCount) {
+        console.log("Invalid data returned:", data);
+        return;
+      }
+
+      document.querySelector(".count2").innerHTML = `|&nbsp; ${data.followersCount} &nbsp;|`;
+      document.querySelector(".count1").innerHTML = `|&nbsp; ${data.followingCount} &nbsp;|`;
+      followBtn.innerHTML = `<p>Followed</p> <i class="fas fa-user-plus"></i>`;
+    } catch (err) {
+      console.log("Follow error:", err.message);
+    }
+  }
+});
+</script>
+
+<script>
 let showMoreBtn = document.querySelector(".showMore");
 let containerBio = document.querySelector(".containerBio");
 let userDescription = document.querySelector(".bio");
@@ -286,7 +363,7 @@ flag = true
     videoControlsSetup();
   });
   </script>
-      <%- include("partials/footer") %>
+    
   
 </body>
 </html>

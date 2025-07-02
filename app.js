@@ -7,6 +7,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 const express = require('express');
 const path = require('path');
+const moment = require("moment");
+
+
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const flash = require('connect-flash');
@@ -60,6 +63,9 @@ app.use('/users', usersRouter);
 app.use('/posts', postRouter);
 app.use('/pins', pinRouter);
 app.use('/comments',commentRouter)
+
+app.locals.moment = moment;
+
 
 // 🚀 Start Server
 const PORT = process.env.PORT || 3000;

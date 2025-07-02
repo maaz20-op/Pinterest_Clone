@@ -25,16 +25,16 @@
     <h3>Profile Information</h3>
 
     <label>Full Name</label>
-    <input type="text" name="fullname" placeholder="Enter full name" />
+    <input type="text" name="fullname" value="<%= loggedInUser.fullname%>" placeholder="Enter full name" />
 
     <label>Username</label>
-    <input type="text" name="username" placeholder="Enter username" />
+    <input type="text" name="username" value="<%=loggedInUser.username %>" placeholder="Enter username" />
 
     <label>Email</label>
-    <input type="email" name="email" placeholder="Enter email" />
+    <input type="email" name="email" value="<%= loggedInUser.email %>" placeholder="Enter email" />
 
     <label>Bio</label>
-    <textarea name="bio" rows="3" placeholder="Tell something about yourself"></textarea>
+    <textarea name="bio" rows="3" placeholder="Tell something about yourself"><%= loggedInUser.bio %></textarea>
     </select>
   </div>
 

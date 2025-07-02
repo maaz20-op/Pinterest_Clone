@@ -7,6 +7,7 @@ const upload = require("../config/multerConfig");
 const { uploadPost } = require("../controllers/userController");
 const { likePost } = require("../controllers/userController");
 const { searchPosts } = require("../controllers/userController");
+const { deletePost } = require("../controllers/userController");
 
 
 
@@ -14,6 +15,8 @@ const { searchPosts } = require("../controllers/userController");
 router.post("/upload", isLoggedIn, upload.single("media"), uploadPost );
 
 router.post("/likepost", isLoggedIn, likePost)
+
+router.get("/delete/post/:id",isLoggedIn, deletePost);
 
 
 router.post("/search", isLoggedIn,searchPosts) 
