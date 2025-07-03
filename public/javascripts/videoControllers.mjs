@@ -235,10 +235,10 @@ commentContainerBox.prepend(div)
 
 createComments();
 } else if(e.target.classList.contains(".share-icon")){
-
+document.body.style.backgroundColor = "red"
     let postUrl = e.target.getAttribute("data-url");
   
-  if(!postUrl)  return alert("no url");
+  if(!postUrl) return alert("no url");
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
 navigator.share({
   title: "ReelNest video",
