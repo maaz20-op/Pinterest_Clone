@@ -36,7 +36,8 @@ await  user.save()
   console.log(users)
   
 })
-router.get("/", function (req, res){
+
+router.get("/register", function (req, res){
   res.render("register")
 })
 
@@ -104,7 +105,7 @@ router.get("/showblockusers", isLoggedIn, async function(req,res){
 })
 
 
-router.get("/feed", isLoggedIn, async function(req,res){
+router.get("/", isLoggedIn, async function(req,res){
   let loggedInUser = await userModel.findById(req.user.id).select("-bio -password -email -__v").lean()
   let users = await userModel.find().select("-email -bio -password -__v -pins")
   .populate("post")
@@ -117,14 +118,14 @@ let user = await userModel.findOne({
   email:req.user.email,
 }).select("-password -email -following -followers -__v -bio")
 .populate("pins")
-.lean
+.lean()
   res.render("showPins", { user });
 })
 
 
 router.get("/otherUsersPin/:id", isLoggedIn, async function(req,res){
   const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
-  if(!isValid) return res.redirect("/feed");
+  if(!isValid) return res.redirect("/");
 let otherUserPin = await userModel.findById(req.params.id).select("-password -email -bio -followers -pins -following -__v")
 .populate("pins")
 .lean();

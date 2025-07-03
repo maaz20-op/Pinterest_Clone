@@ -38,7 +38,7 @@
 
 
     <div class="nav-icons">
-      <a href="/feed">Home</a>
+      <a href="/">Home</a>
       <a href="/profile">My Profile</a>
   <a href="/showblockusers">Blocked People</a>  
     <a class="logout" href="/users/logout">Logout</a> 
@@ -67,8 +67,8 @@
     <div class="masonry-item upgraded-card">
   <!-- Top Left Round Profile -->
   <div class="user-avatar">
-    <img src="<%= user.profileImage %> " alt="User Avatar" />
-    <a class="profileRefrence" href="/otherusersprofile/<%= user._id %>">@<%= user.username %></a>
+     <a class="profileRefrence" href="/otherusersprofile/<%= user._id %>">   <img src="<%= user.profileImage %> " alt="User Avatar" /> </a>
+    <a class="profileRefrence2" href="/otherusersprofile/<%= user._id %>">@<%= user.username %></a>
   </div>
 
   <!-- Main Image -->
@@ -413,7 +413,7 @@ ${isLiked}
   };
 
   feedBtn.addEventListener("click", function () {
-    window.location.href = "/feed";
+    window.location.href = "/";
   });
   
   

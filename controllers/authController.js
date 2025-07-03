@@ -10,16 +10,16 @@ module.exports.signupUser = async function(req,res){
   
 if(!fullname || !username || !email || !password){
   req.flash("error","Some field is Missing fill properly!")
-  return res.redirect("/")
+  return res.redirect("/register")
 }
 
 if(fullname.trim().length > 18){
   req.flash("error","Full name must not exceed 18 characters")
-  return res.redirect("/")
+  return res.redirect("/register")
 }
   if(username.trim().length > 12){
   req.flash("error","Username must not exceed 12 characters")
-  return res.redirect("/")
+  return res.redirect("/register")
 }
 
   let isUserExists = await userModel.findOne({
@@ -33,7 +33,7 @@ if (isUserExists) {
   } else {
     req.flash("error", "Username already taken.");
   }
-  return res.redirect("/");
+  return res.redirect("/register");
 }
   
   
@@ -58,7 +58,7 @@ res.cookie("token", token, {
   } catch(err) {
     req.flash("error","Something Went wrong!")
     console.log(err.message)
-  return  res.redirect("/")
+  return  res.redirect("/register")
   }
 };
 
@@ -70,7 +70,7 @@ module.exports.loginUser = async function(req,res){
   
   if(!user) {
 req.flash("error","Account Not Exists")
-return res.redirect("/")
+return res.redirect("/register")
   }
   
 bcrypt.compare(password,user.password,function(err, result){
@@ -86,11 +86,11 @@ bcrypt.compare(password,user.password,function(err, result){
     return res.redirect("/profile")
   }
   req.flash("error","Wrong email or password")
-  return res.redirect("/")
+  return res.redirect("/register")
 });
 } catch(err){
   req.flash("error","something went wrong!");
-  return res.redirect("/");
+  return res.redirect("/register");
 }
 };
 
@@ -98,10 +98,10 @@ module.exports.logoutUser =  function(req,res){
   try {
   res.clearCookie("token")
 req.flash("success","Successfully Logout");
- return res.redirect("/");
+ return res.redirect("/register");
   } catch(err){
     req.flash("error",`Logout Error: ${err.message}`);
-    return res.redirect("/");
+    return res.redirect("/register");
   }
   
 };

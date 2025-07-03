@@ -11,7 +11,11 @@ html,body {
   color:white;
   font-size:16px;
     font-family: 'Poppins', sans-serif;
-    user-select:none;
+    user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+user-select: none;     /* Internet Explorer/Edge */
+
 }
 
 header{

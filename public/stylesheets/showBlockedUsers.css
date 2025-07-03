@@ -8,6 +8,11 @@
 body {
   background-color: #0f0f0f;
   color: #fff;
+    user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+user-select: none;     /* Internet Explorer/Edge */
+
 }
 
 .container {

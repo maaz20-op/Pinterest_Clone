@@ -118,13 +118,13 @@ let { image,text }  = req.body;
   if(existingPin){
   if(user.pins.some(id => id.toString() === existingPin._id.toString())){
   req.flash("error", "You've already saved this this pin");
-  return res.redirect("/feed");
+  return res.redirect("/");
 }
 
 req.flash("success","Saved");
   user.pins.push(existingPin._id);
   await user.save();
-return res.redirect("/feed");
+return res.redirect("/");
 }
 
 
@@ -138,12 +138,12 @@ let pin = await pinModel.create({
   await user.save();
 req.flash("success","You Image Is save in your Pins!")
 
-return res.redirect("/feed")
+return res.redirect("/")
     
   } catch(err){
     req.flash("error",`something went wrong`)
   
-    res.redirect("/feed")
+    res.redirect("/")
     
   }
 };
@@ -236,7 +236,7 @@ module.exports.blockOtherUser = async function(req,res){
   let blockedUser = await userModel.findById(req.body.id);
   if(!blockedUser) {
     req.flash("error","Error to Block the User")
-   return res.redirect("/feed")
+   return res.redirect("/")
   }
 // logged in user 
   let user = await userModel.findById(req.user.id);
@@ -261,12 +261,12 @@ await Promise.all([
 ])
    
   req.flash("success",`You blocked ${blockedUser.fullname}`);
-return res.redirect("/feed");
+return res.redirect("/");
   
   } catch (err) {
     req.flash("error",`Failed to block`);
 
-   return res.redirect("/feed");
+   return res.redirect("/");
     
   }
   
@@ -293,10 +293,10 @@ await user.save();
 await blockedUser.save();
 
 req.flash("success",`You unblocked ${blockedUser.fullname}`);
-return res.redirect("/feed");
+return res.redirect("/");
   } catch (err) {
   req.flash("error","unable to unblock");
-    res.redirect("/feed");
+    res.redirect("/");
     
   }
 };
@@ -315,7 +315,7 @@ module.exports.deleteAccount = async function(req,res){
   });
   
   req.flash("success","Successfully your Account is Deleted, Create A new Account!")
-  return res.redirect("/")
+  return res.redirect("/register")
   } catch(err) {
     req.flash("error","Cannot delete Your Account!")
   res.redirect("/profile")

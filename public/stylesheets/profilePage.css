@@ -450,7 +450,7 @@ font-size:14px;
 
 .pin {
   width: 150px; /* Minimum width to prevent shrinking */
-  height:150px;
+  height:190px;
   flex: 0 0 auto;   /* Prevent stretching/shrinking */
   background-color: #1a1a1a;
   border-radius: 12px;
@@ -481,6 +481,7 @@ font-size:14px;
 }
 a{
   text-decoration: none;
+  -webkit-tap-highlight-color: #e518182d;
 }
 
 
@@ -815,9 +816,13 @@ border-radius:12px;
   align-items: center;
 }
 
-.comment .user-info img {
-  height:40px;
-  width:40px;
+.comment .user-info a{
+  -webkit-tap-highlight-color:#f934341c;
+}
+
+.comment .user-info a img {
+  height:50px;
+  width:50px;
   border-radius:50%;
   object-fit: cover;
 }
