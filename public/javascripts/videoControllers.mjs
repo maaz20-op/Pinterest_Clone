@@ -234,15 +234,11 @@ commentContainerBox.prepend(div)
 };
 
 createComments();
-}
+} else if(e.target.classList.contains(".share-icon")){
 
-
-});
-
-
-function shareVideo(element){
+    let postUrl = e.target.getAttribute("data-url");
   
-    let postUrl = element.getAttribute("data-url");
+  if(!postUrl)  return alert("no url");
   const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
 navigator.share({
   title: "ReelNest video",
@@ -253,8 +249,16 @@ navigator.share({
 }).catch((error) => {
   alert("Sharing failed: " + error.message);
 });
-  
 }
+
+
+});
+
+
+  
+
+  
+
 
 // Mouse move
 window.addEventListener("mousemove", function (e) {

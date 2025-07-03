@@ -44,6 +44,7 @@
 
 <script>
 const fileInput = document.getElementById("fileInput");
+let form = document.querySelector(".upload-box");
 const previewImage = document.getElementById("preview");
   let loadingText =  document.querySelector(".loadingText");
   let loader = document.querySelector(".loader");
@@ -75,7 +76,7 @@ fileInput.addEventListener("change", function () {
 
 let uploadBtn = document.querySelector(".upload-btn");
 let input = document.querySelector(".input");
-uploadBtn.addEventListener("click", function(){
+form.addEventListener("submit", function(){
   uploadBtn.style.cssText = "pointer-events:none;"
   
 
