@@ -21,15 +21,21 @@ if(fullname.trim().length > 18){
   req.flash("error","Username must not exceed 12 characters")
   return res.redirect("/")
 }
+
   let isUserExists = await userModel.findOne({
-    email,
-  })
-  
-  if(isUserExists) {
-  
- req.flash("error","Account Already Exists")
- return res.redirect("/");
+  $or: [{ email }, { username }]
+});
+
+
+if (isUserExists) {
+  if (isUserExists.email === email) {
+    req.flash("error", "Email already exists.");
+  } else {
+    req.flash("error", "Username already taken.");
   }
+  return res.redirect("/");
+}
+  
   
 const hash = await bcrypt.hash(password,6);
 
@@ -45,6 +51,9 @@ const  token = generateToken(email)
 res.cookie("token",token)
  return res.redirect("/profile")
   } catch(err) {
+    req.flash("error","Something Went wrong!")
+    console.log(err.message)
+  return  res.redirect("/")
   }
 };
 

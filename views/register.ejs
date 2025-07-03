@@ -184,17 +184,25 @@ h2 {
   </script>
 
 <script>
-  let fullNameField = document.querySelector("#fullName");
-  let creatAccountButton = document.querySelector("#account-creation-btn");
-  
-  creatAccountButton.addEventListener("click",function(){
+  const signupForm = document.getElementById("signupForm");
+  const createAccountBtn = document.getElementById("account-creation-btn");
 
-  })
-  
-  fullNameField.addEventListener("change",function(){
-    
-  })
+  signupForm.addEventListener("submit", function () {
+    createAccountBtn.disabled = true;
+    createAccountBtn.innerText = "Creating...";
+  });
 </script>
 
+<% if (error && error.length > 0) { %>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("account-creation-btn");
+      btn.disabled = false;
+      btn.innerText = "Create Account";
+    });
+
+</script>
+  <% } %>
+  
 </body>
 </html>
