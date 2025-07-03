@@ -48,9 +48,11 @@ let type =  file.mimetype.startsWith("video/")?"video":"image";
 let result = await cloudinary.uploader.upload(file.path,{
   resource_type:type,
 });
+let optimizeUrl = result.secure_url.replace("/upload/", "/upload/q_auto,f_auto/");
+
 
   let post = await postModel.create({
-    mediaUrl:result.secure_url,
+    mediaUrl:optimizeUrl,
     mediaType:type,
     user:user._id,
     postdata:req.body.postdata,
@@ -119,7 +121,7 @@ let { image,text }  = req.body;
   return res.redirect("/feed");
 }
 
-req.flash("success","Suxmsjsksosiis")
+req.flash("success","Saved");
   user.pins.push(existingPin._id);
   await user.save();
 return res.redirect("/feed");

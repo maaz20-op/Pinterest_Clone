@@ -9,8 +9,16 @@
 </head>
 <body>
   
+
   <%- include("partials/header2") %>
   
+  <div class="container">
+  <div class="wrapper">
+  <div class="loadingText"></div>
+  <div class="loader"></div>
+      </div>
+      </div>
+      
   <div class="create-post-container">
     <h2>Create New Post</h2>
     <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
@@ -37,6 +45,11 @@
 <script>
 const fileInput = document.getElementById("fileInput");
 const previewImage = document.getElementById("preview");
+  let loadingText =  document.querySelector(".loadingText");
+  let loader = document.querySelector(".loader");
+  let loadingContainer = document.querySelector(".container");
+let loadingMsg = ["Uploading...","Processing...","please wait!"];
+let index = 0;
 
 // Trigger file input when custom icon is clicked
 document.querySelector(".upload-btn2").addEventListener("click", function () {
@@ -44,6 +57,8 @@ document.querySelector(".upload-btn2").addEventListener("click", function () {
 });
 
 // Show image preview when file is selected
+
+let isFile = false;
 fileInput.addEventListener("change", function () {
   const file = this.files[0];
   if (file) {
@@ -51,19 +66,42 @@ fileInput.addEventListener("change", function () {
     reader.onload = function (e) {
       previewImage.src = e.target.result;
     };
+    isFile = true;
     reader.readAsDataURL(file);
   }
+  
+  uploadBtn.style.cssText = "pointer-events:auto;"
 });
 
 let uploadBtn = document.querySelector(".upload-btn");
 let input = document.querySelector(".input");
-uploadBtn.addEventListener("click", function () {
-  setTimeOut(()=>{
-    input.disabled = true
-    fileInput.disabled = true
-    btn.disabled = true
-  },1)
-});
+uploadBtn.addEventListener("click", function(){
+  uploadBtn.style.cssText = "pointer-events:none;"
+  
+
+  
+  setInterval(function(){
+loadingContainer.style.display = "block";
+if(index >= 3) {
+  index = 0
+}
+let text = loadingMsg[index];
+loadingText.textContent = text
+
+index = index + 1;
+  
+},3000)
+
+});  
+
+
+
+
+
+  
+
+
+
 
 
 </script>

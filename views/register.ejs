@@ -137,7 +137,7 @@ h2 {
       <h2>Create Account</h2>
       <div class="form-group">
         <label>Full Name</label>
-        <input type="text" placeholder="Enter full name" name="fullname" required />
+        <input id="fullName" type="text" placeholder="Enter full name" name="fullname" required />
       </div>
       <div class="form-group">
         <label>Username</label>
@@ -151,7 +151,7 @@ h2 {
         <label>Password</label>
         <input type="password" placeholder="Create a password" name="password" required />
       </div>
-      <button type="submit" class="btn">Create Account</button>
+      <button type="submit" id="account-creation-btn"class="btn">Create Account</button>
       <div class="toggle-link">
         Already have an account? <a href="#" onclick="toggleForms()">Login</a>
       </div>
@@ -182,6 +182,19 @@ h2 {
       login.classList.toggle('hidden');
     }
   </script>
+
+<script>
+  let fullNameField = document.querySelector("#fullName");
+  let creatAccountButton = document.querySelector("#account-creation-btn");
+  
+  creatAccountButton.addEventListener("click",function(){
+
+  })
+  
+  fullNameField.addEventListener("change",function(){
+    
+  })
+</script>
 
 </body>
 </html>

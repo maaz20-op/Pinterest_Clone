@@ -11,6 +11,7 @@ let innerProgressBar = null;
 let currentFollowContainer = null;
 let commentInput = null;
 let currentDeleteBtn = null;
+let currentCommentLoader = null;
 let currentVideoTitle = null;
 let isDragging = false;
 
@@ -34,6 +35,7 @@ videos.forEach((videoDiv) => {
     currentPlayPause = videoDiv.querySelector(".play-pause");
     currentProgressBar = videoDiv.querySelector(".progress-bar");
     commentInput = videoDiv.querySelector(".commentInput")
+    currentCommentLoader = videoDiv.querySelector(".loader")
   currentDeleteBtn = videoDiv.querySelector(".delete-icon-video")
     currentVideoTitle = videoDiv.querySelector(".video-title")
     innerProgressBar = videoDiv.querySelector(".bar");
@@ -168,19 +170,25 @@ commentSection.appendChild(div)
   commentContainer.style.display = "none"
   }
   else if(e.target.classList.contains("send")){
-
+let sendIcon = e.target;
 let input = e.target.previousElementSibling;
 let id = input.getAttribute("data-src");
 
 let createComments = async ()=>{
   
-if(!input) return;
+if(!input || !id) return;
 
 let commentContainerBox = input.closest(".comments-container").querySelector(".actual-comments-box"); 
 
 if(commentContainerBox.querySelector(".msg")){
   commentContainerBox.innerHTML = ""
 }
+
+if(currentCommentLoader){
+  currentCommentLoader.style.display = "block";
+  sendIcon.style.display = "none";
+}
+
 
 try {
 
@@ -198,7 +206,12 @@ let response = await fetch("/comments/createcomment",{
 let data = await response.json();
 
 let commentContainerBox = input.closest(".comments-container").querySelector(".actual-comments-box");
+
+input.value = ""
+    currentCommentLoader.style.display = "none";
+  sendIcon.style.display = "block";
   if(data.comment && data.loggedInUser){
+
 let div = document.createElement("div")
 div.classList.add("comment");
 div.innerHTML = `
@@ -313,6 +326,7 @@ document.addEventListener("fullscreenchange", function () {
         if(currentDeleteBtn){
       currentDeleteBtn.style.display="none"
     }
+    currentActionVideo.currentTime = 0
     if(commentContainer){
     commentContainer.style.display = "none"
     }

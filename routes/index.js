@@ -98,15 +98,16 @@ router.get("/showaccountsettings",isLoggedIn, async function(req,res){
 
 
 router.get("/showblockusers", isLoggedIn, async function(req,res){
-  let user = await userModel.findById(req.user.id).populate("blockedUserId")
+  let user = await userModel.findById(req.user.id).select("-password -email -__v -bio -followers -following -pins -post")
+  .populate("blockedUserId")
   res.render("showBlockedUsers",{user})
 })
 
 
 router.get("/feed", isLoggedIn, async function(req,res){
-  let loggedInUser = await userModel.findById(req.user.id);
-  let users = await userModel.find()
-  .populate("post");
+  let loggedInUser = await userModel.findById(req.user.id).select("-bio -password -email -__v").lean()
+  let users = await userModel.find().select("-email -bio -password -__v -pins")
+  .populate("post")
   res.render("feed", { users, loggedInUser});
 });
 
@@ -114,8 +115,9 @@ router.get("/feed", isLoggedIn, async function(req,res){
 router.get("/showpins", isLoggedIn, async function(req,res){
 let user = await userModel.findOne({
   email:req.user.email,
-})
-.populate("pins");
+}).select("-password -email -following -followers -__v -bio")
+.populate("pins")
+.lean
   res.render("showPins", { user });
 })
 
@@ -123,14 +125,18 @@ let user = await userModel.findOne({
 router.get("/otherUsersPin/:id", isLoggedIn, async function(req,res){
   const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
   if(!isValid) return res.redirect("/feed");
-let otherUserPin = await userModel.findById(req.params.id).populate("pins")
+let otherUserPin = await userModel.findById(req.params.id).select("-password -email -bio -followers -pins -following -__v")
+.populate("pins")
+.lean();
 res.render("showOtherUsersPin",{otherUserPin})
 })
 
 
 router.get("/showfollowers/:id", isLoggedIn, async function(req,res){
-  let user = await userModel.findById(req.params.id).populate("followers")
-    let loggedInUser = await userModel.findById(req.user.id);
+  let user = await userModel.findById(req.params.id).select("-password -bio -email -post -blockedUserId -blockedBy -__v")
+  .populate("followers");
+  
+    let loggedInUser = await userModel.findById(req.user.id).select("-password -bio -email -post -blockedUserId -blockedBy -__v").lean()
   if(!user) return res.redirect("/profile")
   console.log(user)
 res.render("showFollowers", {user, loggedInUser});

@@ -31,7 +31,7 @@ if(fullname.trim().length > 18){
  return res.redirect("/");
   }
   
-const hash = await bcrypt.hash(password, 10);
+const hash = await bcrypt.hash(password,6);
 
     let createdUser = await userModel.create({
         fullname,
