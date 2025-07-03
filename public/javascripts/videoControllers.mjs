@@ -241,25 +241,20 @@ createComments();
 
   
 
-  document.addEventListener("click",function(e){
-  if(e.target.classList.contains("share-icon")){
-document.body.style.backgroundColor = "red"
-    let postUrl = e.target.getAttribute("data-url");
-  
-  if(!postUrl) return alert("no url");
-  const postText = "Checkout this amazing video on ReelNest! 🔥🎥👇";
-navigator.share({
-  title: "ReelNest video",
-  text: postText,
-  url: postUrl,
-}).then(() => {
-  console.log("Share successful!");
-}).catch((error) => {
-  alert("Sharing failed: " + error.message);
-});
-}
+  document.querySelectorAll(".share-icon").forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    const postUrl = e.target.getAttribute("data-url");
+    if (!postUrl) return alert("No URL found");
 
+    navigator.share({
+      title: "ReelNest video",
+      text: "Checkout this amazing video on ReelNest! 🔥🎥👇",
+      url: postUrl,
+    })
+    .then(() => console.log("Share successful!"))
+    .catch((err) => alert("Share failed: " + err.message));
   });
+});
 
 
 // Mouse move
