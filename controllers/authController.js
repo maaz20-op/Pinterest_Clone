@@ -48,7 +48,12 @@ const hash = await bcrypt.hash(password,6);
       console.log(createdUser)
 const  token = generateToken(email)
 
-res.cookie("token",token)
+res.cookie("token", token, {
+  httpOnly: true, // prevent JS access to cookie (secure)
+  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
+  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
+  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
+});
  return res.redirect("/profile")
   } catch(err) {
     req.flash("error","Something Went wrong!")
@@ -71,7 +76,12 @@ return res.redirect("/")
 bcrypt.compare(password,user.password,function(err, result){
   if(result){
     let token = generateToken(user.email)
-    res.cookie("token",token)
+    res.cookie("token", token, {
+  httpOnly: true, // prevent JS access to cookie (secure)
+  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
+  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
+  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
+});
     req.flash("success","Successfully Logined!")
     return res.redirect("/profile")
   }
