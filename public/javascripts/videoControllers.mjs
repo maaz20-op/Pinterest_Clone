@@ -234,7 +234,15 @@ commentContainerBox.prepend(div)
 };
 
 createComments();
-} else if(e.target.classList.contains("share-icon")){
+} 
+
+});
+
+
+  
+
+  document.addEventListener("click",function(e){
+  if(e.target.classList.contains("share-icon")){
 document.body.style.backgroundColor = "red"
     let postUrl = e.target.getAttribute("data-url");
   
@@ -251,13 +259,7 @@ navigator.share({
 });
 }
 
-
-});
-
-
-  
-
-  
+  });
 
 
 // Mouse move
