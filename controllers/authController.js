@@ -45,7 +45,7 @@ const hash = await bcrypt.hash(password,6);
         email,
         password:hash,
       })
-      console.log(createdUser)
+    
 const  token = generateToken(email)
 
 res.cookie("token", token, {
@@ -57,7 +57,6 @@ res.cookie("token", token, {
  return res.redirect("/profile")
   } catch(err) {
     req.flash("error","Something Went wrong!")
-    console.log(err.message)
   return  res.redirect("/register")
   }
 };

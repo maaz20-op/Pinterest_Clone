@@ -5,9 +5,8 @@ const commentModel = require('../models/comment-model');
 
 module.exports.createComment = async function(req,res){
   let input = req.body.inputText;
-  let id = req.body.postId
-  console.log(input)
-  console.log(id)
+  let id = req.body.postId;
+  
   if(!input || !id) return res.status(400).json("erorr");
   try {
 let post = await postModel.findById(id);
@@ -29,8 +28,6 @@ post.save(),
 loggedInUser.save()
   ])
 
-console.log(comment)
-console.log(loggedInUser)
 
 return res.status(200).json({
   comment,
@@ -39,8 +36,6 @@ return res.status(200).json({
 
     
   } catch(err) {
-    console.log(err)
-  
     res.status(404).json("Server error!")
   }
 };
@@ -48,7 +43,7 @@ return res.status(200).json({
 
 module.exports.showAllComments = async function(req,res){
   let id = req.query.postId;
-  console.log(id)
+  
   if(!id) return res.status(404).json("no id receive!")
 try {
 
@@ -61,8 +56,6 @@ let post = await postModel.findById(id)
     
   },
 });
-
-console.log(post)
 
 return res.status(200).json(post);
 

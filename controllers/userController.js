@@ -61,7 +61,6 @@ let optimizeUrl = result.secure_url.replace("/upload/", "/upload/q_auto,f_auto/"
 user.post.push(post._id);
 await user.save();
 
-console.log(post)
 req.flash("success","Your creation is Added!")
 return res.redirect("/profile")
 
@@ -83,12 +82,12 @@ module.exports.deletePost = async function(req,res){
     let user = await userModel.findById(req.user.id);
   
   user.post = user.post.filter((eachId)=>{
-  return  eachId  !== post._id
+  return  eachId.toString()  !== post._id.toString();
   })
   await user.save();
     return res.status(200).json({ message: "success" }); 
   } catch(err) {
-    console.error(err);
+    
     res.status(500).json({ message: "Server error!" }); 
   }
 };
@@ -345,7 +344,6 @@ posts = posts.filter((post)=>{
   return post.user !== null;
 })
 
-console.log(posts)
 res.json(posts)
   } catch (err) {
     req.status(404).json("Error From Server!")

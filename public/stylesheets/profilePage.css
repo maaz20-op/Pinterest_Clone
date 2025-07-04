@@ -765,6 +765,10 @@ align-items: center;
 z-index:11;
 }
 
+.btn-action .create-post:hover , .btn-action #settingBtn:hover  {
+  color:white;
+}
+
 .inner .commentInput:focus {
   border:1px solid red;
 }

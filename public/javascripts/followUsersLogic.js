@@ -23,14 +23,14 @@
 let data = await response.json()
 
 if (typeof data.followersCount === "undefined" || typeof data.followingCount === "undefined") {
-  return console.log("error");
+  return 
 }
 
 
 
 e.target.innerHTML = `        <p>Followed </p> <i class="fas fa-user-plus"></i>`
   } catch (err) {
-  console.log(err.message)
+  
   }
   }
   });

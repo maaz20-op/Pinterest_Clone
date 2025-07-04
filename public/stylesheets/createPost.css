@@ -12,7 +12,7 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 120vh;
   padding: 20px;
     user-select: none;
   -webkit-user-select: none; /* Safari */
@@ -43,6 +43,7 @@ user-select: none;     /* Internet Explorer/Edge */
 
 .container {
 display:none;
+margin-top:34px;
 }
 .wrapper{
   display:flex;
@@ -95,7 +96,7 @@ label {
   color: #f2f2f2;
 }
 
-input[type="text"],
+.input ,
 input[type="file"] {
   width: 100%;
   padding: 12px 14px;
@@ -137,12 +138,20 @@ input[type="file"]:focus {
 }
 
 .previewImgCont {
-  height:80px;
-  width:80px;
+  min-height:180px;
+  max-height:220px;
+  width:130px;
   margin:12px 0px;
   border-radius:12px;
+  border:0.3px solid white;
 
 }
+
+.previewImgCont img, .previewImgCont video {
+  height:100%;
+  width:100%;
+}
+
 .upload-btn2 {
   font-size:28px;
   margin-top:7px;

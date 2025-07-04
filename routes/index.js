@@ -7,50 +7,14 @@ const commentModel = require("../models/comment-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
-router.get("/deletepost",async function(req,res){
-  let post = await pinModel.deleteMany({});
-  console.log(post)
-})
-
-router.get("/read", async function(req,res){
-let comment = await commentModel.find()
-console.log(comment)
-  res.send(post)
-});
 
 
-router.get("/delete", async function (req, res){
-  let comment= await commentModel.deleteMany()
-  let posts = await postModel.deleteMany({});
-  let users= await userModel.find()
-  
-  console.log(comment,posts)
-  users.forEach(async (user) =>{
-  user.userCommented = []
-  user.post = []
-  user.likes = [] 
-  user.pins = []
-await  user.save()
-  })
-  
-  console.log(users)
-  
-})
+
 
 router.get("/register", function (req, res){
   res.render("register")
 })
 
-router.get("/u",async function(req,res){
-  let user = await userModel.deleteMany({});
-  let comment = await commentModel.deleteMany()
-  let pin = await pinModel.deleteMany()
-  let post = await postModel.deleteMany()
-  console.log(post)
-  console.log(pin)
-  console.log(comment)
-  console.log(user)
-})
 
 router.get("/profile",isLoggedIn, async function(req,res){
 let user = await userModel.findOne({email:req.user.email})
@@ -93,7 +57,7 @@ router.get("/showaccountsettings",isLoggedIn, async function(req,res){
   user.blockedUserId.forEach((eachBlockedUser)=>{
  array.push(eachBlockedUser.fullname)
   })
-  console.log(array)
+  
   res.render("accountSettings",{user,array,loggedInUser})
 })
 
@@ -139,7 +103,7 @@ router.get("/showfollowers/:id", isLoggedIn, async function(req,res){
   
     let loggedInUser = await userModel.findById(req.user.id).select("-password -bio -email -post -blockedUserId -blockedBy -__v").lean()
   if(!user) return res.redirect("/profile")
-  console.log(user)
+
 res.render("showFollowers", {user, loggedInUser});
 })
 
