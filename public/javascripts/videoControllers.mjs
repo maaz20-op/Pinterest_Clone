@@ -144,7 +144,7 @@ let div = document.createElement("div");
 div.classList.add('comment');
  div.innerHTML = `
   <div class="user-info">
-    <a href="/otherusersprofile/${comment.userId._id}" ><img src="${comment.userId.profileImage}"></a>
+    <a href="/otherusersprofile/${comment.userId._id}" >  <img src="${comment.userId.profileImage}"></a>
     <h1>@${comment.userId.username}</h1>
     <h2>${moment(comment.createdAt).fromNow()}</h2>
   </div>
@@ -216,7 +216,7 @@ let div = document.createElement("div")
 div.classList.add("comment");
 div.innerHTML = `
     <div class="user-info">
-    <img src="${data.loggedInUser.profileImage}">
+      <a href="/otherusersprofile/${data.comment.loggedInUser._id}" >  <img src="${data.loggedInUser.profileImage}"> </a>
     <h1>@${data.loggedInUser.username}</h1>
     <h2>${moment(data.comment.createdAt).fromNow()}</h2>
   </div>
