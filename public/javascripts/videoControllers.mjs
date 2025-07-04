@@ -216,7 +216,7 @@ let div = document.createElement("div")
 div.classList.add("comment");
 div.innerHTML = `
     <div class="user-info">
-      <a href="/otherusersprofile/${data.comment.loggedInUser._id}" >  <img src="${data.loggedInUser.profileImage}"> </a>
+<a href="/otherusersprofile/${data.loggedInUser._id}" >  <img src="${data.loggedInUser.profileImage}"> </a>
     <h1>@${data.loggedInUser.username}</h1>
     <h2>${moment(data.comment.createdAt).fromNow()}</h2>
   </div>
