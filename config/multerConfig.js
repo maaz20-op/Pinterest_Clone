@@ -7,13 +7,13 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     const isVideo = file.mimetype.startsWith("video/");
     return {
-      folder: "maazpins",
+      folder:isVideo?'ReelNest/videos':'ReelNest/images',
       resource_type: isVideo ? "video" : "image",
-      format: isVideo ? "mp4" : undefined,
+     allowed_formats:['mp3', 'mp4', 'png', 'jpg','jpeg'],
     };
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 module.exports = upload;

@@ -1,7 +1,7 @@
 const userModel = require("../models/user-model");
 const postModel = require("../models/post-model");
 const pinModel = require("../models/pin-model");
-const cloudinary = require("../config/cloudinary")
+const cloudinary = require("../config/cloudinary.js")
 const upload = require("../config/multerConfig")
 
 
@@ -20,6 +20,8 @@ user.profileImage = req.file.path;
 await user.save();
 
 
+
+
 res.redirect("/profile")
 } catch(err){
     req.flash("error","Failed to Upload Profile Image");
@@ -36,7 +38,7 @@ module.exports.uploadPost = async function(req,res){
     })
   
   if(!user) return res.redirect("/profile");
-  
+
 let file = req.file
 
 if(!file) {
@@ -44,11 +46,12 @@ if(!file) {
   return res.redirect("/profile")
 }
 let type =  file.mimetype.startsWith("video/")?"video":"image";
+let folderName =  file.mimetype.startsWith("video/")?"video":"image";
 
-let result = await cloudinary.uploader.upload(file.path,{
-  resource_type:type,
-});
-let optimizeUrl = result.secure_url.replace("/upload/", "/upload/q_auto,f_auto/");
+
+
+
+let optimizeUrl = file.path.replace("/upload/", "/upload/q_auto,f_auto/");
 
 
   let post = await postModel.create({
@@ -70,25 +73,52 @@ return res.redirect("/profile")
 }
 }
 
-module.exports.deletePost = async function(req,res){
-  let id = req.params.id;
+module.exports.deletePost = async function(req, res) {
+  const id = req.params.id;
 
-  if(!id) {
-    return res.status(404).json({ message: "Something went wrong!" }); 
+  if (!id) {
+    return res.status(404).json({ message: "Something went wrong!" });
   }
 
   try {
-    let post = await postModel.findByIdAndDelete(id);
-    let user = await userModel.findById(req.user.id);
-  
-  user.post = user.post.filter((eachId)=>{
-  return  eachId.toString()  !== post._id.toString();
-  })
-  await user.save();
-    return res.status(200).json({ message: "success" }); 
-  } catch(err) {
+    const post = await postModel.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    const user = await userModel.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+const url = post.mediaUrl
+  const urlArray = url.split("/");
+    const folder = `${urlArray.at(-3)}/${urlArray.at(-2)}`
     
-    res.status(500).json({ message: "Server error!" }); 
+    const filename = urlArray.at(-1).split(".").at(0);
+    const public_id = `${folder}/${filename}`;
+    
+    const result = await cloudinary.uploader.destroy(public_id, {
+      resource_type: post.mediaType,
+    });
+
+
+
+    if (result.result !== "ok" && result.result !== "not found") {
+      return res.status(500).json({ message: "Failed to delete from Cloudinary" });
+    }
+
+    
+    await post.deleteOne();
+    
+    user.post = user.post.filter(
+      (eachId) => eachId.toString() !== post._id.toString()
+    );
+    await user.save();
+
+    return res.status(200).json({ message: "success" });
+
+  } catch (err) {
+    return res.status(500).json({ message: "Server error!" });
   }
 };
 

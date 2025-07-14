@@ -3,10 +3,11 @@ var router = express.Router();
 const userModel = require("../models/user-model");
 const mongoose = require("mongoose");
 const postModel = require("../models/post-model");
+const cloudinary = require("../config/cloudinary.js");
+const upload  = require('../config/multerConfig.js');
 const commentModel = require("../models/comment-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
-
 
 
 

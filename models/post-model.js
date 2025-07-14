@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
   },
   mediaUrl:String,
   mediaType:String,
+  public_id:String,
   user:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User",
