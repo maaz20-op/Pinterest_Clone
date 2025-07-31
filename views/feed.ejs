@@ -296,8 +296,10 @@ if(eachPost.likes.includes(loggedInUser._id.toString())){
      div.classList.add("masonry-item", "upgraded-card");
             div.innerHTML = `
               <div class="user-avatar">
+                <a class="profileRefrence"  href="/otherusersprofile/${eachPost.user._id}">
                 <img src="${eachPost.user.profileImage}" alt="User Avatar" />
-                <a href="/otherusersprofile/${eachPost.user._id}">@${eachPost.user.username}</a>
+              </a>
+                <a class="profileRefrence2"  href="/otherusersprofile/${eachPost.user._id}">@${eachPost.user.username}</a>
               </div>
 
               <img src="${eachPost.mediaUrl}" alt="pic" class="main-image" />

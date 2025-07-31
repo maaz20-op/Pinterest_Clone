@@ -8,8 +8,29 @@ const upload  = require('../config/multerConfig.js');
 const commentModel = require("../models/comment-model");
 const pinModel = require("../models/pin-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
+const util = require('util');
 
 
+
+router.get("/find",async function(req,res){
+  let user = await userModel.find()
+  console.log(user)
+})
+router.get("/filter", async function(req,res){
+
+let index = await userModel.collection.createIndex({
+  fullname: 1
+})
+
+let filterUser = await userModel.find({fullname: "Malaika Qamar"})
+.explain("executionSats")
+
+
+
+console.log(filterUser)
+
+  res.send(filterUser)
+})
 
 
 router.get("/register", function (req, res){

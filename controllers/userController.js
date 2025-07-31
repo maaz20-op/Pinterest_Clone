@@ -358,25 +358,31 @@ if (!input) {
   return res.status(400).json([]);
 }
 
-let regexp = new RegExp(input,"i");
-let posts = await postModel.find({
-  postdata:regexp,
-}).populate({
-  path:"user",
-  model:'User',
-  match : {
-    accountVisibility:"Public"
+
+let posts = await postModel.find(
+  { $text: { $search: input } },
+  { score: { $meta: "textScore" } }
+)
+.populate({
+  path: "user",
+  model: "User",
+  match: {
+    accountVisibility: "Public"
   },
-  select:"-post -bio",
+  select: "-post -bio"
 })
+.sort({ score: { $meta: "textScore" } })
+
 
 posts = posts.filter((post)=>{
   return post.user !== null;
+  
 })
+
 
 res.json(posts)
   } catch (err) {
-    req.status(404).json("Error From Server!")
+    res.status(404).json("Error From Server!")
   }
 }
 

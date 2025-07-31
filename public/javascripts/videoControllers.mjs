@@ -252,8 +252,9 @@ createComments();
       url: postUrl,
     })
     .then(() => console.log("Share successful!"))
-    .catch((err) => alert("Share failed: " + err.message));
-  });
+    .catch((err) => console.log("error in video share" + err)
+    );
+  })
 });
 
 
