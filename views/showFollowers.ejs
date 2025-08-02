@@ -20,6 +20,8 @@
 <div class="container">
 <% if(user.followers.length > 0) { %>
 <% user.followers.forEach((follower) =>{ %>
+<div id="userData" data-user='<%- JSON.stringify(loggedInUser) %>'></div>
+<div id="userData2" data-user='<%- JSON.stringify(user) %>'></div>
 <div class="card">
 <img src="<%= follower.profileImage %>">
 <div class="text">
@@ -43,22 +45,9 @@
 </section>
 
 <footer>
-
 </footer>
-<script>
-let backIcon = document.querySelector("i");
-// to return profile or other user profile
-let user = <%- JSON.stringify(user) %>
-let loggedInUser =  <%- JSON.stringify(loggedInUser) %>
-backIcon.addEventListener("click",function(){
-backIcon.style.color = "red"
-  if(user._id.toString() === loggedInUser._id.toString()){
-  window.location.href = "/profile"
-  } else {
-  window.location.href = `/otherusersprofile/${user._id}`
-  }
-})
-  
-</script>
+
+<script src="/javascripts/showFollowers.js"></script>
+
 </body>
 </html>

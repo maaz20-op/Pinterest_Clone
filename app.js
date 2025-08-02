@@ -13,7 +13,8 @@ const moment = require("moment");
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const flash = require('connect-flash');
-const MongoStore = require('connect-mongo'); // ✅ add this
+const MongoStore = require('connect-mongo'); 
+const helmet = require('helmet');
 const app = express();
 
 // 📁 Public folder
@@ -34,6 +35,52 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 // 1 day
   }
 }));
+
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+  defaultSrc: ["'self'"],
+  
+  imgSrc: [
+    "'self'", 
+    "https://res.cloudinary.com",
+     "https://freeimage.host",
+     "https://iili.io"
+    ],
+  
+  styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://cdnjs.cloudflare.com",
+        "https://fonts.googleapis.com"
+      ],
+  
+  connectSrc: ["'self'","https://api.cloudinary.com"],
+  
+  mediaSrc: [
+    "'self'",
+  "https://res.cloudinary.com"
+  ],
+  
+  scriptSrc: [
+  "'self'",
+  "https://cdnjs.cloudflare.com",
+  "https://widget.cloudinary.com",
+],
+  
+  fontSrc: [
+        "'self'",
+        "https://cdnjs.cloudflare.com",
+        "https://fonts.gstatic.com",
+        "'unsafe-inline'"
+      ],
+  },
+  reportViolations: true
+  
+  
+})
+)
+
 
 app.use(flash());
 

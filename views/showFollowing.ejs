@@ -17,7 +17,14 @@
 </header>
 
 <section>
+    <div id="userData" data-user='<%- JSON.stringify(loggedInUser) %>'></div>
+<div id="userData2" data-user='<%- JSON.stringify(user) %>'></div>
+</section>
+
+<section>
 <div class="container">
+
+  
 <% if(user.following.length > 0) { %>
 <% user.following.forEach((eachFollow) =>{ %>
 <div class="card">
@@ -55,64 +62,8 @@
 
 </footer>
 
-<script>
-let backIcon = document.querySelector("i");
-// to return profile or other user profile
-let user = <%- JSON.stringify(user) %>
-let loggedInUser =  <%- JSON.stringify(loggedInUser) %>
-backIcon.addEventListener("click",function(){
-backIcon.style.color = "red"
-  if(user._id.toString() === loggedInUser._id.toString()){
-  window.location.href = "/profile"
-  } else {
-  window.location.href = `/otherusersprofile/${user._id}`
-  }
-})
 
-let unfollowBtns = document.querySelectorAll(".unfollow");
-let unfollowUser = function(){
-if(!unfollowBtns) return console.log("something went wrong btns error");
 
-unfollowBtns.forEach((btn)=>{
-  
-btn.addEventListener("click",async function(e){
-  let id = e.target.getAttribute("data-src");
-try {
-  
-  let response = await fetch("/users/unfollowuser",{
-    method:"POST",
-    headers: {
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-      id:id
-    })
-  });
-  
-  let data = await  response.json()
-  
-  if(response.status === 200 && data === "success"){
-  let card = e.target.closest(".card");
-  card.style.cssText = "opacity:0.5;transition: opacity 0.4s ease;"
-setTimeout(function(){
-  card.remove()
-},1500)
-  
-  }else {
-    console.log("error form server!")
-  }
-  
-  
-  
-} catch(err) {
-  console.log(err.message)
-}
-});
-})
-}
-unfollowUser()
-
-  
-</script>
+<script src="/javascripts/showFollowing.js"></script>
 </body>
 </html>

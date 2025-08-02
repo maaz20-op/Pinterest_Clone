@@ -36,6 +36,9 @@ e.target.innerHTML = `        <p>Followed </p> <i class="fas fa-user-plus"></i>`
   });
   };
   
+    document.addEventListener("DOMContentLoaded",function(){
+    window.followUser()
+  })
   window.followUser = followUser
   
   

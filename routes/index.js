@@ -18,18 +18,9 @@ router.get("/find",async function(req,res){
 })
 router.get("/filter", async function(req,res){
 
-let index = await userModel.collection.createIndex({
-  fullname: 1
-})
-
-let filterUser = await userModel.find({fullname: "Malaika Qamar"})
-.explain("executionSats")
 
 
 
-console.log(filterUser)
-
-  res.send(filterUser)
 })
 
 

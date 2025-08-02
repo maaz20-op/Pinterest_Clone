@@ -46,7 +46,7 @@
 <!-- block or follow users btns -->
 <div class="btnsbox">
   <button class="block-btn"><p>Block This User</p> <i class="fas fa-exclamation-triangle"></i></button>
-      <button  class="follow" >
+      <button data-src="<%= otherUser._id %>" class="follow" >
         <p><%= otherUser.followers.includes(loggedInUser._id)?"Followed" :"Follow" %></p> <i class="fas fa-user-plus"></i>
       </button>
     </div>
@@ -63,7 +63,7 @@
 <section class="pin-section">
 <a href="/otherUsersPin/<%= otherUser._id %>">
   <div class="pin">
-    <img src="https://iili.io/FaLFDb4.png" alt="<%= otherUser.fullname %> Posts Section" />
+    <img src="https://iili.io/FrUhTYu.png" alt="<%= otherUser.fullname %> Posts Section" />
 <p class="category">Saved Posts <%= otherUser.pins.length %></p>
   </div>
   </a>
@@ -236,135 +236,23 @@
  
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-   <script>
-  let sections = document.querySelector("ul");
-let container1 = document.querySelector(".container");
-let container2 = document.querySelector(".container2");
-let imagesBar = sections.querySelector(".images");
-let videoBar = sections.querySelector(".videos");
-
-imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-
-sections.addEventListener("click",function(e){
-  if(e.target.classList.contains("videos")){
-imagesBar.style.cssText = "border-bottom:none"
-videoBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-container2.style.cssText = "display:block;min-height:100vh;"
-container1.style.cssText ="display:none"
-    
-  } else if(e.target.classList.contains("images")) {
-    
-videoBar.style.cssText = "border-bottom:none"
-imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-container2.style.cssText = "display:none;"
-container1.style.cssText ="display:block;min-height:100vh;"
-      
-  }
-})
-</script>
-
-  <script>
-    let conainerLikePost = document.querySelector(".masonry");
-
-conainerLikePost.addEventListener("click", async function(e) {
-  const likeBtn = e.target.closest(".like-btn");
-  if (likeBtn) {
-    const id = likeBtn.getAttribute("data-src");
-    
-    try {
-      const response = await fetch("/posts/likepost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id })
-      });
-
-      const data = await response.json();
-    
-
-      if (data.post && data.loggedInUser) {
-        if (data.post.likes.includes(data.loggedInUser._id.toString())) {
-          likeBtn.innerHTML = `❤️ Liked ${data.post.likes.length}`;
-        } else {
-          likeBtn.innerHTML = `Likes ${data.post.likes.length}`;
-        }
-      }
-    } catch (err) {
-      console.error("Like failed:", err);
-    }
-  }
-});
-  </script>
-  
-<script>
-  document.addEventListener("click", async function(e) {
-  // Block Logic
-  const blockBtn = e.target.closest(".block-btn");
-  if (blockBtn) {
-    document.querySelector("#blockUserData").submit();
-    return;
-  }
-
-  // Follow Logic
-  const followBtn = e.target.closest(".follow");
-  if (followBtn) {
-    try {
-      const user = <%- JSON.stringify(otherUser) %>;
-      const res = await fetch("/users/followuser", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: user._id })
-      });
-
-      const data = await res.json();
-      if (!data.followersCount || !data.followingCount) {
-        console.log("Invalid data returned:", data);
-        return;
-      }
-
-      document.querySelector(".count2").innerHTML = `|&nbsp; ${data.followersCount} &nbsp;|`;
-      document.querySelector(".count1").innerHTML = `|&nbsp; ${data.followingCount} &nbsp;|`;
-      followBtn.innerHTML = `<p>Followed</p> <i class="fas fa-user-plus"></i>`;
-    } catch (err) {
-      console.log("Follow error:", err.message);
-    }
-  }
-});
-</script>
-
-<script>
-let showMoreBtn = document.querySelector(".showMore");
-let containerBio = document.querySelector(".containerBio");
-let userDescription = document.querySelector(".bio");
-let flag = true
-showMoreBtn.addEventListener("click",function(){
-
-if(flag){
-  containerBio.style.cssText = "min-height:0vh"
-  userDescription.classList.add("showText");
-  showMoreBtn.classList.remove("fa-circle-chevron-down");
-  showMoreBtn.classList.add("fa-circle-chevron-up");
    
-  showMoreBtn.style.cssText = "bottom:0;left:288px"
-  flag = false;
-} else {
-  containerBio.style.cssText = "min-height:2vh"
+<script src="/javascripts/imagevideoSectionToggle.js"></script> 
 
-  showMoreBtn.classList.remove("fa-circle-chevron-up");
-  showMoreBtn.classList.add("fa-circle-chevron-down");
-userDescription.classList.remove("showText");
-flag = true
-}
-})  
-  </script>
-  <script type="module">
-  import { videoControlsSetup } from "/javascripts/videoControllers.mjs";
 
-  document.addEventListener("DOMContentLoaded", () => {
-    videoControlsSetup();
-  });
-  </script>
+ 
+ <script src="/javascripts/likeImages.js"></script>
+ 
+<script src="/javascripts/blockOtherUsers.js"></script>
+  
+
+
+<script src="/javascripts/followOtherUserOnProfile.js"></script>
+  
+
+<script src="/javascripts/toggleUserBio.js"></script>
+  
+<script type="module" src="/javascripts/videoControllers.mjs"></script>
     
   
 </body>

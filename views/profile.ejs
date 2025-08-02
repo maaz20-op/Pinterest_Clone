@@ -78,7 +78,7 @@
   <section class="pin-section">
           <a href="/showpins">
     <div class="pin">
-      <img src="https://iili.io/FaLFDb4.png" alt="Saved Posts Section" />
+      <img src="https://iili.io/FrUhTYu.png" alt="Saved Posts Section" />
 <p class="category">Saved Posts <%= user.pins.length %></p></a>
     </div>
     </a>
@@ -250,159 +250,24 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   
-  <script type="module" src="/javascripts/followUsersLogic.mjs"></script>
-
-
-
-<!-- Delete post -->
-<script>
-  
-let postsContainer = document.querySelector(".masonry");
-  
-document.addEventListener("click", async function(e){
-
-if(e.target.closest(".delete-post") || e.target.closest(".delete-video")){
- let deleteBtn = e.target
-
-let id = deleteBtn.getAttribute("data-src");
-
-try {
-  
-let response =  await fetch(`/posts/delete/post/${id}`,{
-    method:"GET",
-    headers:{
-      'Content-Type':'application/json'
-    }
-  })
-
-let data = await response.json();
-const postCard =
-  e.target.closest(".masonry-item") || e.target.closest(".video");
-if(!data) return 
-
-if(data.message === "success" && response.status === 200){
-postCard.style.cssText = "opacity:0.5;transition: opacity 0.4s ease;"
-
-setTimeout(function(){
-  postCard.remove()
-},1500)
-}
-
-} catch(err) {
-  
-  
-}
-
-  
-}
-})
-  
-</script>
+  <!-- follow User Logic -->
 
 <!-- like post -->
-  <script>
-    let conainerLikePost = document.querySelector(".masonry");
-
-conainerLikePost.addEventListener("click", async function(e) {
-  const likeBtn = e.target.closest(".like-btn");
-  if (likeBtn) {
-    const id = likeBtn.getAttribute("data-src");
-    
-    try {
-      const response = await fetch("/posts/likepost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id })
-      });
-
-      const data = await response.json();
-    
-
-      if (data.post && data.loggedInUser) {
-        if (data.post.likes.includes(data.loggedInUser._id.toString())) {
-          likeBtn.innerHTML = `❤️ Liked ${data.post.likes.length}`;
-        } else {
-          likeBtn.innerHTML = `Likes ${data.post.likes.length}`;
-        }
-      }
-    } catch (err) {
-      console.error("Like failed:", err);
-    }
-  }
-});
-  </script>
+<script src="/javascripts/likeImages.js"></script>
 <!-- images and videos section toggle -->
-<script>
-  let sections = document.querySelector("ul");
-let container1 = document.querySelector(".container");
-let container2 = document.querySelector(".container2");
-let imagesBar = sections.querySelector(".images");
-let videoBar = sections.querySelector(".videos");
+<script src="/javascripts/imagevideoSectionToggle.js"></script> 
 
-imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-
-sections.addEventListener("click",function(e){
-  if(e.target.classList.contains("videos")){
-imagesBar.style.cssText = "border-bottom:none"
-videoBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-container2.style.cssText = "display:block;min-height:30vh;"
-container1.style.cssText ="display:none"
-    
-  } else if(e.target.classList.contains("images")) {
-    
-videoBar.style.cssText = "border-bottom:none"
-imagesBar.style.cssText = "border-bottom:2px solid red;transition: border ease 0.4s;"
-container2.style.cssText = "display:none;"
-container1.style.cssText ="display:block;min-height:50vh;"
-      
-  }
-})
-</script>
-
-  <script>
-    // Edit Profile Pic
-    document.querySelector(".editicon").addEventListener("click", function () {
-      document.querySelector(".editForm input").click();
-    });
-
-    document.querySelector(".editForm input").addEventListener("change", function () {
-      document.querySelector(".editForm").submit();
-    });
-
-let showMoreBtn = document.querySelector(".showMore");
-let containerBio = document.querySelector(".containerBio");
-let userDescription = document.querySelector(".bio");
-let flag = true
-showMoreBtn.addEventListener("click",function(){
-
-if(flag){
-  containerBio.style.cssText = "min-height:1vh"
-  userDescription.classList.add("showText");
-  showMoreBtn.classList.remove("fa-circle-chevron-down");
-  showMoreBtn.classList.add("fa-circle-chevron-up");
-   
-  showMoreBtn.style.cssText = "bottom:0;left:288px"
-  flag = false;
-} else {
-  containerBio.style.cssText = "min-height:2vh"
-
-  showMoreBtn.classList.remove("fa-circle-chevron-up");
-  showMoreBtn.classList.add("fa-circle-chevron-down");
-userDescription.classList.remove("showText");
-flag = true
-}
-})
-  </script>
+<!-- Toogle User bio -->
+ <script src="/javascripts/toggleUserBio.js"></script>
   
-  <script type="module">
-  import { videoControlsSetup } from "/javascripts/videoControllers.mjs";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    videoControlsSetup();
-  });
-</script>
+  <!-- edit Profile pic -->
+  <script src="/javascripts/editProfilePic.js"></script>
+  
+  <!-- Delete post -->
+    <script src="/javascripts/deletePost.js"></script>
+    
+    <!-- video controls -->
+  <script type="module" src="/javascripts/videoControllers.mjs"></script>
       <%- include("partials/footer") %>
   
 </body>

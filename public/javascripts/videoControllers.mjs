@@ -336,7 +336,10 @@ document.addEventListener("fullscreenchange", function () {
   }
 });
 
-
 }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    videoControlsSetup()
+  });
 
 window.videoControlsSetup = videoControlsSetup;

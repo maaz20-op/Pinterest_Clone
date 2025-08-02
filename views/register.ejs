@@ -113,7 +113,7 @@ h2 {
 
 .toggle-link a {  
   color: #ff0033;  
-  text-decoration: none;  
+  text-decoration: underline;  
   font-weight: bold;  
 }  
 
@@ -153,7 +153,7 @@ h2 {
       </div>
       <button type="submit" id="account-creation-btn"class="btn">Create Account</button>
       <div class="toggle-link">
-        Already have an account? <a href="#" onclick="toggleForms()">Login</a>
+        Already have an account? <a href="#" class="toggle-login">Login</a>
       </div>
     </form>
 
@@ -169,39 +169,16 @@ h2 {
       </div>
       <button type="submit" class="btn">Login</button>
       <div class="toggle-link">
-        Don't have an account? <a href="#" onclick="toggleForms()">Create One</a>
+        Don't have an account? <a href="#" class="toggle-login">Create One</a>
       </div>
     </form>
   </div>
 
-  <script>
-    function toggleForms() {
-      const signup = document.getElementById('signupForm');
-      const login = document.getElementById('loginForm');
-      signup.classList.toggle('hidden');
-      login.classList.toggle('hidden');
-    }
-  </script>
-
-<script>
-  const signupForm = document.getElementById("signupForm");
-  const createAccountBtn = document.getElementById("account-creation-btn");
-
-  signupForm.addEventListener("submit", function () {
-    createAccountBtn.disabled = true;
-    createAccountBtn.innerText = "Creating...";
-  });
-</script>
-
+ 
+  
+  <script src="/javascripts/createAccount.js"></script>
 <% if (error && error.length > 0) { %>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const btn = document.getElementById("account-creation-btn");
-      btn.disabled = false;
-      btn.innerText = "Create Account";
-    });
-
-</script>
+<script src="/javascripts/errorInCreateAccount.js"></script>
   <% } %>
   
 </body>
