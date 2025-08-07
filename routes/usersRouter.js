@@ -12,14 +12,15 @@ const  { unblockUser } = require("../controllers/userController");
 const  { deleteAccount  } = require("../controllers/userController");
 const  { followOtherUser  } = require("../controllers/followersController");
 const  { unfollowOtherUser  } = require("../controllers/followersController");
-
+const loginLimiter = require("../middlewares/loginRequestLimiter.js")
+const registerLimiter = require("../middlewares/registerRequestLimiter.js");
 
 
 
 // for authentication & authorization
-router.post("/register",signupUser);
+router.post("/register", registerLimiter, signupUser);
 
-router.post("/login",loginUser);
+router.post("/login", loginLimiter, loginUser);
 
 router.get("/logout",logoutUser);
 

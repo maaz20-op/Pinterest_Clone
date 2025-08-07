@@ -75,11 +75,14 @@ app.use(helmet.contentSecurityPolicy({
         "'unsafe-inline'"
       ],
   },
-  reportViolations: true
-  
+  reportViolations: true,
+  reportUri: "/csp-violation"
   
 })
 )
+
+
+
 
 
 app.use(flash());
@@ -113,6 +116,10 @@ app.use('/comments',commentRouter)
 
 app.locals.moment = moment;
 
+app.use((err, req, res, next) => {
+  
+  
+})
 
 // 🚀 Start Server
 const PORT = process.env.PORT || 3000;

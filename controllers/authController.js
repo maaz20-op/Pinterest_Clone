@@ -4,14 +4,17 @@ const bcrypt = require("bcryptjs");
 const generateToken = require("../utils/generateToken");
 
 
+
 module.exports.signupUser = async function(req,res){
   try {
   let {fullname, username, email, password} = req.body
   
-if(!fullname || !username || !email || !password){
+if(!fullname || !username || !email || !passworreq){
   req.flash("error","Some field is Missing fill properly!")
   return res.redirect("/register")
 }
+
+
 
 if(fullname.trim().length > 18){
   req.flash("error","Full name must not exceed 18 characters")
@@ -71,7 +74,7 @@ module.exports.loginUser = async function(req,res){
 req.flash("error","Account Not Exists")
 return res.redirect("/register")
   }
-  
+
 bcrypt.compare(password,user.password,function(err, result){
   if(result){
     let token = generateToken(user.email)
@@ -82,6 +85,7 @@ bcrypt.compare(password,user.password,function(err, result){
   maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
 });
     req.flash("success","Successfully Logined!")
+  
     return res.redirect("/profile")
   }
   req.flash("error","Wrong email or password")
