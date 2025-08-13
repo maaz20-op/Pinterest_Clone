@@ -64,6 +64,7 @@
     <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
    <% user.post.reverse().forEach((eachPost) => { %>
   <% if(eachPost.mediaType.toLowerCase() === "image") {%>
+  
     <div class="masonry-item upgraded-card">
   <!-- Top Left Round Profile -->
   <div class="user-avatar">
@@ -218,6 +219,9 @@
 </div>
  </div>
 
+<div class="paginationLoader visibility">
+ 
+</div>
 
       <%- include("partials/footer") %>
   
@@ -231,10 +235,10 @@
 
 
 
-<script type="module" src="/javascripts/videoControllers.mjs"></script>
+ <script type="module" src="/javascripts/videoControllers.mjs"></script> 
 
 <script type="module" src="/javascripts/searchLogic.mjs"></script> 
-<script src="/javascripts/imagevideoSectionToggle.js"></script> 
+<script type="module" src="/javascripts/imagesVideosToggleSectionFeedPage.mjs"></script> 
 
 <script src="/javascripts/likeImages.js"></script>
 

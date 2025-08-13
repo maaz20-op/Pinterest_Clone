@@ -20,7 +20,37 @@
     margin-bottom:25px;
   }
   
+.paginationLoader {
+  height:100px;
+  width:100vw;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin-bottom: 60px;
+}
 
+
+.lazyLoader {
+  height: 50px;
+  width: 50px;
+  border: 8px solid transparent;
+  border-top-color: #ff3c3c;  /* bright red */
+  border-left-color: #ff3c3c;
+  border-radius: 50%;
+  animation: rotateSpinner 0.8s linear infinite;
+
+  box-shadow: 0 0 6px #ff3c3c70;
+}
+
+
+@keyframes rotateSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
   
   ul{
     display:flex;
@@ -36,8 +66,6 @@
 
   
 
-.container {
-}
 
 /* Navbar Styling */
 .navbar {
@@ -410,7 +438,6 @@ video  {
     display:none;
     min-height:100vh;
     width:100vw;
-    margin-bottom:300px;
     box-sizing: border-box;
   }
   

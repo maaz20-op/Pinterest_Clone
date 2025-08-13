@@ -386,6 +386,109 @@ res.json(posts)
   }
 }
 
+module.exports.imagesFetchingFeedPage = async function(req, res){
+ try {
+const page = Number(req.query.page) || 1;
+const limit = 4
+
+const skip = (page - 1) * limit;
+//console.log(`in image skip = ${skip} and page = ${page}`)
+let loggedInUser  = await userModel.findById(req.user._id);
+const posts = await postModel.aggregate([
+  {
+    $match: {
+      mediaType:'image',
+    }
+  },
+  {
+    $lookup: {
+      from: 'users',
+      localField: 'user',
+      foreignField: '_id',
+      as: 'userData'
+    }
+  },
+  {
+    $unwind: "$userData"
+  },
+  { $match: {
+    'userData.accountVisibility': 'Public'
+  }
+  },
+  { $skip: skip },
+  { $limit: limit },
+  
+  ])
 
 
 
+console.log("images length",posts)
+res.json({
+ success: true,
+ posts,
+ loggedInUser,
+})
+
+  } catch (err) {
+    
+    res.json({
+ success: false,
+ message: "Failed To Fetch Posts!"
+})
+  }
+}
+
+module.exports.videosFetchingFeedPage = async function(req, res){
+  try {
+const page = Number(req.query.page) || 1;
+const limit = 4
+const skip = (page - 1) * limit;
+//console.log(`in video skip = ${skip} and page = ${page}`)
+let loggedInUser  = await userModel.findById(req.user._id);
+
+const posts = await postModel.aggregate([
+  {
+    $match: {
+      mediaType:'video',
+    }
+  },
+  {
+    $lookup: {
+      from: 'users',
+      localField: 'user',
+      foreignField: '_id',
+      as: 'userData'
+    }
+  },
+  {
+    $unwind: "$userData"
+  },
+  {
+    $match: {
+      'userData.accountVisibility': 'Public'
+  }
+  },
+  { $skip: skip  },
+  { $limit: limit }
+  
+  
+  ])
+
+
+
+console.log("video length",posts)
+res.json({
+ success: true,
+ posts,
+ loggedInUser,
+ 
+})
+
+  } catch (err) {
+  res.json({
+ success: false,
+ message: "Failed To Fetch Posts!"
+})
+    
+  }
+}

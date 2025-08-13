@@ -14,13 +14,37 @@ let currentDeleteBtn = null;
 let currentCommentLoader = null;
 let currentVideoTitle = null;
 let isDragging = false;
+let clickedDiv = null;
+let commentContainer = null;
 
 
-let videos = document.querySelectorAll(".video");
 
-videos.forEach((videoDiv) => {
-  videoDiv.addEventListener("click", function (e) {
-    // Fullscreen
+
+let videoContainer = document.querySelector(".container2");
+
+if(!videoContainer.classList.contains("attached-bubling")) {
+videoContainer.addEventListener("click", function(e) {
+  clickedDiv = e.target.closest(".video");
+
+  // Run if video is clicked
+  if (clickedDiv) {
+    addClickOnVideo();
+  }
+
+  // Always run setupFunctionality for things like heart, comment, etc.
+  setupFunctionality(e);
+});
+}
+ videoContainer.classList.add("attached-bubling")
+
+
+// setup fullscreen progress bar drag seek etc 
+function addClickOnVideo() {
+    
+    let videoDiv = clickedDiv
+    if(!videoDiv) return;
+    
+    
     if (videoDiv.requestFullscreen) {
       videoDiv.requestFullscreen();
     } else if (videoDiv.webkitRequestFullscreen) {
@@ -29,6 +53,7 @@ videos.forEach((videoDiv) => {
       videoDiv.msRequestFullscreen();
     }
 
+     
     currentActionBar = videoDiv.querySelector(".video-action");
     currentActionVideo = videoDiv.querySelector("video");
     currentFollowContainer = videoDiv.querySelector(".follow-container-video");
@@ -53,6 +78,7 @@ videos.forEach((videoDiv) => {
           currentActionVideo.pause();
           currentPlayPause.innerHTML = `<i class="fa-solid fa-play"></i>`;
         }
+        
       });
       
       
@@ -81,11 +107,12 @@ videos.forEach((videoDiv) => {
         innerProgressBar.style.width = percent + "%";
       });
     }
-  });
-});
-let commentContainer = null;
-// like video
-document.addEventListener("click", async function (e) {
+  }
+
+
+// setup likes comments and share btn
+
+async function setupFunctionality(e) {
   if (e.target.classList.contains("heart")) {
     const heartIcon = e.target;
     const postId = heartIcon.getAttribute("data-src");
@@ -116,7 +143,10 @@ document.addEventListener("click", async function (e) {
       console.error("Video like failed:", err);
     } } else if(e.target.closest(".comment-video")){
   commentContainer = e.target.closest(".video").querySelector(".comments-container")
+  if(commentContainer){
   commentContainer.style.display = "block"
+  
+  }
   
   let showComments = async function(){
   let input = commentContainer.querySelector("textarea")
@@ -236,7 +266,9 @@ commentContainerBox.prepend(div)
 createComments();
 } 
 
-});
+}
+
+
 
 
   
@@ -288,9 +320,6 @@ function seek(clientX) {
   innerProgressBar.style.backgroundColor = "red";
   currentActionVideo.currentTime = percent * currentActionVideo.duration;
 }
-
-
-/* show video on click of share link example share to wattsapp  */ 
 
 
 

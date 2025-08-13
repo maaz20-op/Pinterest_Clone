@@ -49,28 +49,7 @@ container1.style.cssText ="display:none"
 
   getCurrentSection()
 
-let videosPage = 1
-let imagesPage = 1
 
-window.addEventListener('scroll', function(){
-  if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100){
-
-
-  loadPosts()
-    
-  }
-})
-
-let page;
-
-function loadPosts(){
-
-if (isVideoSection) page = videosPage
-else page = imagesPage
-
-
-  
-}
   
   
 

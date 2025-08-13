@@ -158,6 +158,7 @@ ${isLiked}
 <div class="inner">
 <textarea data-src="${eachPost._id }" placeholder="Share your thought's..." class="commentInput" name="message" rows="5" cols="30"></textarea>
   <i class="send fa-solid fa-paper-plane"></i>
+    <div class="loader"></div>
 </div>
 <div class="wrapper">
 <div class="actual-comments-box">

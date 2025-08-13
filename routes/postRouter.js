@@ -8,9 +8,14 @@ const { uploadPost } = require("../controllers/userController");
 const { likePost } = require("../controllers/userController");
 const { searchPosts } = require("../controllers/userController");
 const { deletePost } = require("../controllers/userController");
+const { imagesFetchingFeedPage } = require("../controllers/userController");
+const { videosFetchingFeedPage } = require("../controllers/userController");
 
 
 
+router.get("/getPostsImages", isLoggedIn, imagesFetchingFeedPage)
+
+router.get("/getPostsVideos", isLoggedIn, videosFetchingFeedPage)
 
 router.post("/upload", isLoggedIn, upload.single("media"), uploadPost );
 
