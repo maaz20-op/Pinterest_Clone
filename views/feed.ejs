@@ -26,7 +26,10 @@
     <%- include("partials/flash") %>
     
     <nav class="navbar">
-    <div class="logo"><span class="text">ReelNest</span>
+    <div class="logo">
+     <img src="/images/uploads/favicon.ico" class="img-desktop"/>
+    
+      <span class="text">ReelNest</span>
     <img src="/images/uploads/favicon.ico" class="logo-img"/></div>
     
 <div class="search-data-container">
@@ -136,7 +139,7 @@
   <% if(user._id.toString() === loggedInUser._id.toString()){ %>
         <button data-src="<%= user._id %>" class="you-btn" type="submit">You </button>
     <% } else if(user.followers.includes(loggedInUser._id.toString())) {%>
-    <button data-src="<%= user._id %>" class="you-btn" type="submit">    <p>Followed </p> <i class="fas fa-user-plus"></i></button>
+    <button data-src="<%= user._id %>" class="follow" type="submit">    <p>Followed </p> <i class="fas fa-user-plus"></i></button>
   <% } else { %>
    <button data-src="<%= user._id %>" class="follow" type="submit">Follow </button>
   <% } %>
