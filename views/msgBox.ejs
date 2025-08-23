@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedChat UI</title>
+  <link rel="stylesheet" href="/stylesheets/msgBox.css">
+</head>
+<body>
+  <div class="chat-container">
+    <!-- User Profile Section -->
+    <div class="profile-section">
+      <img class="profile-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" />
+      <div class="profile-info">
+        <div class="profile-name">John Doe</div>
+        <div class="profile-status">Online</div>
+      </div>
+      <div class="profile-menu">&#8942;</div>
+    </div>
+
+    <div class="chat-header">RedChat</div>
+
+    <div class="chat-messages" id="chatMessages">
+      <!-- Messages will appear here -->
+      <div class="message user">Hello! How are you?</div>
+      <div class="message other">I'm good! You?</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <button title="Send">&#9658;</button>
+    </div>
+  </div>
+
+  <script src="/javascripts/msgBox.js"></script>
+</body>
+</html>

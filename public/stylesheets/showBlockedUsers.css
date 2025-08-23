@@ -94,3 +94,15 @@ width:100px;
   background-color: #ff2e63;
   color: #fff;
 }
+
+@media (min-width:600px) {
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-left: 25vw;
+  }
+  .user-info {
+    margin-left: 10px;
+  }
+}

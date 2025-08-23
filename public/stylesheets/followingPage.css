@@ -141,3 +141,31 @@ h3 {
 .unfollow:hover , .view-user-profile:hover {
 background: red;
 }
+
+@media  (min-width:600px) {
+    .card {
+    width: 50%;
+    margin-left: 360px;
+    position: relative;
+  }
+  .action-btns {
+    position: absolute;
+    top: 0;
+    right: 8px;
+  }
+
+  h1 {
+    position: absolute;
+    top:8px;
+  }
+  h2 {
+    position: absolute;
+    top:61px;
+  }
+  .uname {
+    width: 100px;
+    position: absolute;
+    top:7px;
+    left: 30%;
+  }
+}

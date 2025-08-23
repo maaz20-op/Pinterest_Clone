@@ -128,5 +128,13 @@ router.get("/showfollowing/:id", isLoggedIn, async function(req,res){
 res.render("showFollowing", {user, loggedInUser});
 });
 
+router.get('/showmsgbox', isLoggedIn, function (req, res) {
+res.render('msgBox');
+})
+
+router.get('/msginbox', isLoggedIn , function (req, res) {
+res.render('showallmsgbyusers');
+})
+
 
 module.exports = router;
