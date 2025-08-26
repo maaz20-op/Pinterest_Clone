@@ -10,20 +10,19 @@
   <div class="chat-container">
     <!-- User Profile Section -->
     <div class="profile-section">
-      <img class="profile-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" />
+      <img src="<%= user.profileImage %>" class="profile-avatar"  alt="User Avatar" />
       <div class="profile-info">
-        <div class="profile-name">John Doe</div>
-        <div class="profile-status">Online</div>
+        <div class="profile-name"><%= user.fullname %></div>
+        <div class="profile-status" data-src="<%= user.username %>">Online</div>
       </div>
       <div class="profile-menu">&#8942;</div>
     </div>
 
-    <div class="chat-header">RedChat</div>
+    <div class="chat-header">Chat with your Special One</div>
 
     <div class="chat-messages" id="chatMessages">
       <!-- Messages will appear here -->
-      <div class="message user">Hello! How are you?</div>
-      <div class="message other">I'm good! You?</div>
+     
     </div>
 
     <div class="chat-input">
@@ -32,6 +31,9 @@
     </div>
   </div>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/javascripts/msgBox.js"></script>
 </body>
 </html>
+
+

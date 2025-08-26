@@ -4,6 +4,7 @@ import { videoControlsSetup } from "/javascripts/videoControllers.mjs"
   const toggleSection = document.querySelector(".sections")
   const container = document.querySelector(".container");
   const contai = document.querySelector(".container2")
+  let isSearchActive = false;
     let feedBtn = document.querySelector(".button");
 const searchBtn = document.querySelector(".search-btn");
   const userDataDiv = document.getElementById("userData");
@@ -39,7 +40,7 @@ container.style.display = "block"
       const posts = await response.json();
       if(!posts)  return
       
-      console.log(posts)
+    
       feedBtn.classList.remove("normal")
     feedBtn.classList.add("style")
       container.innerHTML = ""; // Clear after successful fetch
@@ -173,6 +174,7 @@ ${isLiked}
   
           });
  videoControlsSetup()
+
       } else {
         container.innerHTML = `<h1 style="color:white;font-size:20px;margin-left:2cm;width:60vw;">No Posts Found...</h1>`
       }
@@ -183,6 +185,7 @@ ${isLiked}
   };
 
 searchBtn.addEventListener("click", function(){
+  isSearchActive = true;
   sendData()
 })
 
@@ -192,4 +195,4 @@ searchBtn.addEventListener("click", function(){
     window.location.href = "/";
   });
   
-  
+  export let isSearch =  isSearchActive;

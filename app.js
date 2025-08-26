@@ -1,21 +1,48 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-
+  
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
+.then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ MongoDB Error:", err));
 
 const express = require('express');
+const app = express();
 const path = require('path');
 const moment = require("moment");
-
 
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo'); 
+const { Server} = require("socket.io");
+const http   = require("http");
+const server = http.createServer(app);
 const helmet = require('helmet');
-const app = express();
+const io  = new  Server(server);
+
+
+let socketMapID = {};
+
+io.on('connection', (socket) => {
+  console.log("uiser connected", socket.id);
+socket.on("register", (username)=> {
+ socketMapID[username] = socket.id
+})
+
+  socket.on("chat-msg", (msg, to)=>{
+console.log(socketMapID);
+let room = socketMapID[to];
+    console.log("Message from client:", msg);
+    // Broadcast the message to all connected clients
+    socket.to(room).emit("chat-msg", msg);
+  })
+
+socket.on("disconnect", ()=>{
+  console.log("user disconnected", socket.id);
+
+
+})
+})
 
 // 📁 Public folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -55,7 +82,7 @@ app.use(helmet.contentSecurityPolicy({
         "https://fonts.googleapis.com"
       ],
   
-  connectSrc: ["'self'","https://api.cloudinary.com"],
+  connectSrc: ["'self'","https://api.cloudinary.com", "ws:" , "http:"],
   
   mediaSrc: [
     "'self'",
@@ -67,7 +94,6 @@ app.use(helmet.contentSecurityPolicy({
   "https://cdnjs.cloudflare.com",
   "https://widget.cloudinary.com",
 ],
-  
   fontSrc: [
         "'self'",
         "https://cdnjs.cloudflare.com",
@@ -123,7 +149,7 @@ app.use((err, req, res, next) => {
 
 // 🚀 Start Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, function () {
+server.listen(PORT, function () {
   console.log(`🚀 Server is running on port ${PORT}...`);
 });
 

@@ -1,10 +1,10 @@
  import { videoControlsSetup } from '/javascripts/videoControllers.mjs'
- 
+ import { isSearch } from "/javascripts/searchLogic.mjs";
  
  let sections = document.querySelector("ul");
 let container1 = document.querySelector(".container");
 let isEndOfPosts = false;
-// loader logic 
+// loader logic
 let loaderContainer = document.querySelector(".paginationLoader")
 let loaderDiv = document.createElement("div");
 
@@ -261,7 +261,7 @@ videoControlsSetup()
 window.addEventListener('scroll', function(){
   if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading){
 
-if(isEndOfPosts) return 
+if(isEndOfPosts || isSearch) return 
  loaderDiv.classList.add("lazyLoader")
  
   isLoading = true

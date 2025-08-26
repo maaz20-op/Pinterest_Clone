@@ -265,7 +265,12 @@ border-radius:3px;
   margin-bottom: 1rem;
 }
 
-
+.msgicon {
+  position: fixed;
+  right: 12px;
+  color: white;
+  font-size: 28px;
+}
 
 @media (min-width:600px) {
   

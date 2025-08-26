@@ -19,7 +19,6 @@ let commentContainer = null;
 
 
 
-
 let videoContainer = document.querySelector(".container2");
 
 if(!videoContainer.classList.contains("attached-bubling")) {

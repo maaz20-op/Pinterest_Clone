@@ -12,17 +12,6 @@ const util = require('util');
 
 
 
-router.get("/find",async function(req,res){
-  let user = await userModel.find()
-  console.log(user)
-})
-router.get("/filter", async function(req,res){
-
-
-
-
-})
-
 
 router.get("/register", function (req, res){
   res.render("register")
@@ -135,6 +124,14 @@ res.render('msgBox');
 router.get('/msginbox', isLoggedIn , function (req, res) {
 res.render('showallmsgbyusers');
 })
+
+router.get('/showmsgpageofothersuser/:id', isLoggedIn , async function (req, res) {
+
+  let user = await userModel.findById(req.params.id);
+  console.log(user)
+res.render('msgBox', {user});
+})
+
 
 
 module.exports = router;

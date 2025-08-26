@@ -74,7 +74,12 @@ margin-top:4px;
   width:100%;
 }
 
-
+.msgicon {
+  position: fixed;
+  right: 12px;
+  color: white;
+  font-size: 28px;
+}
 
 /* Responsive */
 @media (max-width: 500px) {
