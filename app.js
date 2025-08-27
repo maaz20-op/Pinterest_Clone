@@ -32,6 +32,7 @@ socket.on("register", (username)=> {
   socket.on("chat-msg", (msg, to)=>{
 console.log(socketMapID);
 let room = socketMapID[to];
+console.log("Room ID:", room);
     console.log("Message from client:", msg);
     // Broadcast the message to all connected clients
     socket.to(room).emit("chat-msg", msg);

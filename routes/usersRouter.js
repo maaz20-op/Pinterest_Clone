@@ -20,7 +20,7 @@ const registerLimiter = require("../middlewares/registerRequestLimiter.js");
 // for authentication & authorization
 router.post("/register", registerLimiter, signupUser);
 
-router.post("/login", loginLimiter, loginUser);
+router.post("/login", loginUser);
 
 router.get("/logout",logoutUser);
 

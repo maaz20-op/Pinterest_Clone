@@ -3,7 +3,7 @@ let socket = io();
 
 socket.on("connect", ()=>{
   console.log("Connected to server with ID:", socket.id);
-  receiveMsg();
+  
 })
 
 let userData = document.querySelector(".profile-status");
@@ -12,7 +12,7 @@ let username = userData.getAttribute("data-src");
 // to register the user with socket id
 socket.emit("register", username);
 
-function receiveMsg(){
+
 socket.on("chat-msg", (msg) =>{
   console.log("New message received", msg);
 
@@ -21,7 +21,6 @@ socket.on("chat-msg", (msg) =>{
    receiveMsgDiv.textContent = msg;
    document.getElementById("chatMessages").appendChild(receiveMsgDiv);
 })
-}
 
 function sendMessage() {
   const input = document.getElementById("messageInput");
