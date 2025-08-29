@@ -128,8 +128,8 @@ res.render('showallmsgbyusers');
 router.get('/showmsgpageofothersuser/:id', isLoggedIn , async function (req, res) {
 
   let user = await userModel.findById(req.params.id);
-  console.log(user)
-res.render('msgBox', {user});
+  let loggedInUser = await userModel.findById(req.user.id);
+res.render('msgBox', {user, loggedInUser });
 })
 
 

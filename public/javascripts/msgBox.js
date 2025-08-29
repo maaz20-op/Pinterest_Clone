@@ -1,4 +1,4 @@
-
+// Client-side JavaScript for chat functionality
 let socket = io();
 
 socket.on("connect", ()=>{
@@ -8,10 +8,11 @@ socket.on("connect", ()=>{
 
 let userData = document.querySelector(".profile-status");
 let username = userData.getAttribute("data-src");
-
+let userDatra2 = document.querySelector(".profile-menu");
+let loggedInUser = userDatra2.getAttribute("data-src");
 // to register the user with socket id
-socket.emit("register", username);
-
+socket.emit("register", loggedInUser); 
+console.log("Registered as:", loggedInUser);
 
 socket.on("chat-msg", (msg) =>{
   console.log("New message received", msg);
@@ -32,7 +33,7 @@ function sendMessage() {
     messageDiv.textContent = text;
 
 
-socket.emit("chat-msg", text, username);
+socket.emit("chat-msg", { msg: text, to:username });
 
     document.getElementById("chatMessages").appendChild(messageDiv);
     input.value = "";

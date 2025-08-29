@@ -27,22 +27,29 @@ io.on('connection', (socket) => {
   console.log("uiser connected", socket.id);
 socket.on("register", (username)=> {
  socketMapID[username] = socket.id
+ console.log(socketMapID);
 })
+console.log(socket.id)
+  socket.on("chat-msg", ({msg, to})=>{
 
-  socket.on("chat-msg", (msg, to)=>{
-console.log(socketMapID);
 let room = socketMapID[to];
-console.log("Room ID:", room);
+console.log("Room ID: send ",to, room);
+
     console.log("Message from client:", msg);
     // Broadcast the message to all connected clients
+  if(!room) return;
     socket.to(room).emit("chat-msg", msg);
   })
 
-socket.on("disconnect", ()=>{
-  console.log("user disconnected", socket.id);
-
-
-})
+ socket.on("disconnect", () => {
+    console.log("❌ Disconnected:", socket.id);
+    for (let user in socketMapID) {
+      if (socketMapID[user] === socket.id) {
+        delete socketMapID[user];
+        break;
+      }
+    }
+  });
 })
 
 // 📁 Public folder
