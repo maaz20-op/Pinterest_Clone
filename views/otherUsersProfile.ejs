@@ -27,7 +27,7 @@
   
     <!-- Profile Section -->
   <header class="profile-header">
-    <a href="/showmsgpageofothersuser/<%= otherUser._id %>">  <i class="msgicon fa-solid fa-comment-dots"></i></a>
+    <i data-src="<%= otherUser._id %>" class="msgicon fa-solid fa-comment-dots"></i>
    <div class="profileImage" >
     <img src="<%= otherUser.profileImage %>" alt="Profile" class="profile-pic"/>
     </div>
@@ -240,6 +240,7 @@
    
 <script src="/javascripts/imagevideoSectionToggle.js"></script> 
 
+<script src="/javascripts/directToMsgBox.js"></script>
 
  
  <script src="/javascripts/likeImages.js"></script>

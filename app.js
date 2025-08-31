@@ -12,45 +12,22 @@ const moment = require("moment");
 
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
+const passport = require("passport");
+const FacebookStrategy = require('passport-facebook').Strategy
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo'); 
-const { Server} = require("socket.io");
+const { Server } = require("socket.io");
 const http   = require("http");
 const server = http.createServer(app);
+
 const helmet = require('helmet');
 const io  = new  Server(server);
+//  require message connections of sockets 
+const messageSocketsConnection = require("./socket/message-sockets-connection");
 
 
-let socketMapID = {};
+messageSocketsConnection(io);
 
-io.on('connection', (socket) => {
-  console.log("uiser connected", socket.id);
-socket.on("register", (username)=> {
- socketMapID[username] = socket.id
- console.log(socketMapID);
-})
-console.log(socket.id)
-  socket.on("chat-msg", ({msg, to})=>{
-
-let room = socketMapID[to];
-console.log("Room ID: send ",to, room);
-
-    console.log("Message from client:", msg);
-    // Broadcast the message to all connected clients
-  if(!room) return;
-    socket.to(room).emit("chat-msg", msg);
-  })
-
- socket.on("disconnect", () => {
-    console.log("❌ Disconnected:", socket.id);
-    for (let user in socketMapID) {
-      if (socketMapID[user] === socket.id) {
-        delete socketMapID[user];
-        break;
-      }
-    }
-  });
-})
 
 // 📁 Public folder
 app.use(express.static(path.join(__dirname, 'public')));
