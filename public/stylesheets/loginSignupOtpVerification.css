@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+}
+
+.otp-container {
+  text-align: center;
+  background-color: #111;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
+
+
+.otp-container h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #ff2c2c;
+}
+
+.otp-container p {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.otp-inputs input {
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  text-align: center;
+  border: 2px solid #ff2c2c;
+  background-color: transparent;
+  color: #ff2c2c;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.otp-inputs input:focus {
+  outline: none;
+  border-color: #ff4d4d;
+  box-shadow: 0 0 8px #ff4d4d;
+}
+
+.verify-btn {
+  background-color: #ff2c2c;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.verify-btn:hover {
+  background-color: #e60000;
+}
+
+a {
+  color: #ff2c2c;
+  margin-top: 15px;
+  display: inline-block;
+}

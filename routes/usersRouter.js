@@ -14,35 +14,41 @@ const  { followOtherUser  } = require("../controllers/followersController");
 const  { unfollowOtherUser  } = require("../controllers/followersController");
 const loginLimiter = require("../middlewares/loginRequestLimiter.js")
 const registerLimiter = require("../middlewares/registerRequestLimiter.js");
-
-
+const { forgotPassword } = require("../controllers/authController");
+const { sendOTP } = require("../controllers/authController");
+const { getEmailForVerification } = require("../controllers/authController");
 
 // for authentication & authorization
 router.post("/register", registerLimiter, signupUser);
 
 router.post("/login", loginUser);
 
+router.post("/sendOTP", sendOTP);
+
+// getting verification email for forgot password
+router.post("/getVerificationEmail", getEmailForVerification);
+
+router.post("/forgotpassword", forgotPassword);
+
 router.get("/logout",logoutUser);
 
-router.post("/deleteaccount", isLoggedIn,deleteAccount)
-
-//block and unblock other users 
-
-router.post("/blockuser",isLoggedIn,blockOtherUser);
-
-router.post("/unblockuser", isLoggedIn,unblockUser);
-
+router.post("/deleteaccount", isLoggedIn, deleteAccount)
 
 
 // user profile features
+router.post("/blockuser", isLoggedIn, blockOtherUser);
+
+router.post("/unblockuser", isLoggedIn, unblockUser);
+
 router.post("/editprofpic", isLoggedIn, upload.single("profileImage"), editprofpic);
 
 router.post("/update/account", isLoggedIn, updateAccountSettings);
 
-
 router.post("/followuser", isLoggedIn , followOtherUser)
 
 router.post("/unfollowuser", isLoggedIn, unfollowOtherUser)
+
+
 module.exports = router;
 
 

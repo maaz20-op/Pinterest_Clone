@@ -125,6 +125,11 @@ h2 {
   display: none;  
 }
 
+#redirect {
+color: #fff;
+
+}
+  
   </style>
 </head>
 <body>
@@ -168,6 +173,10 @@ h2 {
         <input type="password" placeholder="Enter your password" name="password" required />
       </div>
       <button type="submit" class="btn">Login</button>
+      <div class="divider"></div>
+      
+      <a id="redirect" href="/auth/google">login with google </a> <br>
+        <a id="redirect" href="/enterEmailForOTP">Forgot Password? </a>
       <div class="toggle-link">
         Don't have an account? <a href="#" class="toggle-login">Create One</a>
       </div>

@@ -15,8 +15,17 @@ const util = require('util');
 
 router.get("/register", function (req, res){
   res.render("register")
-})
+});
 
+// input email page
+router.get('/enterEmailForOTP', function (req, res) {
+  res.render('enteremailforOTP');
+});
+
+router.get('/forgotpassword', function (req, res) {
+  let email = req.session.email
+  res.render('loginSignupOtpVerification', { email });
+});
 
 router.get("/profile",isLoggedIn, async function(req,res){
 let user = await userModel.findOne({email:req.user.email})

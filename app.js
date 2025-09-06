@@ -12,16 +12,19 @@ const moment = require("moment");
 
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
-const passport = require("passport");
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo'); 
 const { Server } = require("socket.io");
 const http   = require("http");
 const server = http.createServer(app);
-
+const userModel = require('./models/user-model');
 const helmet = require('helmet');
 const io  = new  Server(server);
+
+const passport = require("passport");
+require('./auth/google')
+const createToken = require('./utils/generateToken');
 //  require message connections of sockets 
 const messageSocketsConnection = require("./socket/message-sockets-connection");
 
@@ -31,6 +34,9 @@ messageSocketsConnection(io);
 
 // 📁 Public folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport setup 
+app.use(passport.initialize());
 
 // 🔐 Middlewares
 app.use(cookieParser());
@@ -113,6 +119,11 @@ app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // make sure views folder ka path theek hai
 // 📁 Routes
+
+
+
+// mounting of routes 
+const auth = require('./auth/google');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const postRouter = require("./routes/postRouter");
@@ -120,6 +131,7 @@ const pinRouter = require("./routes/pinRouter");
 const commentRouter = require("./routes/commentRouter")
 
 app.use('/', indexRouter);
+app.use('/auth', auth);
 app.use('/users', usersRouter);
 app.use('/posts', postRouter);
 app.use('/pins', pinRouter);
@@ -138,4 +150,4 @@ server.listen(PORT, function () {
   console.log(`🚀 Server is running on port ${PORT}...`);
 });
 
-module.exports = app;
+module.exports = server;
