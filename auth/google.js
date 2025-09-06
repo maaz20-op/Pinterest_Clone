@@ -9,7 +9,7 @@ const { googleConfigCallback } =  require("../controllers/authController");
 
 passport.use(new GoogleStrategy({
     clientID: process.env.clientID,
-  clientSecret:process.env.clientID,
+  clientSecret:process.env.clientSecret,
   callbackURL: 'http://localhost:3000/auth/google/callback',
 }, googleConfigCallback));
 
