@@ -3,11 +3,24 @@ const userModel = require('../models/user-model');
 
 const isLoggedIn = async function(req,res,next){
   try{
-    let token = req.cookies.token;
+    let jwtAccessToken = req.cookies.accessToken;
+    let jwtRefreshToken = req.cookies.refreshToken;
     
-    if (!token) return res.redirect("/register");
+    if(!jwtRefreshToken) return res.redirect("/register");
+      let decodedData =  jwt.verify(jwtRefreshToken, process.env.REFRESH_TOKEN_SECRET);
     
-const decoded = jwt.verify(token,process.env.JWT_SECRET);
+let backupUser = await userModel.findOne({email: decodedData.email});
+
+
+
+    if (!jwtAccessToken) {
+      req.session.backupUser = backupUser;
+    let requestURL = req.originalUrl;
+    req.session.requestURL = requestURL;
+    return res.redirect("/users/getAccessToken");
+    } 
+    
+const decoded = jwt.verify(jwtAccessToken,process.env.ACCESS_TOKEN_SECRET);
 
 let user = await userModel.findOne({
   email:decoded.email,

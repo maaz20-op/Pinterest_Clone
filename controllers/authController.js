@@ -1,9 +1,9 @@
 const userModel = require("../models/user-model");
 const postModel = require("../models/post-model");
 const bcrypt = require("bcryptjs");
-const generateToken = require("../utils/generateToken");
 const sendSignupEmail = require('../emails/signupWelcome');
 const sendOptonEmail = require('../emails/verifyOtpEmail');
+const sendAccessAndRefreshTokenThroughCookies = require("../utils/sendAccessAndRefreshTokenThroughCookie")
 const generateOTP = require("../utils/generateOTP");
 
 // local authentication using email and password
@@ -53,15 +53,9 @@ const hash = await bcrypt.hash(password,6);
 
       // send welcome email to signup user
       sendSignupEmail(createdUser.email, createdUser.fullname);
+// send access and refresh token through cookies
+    sendAccessAndRefreshTokenThroughCookies(createdUser.email, res);
 
-const  token = generateToken(email)
-
-res.cookie("token", token, {
-  httpOnly: true, // prevent JS access to cookie (secure)
-  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
-  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
-  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
-});
  return res.redirect("/profile")
   } catch(err) {
     req.flash("error","Something Went wrong!")
@@ -82,13 +76,9 @@ return res.redirect("/register")
 
 bcrypt.compare(password,user.password,function(err, result){
   if(result){
-    let token = generateToken(user.email)
-    res.cookie("token", token, {
-  httpOnly: true, // prevent JS access to cookie (secure)
-  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
-  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
-  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
-});
+   // send access and refresh token through cookies
+    sendAccessAndRefreshTokenThroughCookies(user.email, res);
+
  sendSignupEmail(user.email, user.fullname);
     req.flash("success","Successfully Logined!")
   
@@ -105,7 +95,8 @@ bcrypt.compare(password,user.password,function(err, result){
 
 module.exports.logoutUser =  function (req,res){
   try {
-  res.clearCookie("token")
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
 req.flash("success","Successfully Logout");
  return res.redirect("/register");
   } catch(err){
@@ -114,6 +105,31 @@ req.flash("success","Successfully Logout");
   }
   
 };
+
+module.exports.getAccessToken = async function(req, res){
+  try {
+  let user = await userModel.findOne({email: req.session.backupUser.email});
+
+  if(!user) return res.send("server error 500");
+
+  // delete backup user from session 
+  delete req.session.backupUser;
+
+  // send access and refresh token through cookies
+    sendAccessAndRefreshTokenThroughCookies(user.email, res);
+
+
+// getting redirect url from session that we strore in isLoggedin middleware
+let redirectUrl = req.session.requestURL || "/";
+
+// delete redirect url from session 
+delete req.session.requestURL
+
+return res.redirect(redirectUrl);
+  } catch(err) {
+  console.log('access token error', err)
+  }
+}
 
 module.exports.getEmailForVerification = function (req,res){
   try {
@@ -156,23 +172,20 @@ let verificationEmail = req.session.email;
 let userInputOPT = `${val1}${val2}${val3}${val4}`;
 console.log(emailOTP,userInputOPT)
 if(emailOTP.toString() === userInputOPT.toString()){
-     let token = generateToken(verificationEmail);
-    res.cookie("token", token, {
-  httpOnly: true, // prevent JS access to cookie (secure)
-  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
-  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
-  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
-});
 
-// delete email and otp from session 
-let user = await userModel.findOne({ email: req.session.email});
+  let user = await userModel.findOne({ email: req.session.email});
 if(!user) {
   req.flash('error','wrong email, error');
   return res.redirect("/enterEmailForOTP");
 }
 
+// send access and refresh token through cookies
+    sendAccessAndRefreshTokenThroughCookies(user.email, res);
+
+
 sendSignupEmail(user.email, user.fullname)
 
+// delete email and otp from session 
 delete req.session.otp;
 delete req.session.email;
 console.log('session after delete',req.session.otp, req.session.email)
@@ -189,19 +202,17 @@ return res.redirect('/forgotpassword');
 }
 
 
-// authentication using ggoogleCallboogle passport strategy
+// authentication using googleCallboogle passport strategy
 
 module.exports.googleCallback = async (req, res) => {
   try {
+    
+    console.log("REUESTED USRR", req.userEmail)
     if (!req.user) return res.redirect('/register');
-let token = createToken(req.user);
-console.log(req.user)
-res.cookie("token", token, {
-  httpOnly: true, // prevent JS access to cookie (secure)
-  secure: process.env.NODE_ENV === "production", // only HTTPS in prod
-  sameSite: "Lax", // or "Strict" / "None" based on frontend-backend location
-  maxAge: 24 * 60 * 60 * 1000, // 1 day in ms
-})
+  let user = await userModel.findOne({ email: req.userEmail});
+   if (!user) return res.redirect('/register');
+// send access and refresh token through cookies
+    sendAccessAndRefreshTokenThroughCookies(user.email, res);
 
 res.redirect("/profile");
   } catch (err) {
@@ -213,19 +224,11 @@ res.redirect('/register');
 
 module.exports.googleConfigCallback = async function (accessToken, refreshToken, profile, done){
   try {
-   let user = await userModel.findOne({ googleId: profile.id });
-
-    if (!user) {
-      user = await userModel.create({
-        googleId: profile.id,
-         fullname: profile.displayName
-      });
-    }
-
-    done(null, user);
+   let userEmail = profile.emails[0].value;
+    done(null, userEmail);
 
   } catch (err) {
-  res.redirect('/register');
+  done(err, false);
   }
  
 }

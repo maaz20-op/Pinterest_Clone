@@ -17,6 +17,8 @@ const registerLimiter = require("../middlewares/registerRequestLimiter.js");
 const { forgotPassword } = require("../controllers/authController");
 const { sendOTP } = require("../controllers/authController");
 const { getEmailForVerification } = require("../controllers/authController");
+const { getAccessToken } = require("../controllers/authController");
+
 
 // for authentication & authorization
 router.post("/register", registerLimiter, signupUser);
@@ -24,6 +26,8 @@ router.post("/register", registerLimiter, signupUser);
 router.post("/login", loginUser);
 
 router.post("/sendOTP", sendOTP);
+
+router.get('/getAccessToken', getAccessToken)
 
 // getting verification email for forgot password
 router.post("/getVerificationEmail", getEmailForVerification);
