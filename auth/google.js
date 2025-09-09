@@ -13,7 +13,7 @@ passport.use(new GoogleStrategy({
 }, googleConfigCallback));
 
 
-//route where frontend will interact with backend 
+// route where frontend will interact with backend 
 router.get('/google', passport.authenticate('google', {
   scope : ['profile', 'email'],
   session: false,

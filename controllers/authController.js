@@ -207,10 +207,13 @@ return res.redirect('/forgotpassword');
 module.exports.googleCallback = async (req, res) => {
   try {
     
-    console.log("REUESTED USRR", req.userEmail)
-    if (!req.user) return res.redirect('/register');
-  let user = await userModel.findOne({ email: req.userEmail});
-   if (!user) return res.redirect('/register');
+    let email = req.user;
+    if (!email) return res.redirect('/register');
+  let user = await userModel.findOne({ email });
+   if (!user) {
+    req.flash("error", `Account Not exist on ${email}!`);
+     return res.redirect('/register');
+   }
 // send access and refresh token through cookies
     sendAccessAndRefreshTokenThroughCookies(user.email, res);
 
@@ -224,7 +227,7 @@ res.redirect('/register');
 
 module.exports.googleConfigCallback = async function (accessToken, refreshToken, profile, done){
   try {
-   let userEmail = profile.emails[0].value;
+ let userEmail = profile.emails[0].value;
     done(null, userEmail);
 
   } catch (err) {
