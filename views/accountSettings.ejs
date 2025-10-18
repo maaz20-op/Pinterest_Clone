@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/accountSettings.css" />
+</head>
+<body>
+  
+  <%- include("partials/header2") %>
+  
+  
+  <div class="settings-container">
+    <div class="settings-header">
+      <h2><i class="fas fa-cog"></i> Account Settings</h2>
+      <button class="save-btn">
+        <i class="fas fa-save"></i> Save
+      </button>
+    </div>
+    <form id="settings-form" action="/users/update/account" method="post">
+
+  <!-- Profile Info -->
+  <div class="settings-section">
+    <h3>Profile Information</h3>
+
+    <label>Full Name</label>
+    <input type="text" name="fullname" value="<%= loggedInUser.fullname%>" placeholder="Enter full name" />
+
+    <label>Username</label>
+    <input type="text" name="username" value="<%=loggedInUser.username %>" placeholder="Enter username" />
+
+    <label>Email</label>
+    <input type="email" name="email" value="<%= loggedInUser.email %>" placeholder="Enter email" />
+
+    <label>Bio</label>
+    <textarea name="bio" rows="3" placeholder="Tell something about yourself"><%= loggedInUser.bio %></textarea>
+    </select>
+  </div>
+
+  <!-- Password -->
+  <div class="settings-section">
+    <h3>Change Password</h3>
+
+
+    <label>New Password</label>
+    <input type="password" name="newPassword" placeholder="Enter new password" />
+  </div>
+
+  <!-- Privacy -->
+  <div class="settings-section">
+    <h3>Privacy Settings</h3>
+
+  <select id="visibility" name="accountVisibility">
+  <option value="Public" <%= user.accountVisibility === 'Public' ? 'selected' : '' %>>Public</option>
+  <option value="Private" <%= user.accountVisibility === 'Private' ? 'selected' : '' %>>Private</option>
+</select>
+
+    <label>Who Can Message You?</label>
+    <select name="messageControl">
+      <option value="everyone">Everyone</option>
+      <option value="followers">Followers only</option>
+    </select>
+
+    <label>Blocked Users (usernames comma separated)</label>
+  
+    <input type="text" name="blockedUsers" placeholder="<%= array.join(", ") %>" />
+  
+
+</form>
+  <!-- Danger Zone -->
+  <div class="settings-section danger">
+    <h3>Danger Zone</h3>
+
+    <label>Delete My Account</label>
+    <button type="button" class="danger-btn">Delete Account</button>
+    
+
+  
+  
+
+  </div>
+
+</form>
+
+  </div>
+  
+      
+  <form hidden id="form" action="/users/deleteaccount" method="post">
+  <input hidden type="text" name="id" value="<%= user._id %>">
+  <button></button>
+  </form> 
+ 
+ <script src="/javascripts/deleteAccount.js"></script>
+<script src="/javascripts/updateAccount.js"></script>
+  
+</body>
+</html>

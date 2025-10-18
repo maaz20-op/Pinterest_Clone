@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedChat UI</title>
+  <link rel="stylesheet" href="/stylesheets/msgBox.css">
+</head>
+<body>
+  <div class="chat-container">
+    <!-- User Profile Section -->
+    <div class="profile-section">
+      <img src="<%= user.profileImage %>" class="profile-avatar"  alt="User Avatar" />
+      <div class="profile-info">
+        <div class="profile-name"><%= user.fullname %></div>
+        <div class="profile-status" data-src="<%= user.username %>">Online</div>
+      </div>
+      <div class="profile-menu" data-src="<%= loggedInUser.username %>">&#8942;</div>
+    </div>
+
+    <div class="chat-header">Chat with your Special One</div>
+
+    <div class="chat-messages" id="chatMessages">
+   <!-- Messages will appear here -->
+<% if(sendMsgs[0].userData.length > 0) { %>
+  <% sendMsgs[0].userData.forEach((sendMsg) => { %>
+<div class="message user"><%= sendMsg.msg %></div>
+   <% }) %>
+   <% } %> 
+   
+  <% if(receivedMsgs[0].userData.length > 0) { %>
+  <% receivedMsgs[0].userData.forEach((receivedMsg) => { %>
+<div class="message other"><%= receivedMsg.msg %></div>
+   <% }) %>
+   <% } %> 
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <button title="Send">&#9658;</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/msgBox.js"></script>
+</body>
+</html>
+
+

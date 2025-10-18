@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>Malaika & Maaz | Wedding</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #000;
+      color: #eee;
+    }
+
+    header {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                  url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      color: #ff4c4c;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 15px;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .countdown {
+      font-size: 2rem;
+      color: #ff4c4c;
+      margin-top: 20px;
+    }
+
+    .details {
+      background-color: #111;
+      border: 2px solid #ff4c4c;
+      border-radius: 10px;
+      padding: 40px;
+      margin-top: 40px;
+    }
+
+    .details h2,
+    .story h2 {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 2.8rem;
+      color: #ff4c4c;
+      margin-bottom: 20px;
+    }
+
+    .photos {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
+    }
+
+    .person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .person img {
+      border: 3px solid #ff4c4c;
+      border-radius: 10px;
+      width: 155px;
+    height:180px;
+      object-fit: cover;
+    }
+.person p {
+  font-size:18px;
+}
+    .name {
+      margin-top: 10px;
+      font-size: 1.3rem;
+      color: #ff4c4c;
+      font-family: 'Georgia', serif;
+    }
+
+    footer {
+      background: #111;
+      color: #888;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<%- include("partials/flash") %>
+  <header>
+    <h1>Malaika & Maaz</h1>
+    <p>December 15, 2025 — Our Forever Begins</p>
+  </header>
+
+<section class="countdown">
+    <div>Countdown to Our Big Day: <span id="days">219</span> Days</div>
+  </section>
+  
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required />
+    <button type="submit">Upload</button>
+  </form>
+<section class="photos">
+    <div class="person">
+   <p class="name">Malaika ( Bride )</p>
+      <img src="https://iili.io/FJXzRbn.jpg" alt="Bride - Malaika">
+
+    </div>
+    <div class="person">
+     <p class="name">Maaz ( Groom )</p>
+      <img src="https://iili.io/FJS4cAl.jpg" alt="Groom - Maaz">
+
+    </div>
+  </section>
+
+
+  <section class="details">
+    <h2>Wedding Details</h2>
+    <p><strong>Date:</strong> December 15, 2025</p>
+    <p><strong>Time:</strong> 6:00 PM onwards</p>
+    <p><strong>Venue:</strong> Pearl Continental Hotel, Rawalpindi</p>
+    <p>You're invited to witness our eternal bond and celebrate love with us.</p>
+  </section>
+
+  
+  <section class="story">
+    <h2>Our Love Story</h2>
+    <p>From the first hello to forever promises—our story is filled with memories, moments, and magic. We're excited to begin this new journey together and celebrate with the ones we love most.</p>
+  </section>
+
+  <footer>
+    © 2025 Malaika & Maaz — All Rights Reserved
+  </footer>
+
+</body>
+</html>

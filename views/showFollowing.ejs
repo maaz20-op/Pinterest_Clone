@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Followers</title>
+  <link rel="stylesheet" href="/stylesheets/followingPage.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  
+<header>
+  <div class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+  <div class="heading">Following List</div>
+</header>
+
+<section>
+    <div id="userData" data-user='<%- JSON.stringify(loggedInUser) %>'></div>
+<div id="userData2" data-user='<%- JSON.stringify(user) %>'></div>
+</section>
+
+<section>
+<div class="container">
+
+  
+<% if(user.following.length > 0) { %>
+<% user.following.forEach((eachFollow) =>{ %>
+<div class="card">
+
+<img src="<%= eachFollow.profileImage %>">
+<div class="text">
+<div class="identityBox">
+<h1 class="fname"><%= eachFollow.fullname %></h1>
+<h3 class="uname"> <%= loggedInUser._id.toString() === eachFollow._id.toString()?"( You )":""%> </h3>
+</div>
+<h2>@<%= eachFollow.username %></h2>
+<div class="action-btns">
+<% if(user._id.toString() === loggedInUser._id.toString()){ %>
+<a href="/otherusersprofile/<%= eachFollow._id %>" class="view-user-profile">View Profile</a>
+<div class="unfollow" data-src="<%= eachFollow._id %>">Unfollow</div>
+
+<% } else { %>
+<a style="margin-left:137px;padding:7px 14px;font-size:0.7rem;" href="/otherusersprofile/<%= eachFollow._id %>" class="view-user-profile">View Profile</a>
+<% } %>
+</div>
+</div>
+</div>
+<% }) %>
+<% } else { %>
+<% if(user._id.toString()=== loggedInUser._id.toString()){ %>
+<h1 style="color:red;margin-left:0.2cm;margin-top:3cm;width:90vw;">You are Not following Anyone Yet... &nbsp; <i style="font-size:25px;color:yellow;" class="fas fa-sad-tear"></i></h1>
+<% } else { %>
+<h1 style="color:red;margin-left:2.6cm;margin-top:3cm;">No following Yet... </h1>
+<% } %>
+<% } %>
+</div>
+</section>
+
+<footer>
+
+</footer>
+
+
+
+<script src="/javascripts/showFollowing.js"></script>
+</body>
+</html>

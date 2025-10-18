@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest Board</title>
+  <link rel="stylesheet" href="/stylesheets/showOtherUsersPin.css" />
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Add this in <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  
+    <%- include("partials/flash") %>
+
+    <%- include("partials/header2") %>
+
+  <div class="hero-banner">️Saved Post Of (<%= otherUserPin.fullname %>)</div>
+
+  <section class="masonry">
+    
+<% if(otherUserPin.pins.length > 0 ) { %>
+ <% otherUserPin.pins.reverse().forEach((eachPin) => {  %>
+
+<!-- Inside masonry item -->
+<div class="masonry-item">
+  <img src="<%= eachPin.image %>" alt="Pin Image">
+  <h3><%= eachPin.text %></h3>
+  </div>
+</div>
+  </div>
+</div>
+    
+  <% }) %>
+
+<% } else { %>
+<h1 style="margin-left:1.6cm;width:70vw;
+margin-top:1cm;font-size:17px;"> No Posts Saved Yet...</h1>
+
+<% } %>
+  </section>
+
+   <%- include("partials/footer") %>
+
+</body>
+</html>

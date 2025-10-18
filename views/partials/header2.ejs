@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest Profile</title>
+
+  
+  <style>
+    /* Reset */
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 12px 20px;
+  border-bottom: 1px solid #333;
+  width:100vw;
+
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: crimson;
+  letter-spacing: 1px;
+  display:flex;
+  column-gap:4.4cm;
+}
+
+.search {
+  flex: 1;
+  margin: 0 20px;
+  padding: 8px 12px;
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.search::placeholder {
+  color: #aaa;
+}
+
+.nav-icons a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #ccc;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: 18px;
+  transition: all 0.3s ease;
+}
+
+.nav-icons a:hover {
+  background-color: crimson;
+  color: white;
+}
+span{
+  height:40px;
+  width:40px;
+  border-radius: 50%;
+}
+
+.logout {
+  background-color: red;
+  padding:2px;
+  color:white;
+  font-weight:bold;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .nav-icons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-icons">
+      <a href="/">Home</a>
+      <a href="/profile">My Profile</a>
+    <a class="logout" href="/auth/local/logout">Logout</a> 
+    </div>
+  </nav>
+
+
+
+</body>
+</html>

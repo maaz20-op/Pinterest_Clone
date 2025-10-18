@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+Dockerfile
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Config files you don’t want on GitHub
+config/development.json
+config/production.json
+
+# views file of ejs
+views/index2.ejs
+# Build files (if any)
+dist/
+build/
+
+# Uploaded images (optional)
+public/images/uploads/.env
+.env

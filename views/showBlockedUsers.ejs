@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blocked Users</title>
+  <link rel="stylesheet" href="/stylesheets/showBlockedUsers.css">
+   <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<%- include("partials/header2") %>
+
+
+  <div class="container">
+    <h1><i class="fas fa-user-slash"></i> Blocked Users</h1>
+
+    <div class="user-list">
+      
+  <% if(user.blockedUserId.length > 0){ %>
+<% user.blockedUserId.forEach((eachBlockedUser,index) =>{ %> 
+      <div class="user-card">
+        <img src="<%= eachBlockedUser.profileImage  %>" alt="User">
+        <div class="user-info">
+          <h2><%= eachBlockedUser.fullname %></h2>
+          <p><%= eachBlockedUser.username %></p>
+      </div>
+        <button data-index="<%= index %>" class="unblock-btn"><i class="fas fa-unlock"></i> Unblock</button>
+        
+         <form hidden id="submit-<%= index %>" action="/users/unblockuser" method="post">
+      <input type="hidden" name="id" value="<%= eachBlockedUser._id %>">
+    </form>
+    
+      </div>
+<% }) %>
+<% } else { %>
+<h1 style="font-size:17px;margin-top:3cm;">No blocked users found</h1>
+
+<% } %>
+
+    </div>
+  </div>
+  
+<script src="/javascripts/unblockuser.js"></script>
+
+
+</body>
+</html>

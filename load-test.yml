@@ -1,0 +1,17 @@
+config:
+  target: "http://localhost:3000"   # 👈 tera backend or deployed URL
+  phases:
+    - duration: 60       # test chalega 60 seconds
+      arrivalRate: 10    # har second 10 new users request bhejenge
+
+scenarios:
+  - name: "Signup Load Test"
+    flow:
+      - post:
+          url: "/signup"
+          json:
+            username: "test_user_{{ $randomNumber(1,10000) }}"
+            email: "user{{ $randomNumber(1,10000) }}@test.com"
+            password: "12345678"
+          expect:
+            - statusCode: 201

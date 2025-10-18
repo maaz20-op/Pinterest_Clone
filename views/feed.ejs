@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
+  <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon">
+  <title>ReelNest || Home Page</title>
+  <!-- FontAwesome Icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./stylesheets/feedPage.css">
+  
+</head>
+
+
+
+<body>
+  
+  
+  
+    <%- include("partials/flash") %>
+    
+    <nav class="navbar">
+    <div class="logo">
+     <img src="/images/uploads/favicon.ico" class="img-desktop"/>
+    
+      <span class="text">ReelNest</span>
+    <img src="/images/uploads/favicon.ico" class="logo-img"/></div>
+    
+<div class="search-data-container">
+      <input type="text" name="searchValue" class="search" placeholder="Search Here...." />
+<button class="search-btn" >
+  <i class="fas fa-search"></i> Search
+</button>
+</div>
+
+
+    <div class="nav-icons">
+      <a href="/">Home</a>
+      <a href="/profile">My Profile</a>
+       <a href="/getpremium">Get Premium</a> 
+  <a href="/showblockusers">Blocked People</a>  
+    <a class="logout" href="/auth/local/logout">Logout</a> 
+    
+    </div>
+  </nav>
+
+<div class="sections">
+<ul>
+  <li class="images">Images</li>
+  <li class="videos">Videos</li>
+</ul>
+</div>
+  <!-- ===== IMAGES MASONRY GRID ===== -->
+<button class="normal button" ><i class="fas fa-arrow-left"></i>Back to Feed</button>
+<div id="userData" data-user='<%- JSON.stringify(loggedInUser) %>'></div>
+<!-- For images --> 
+<div class="container masonry">
+  <div class="placeholderDiv">
+  
+<% if(users.length > 0) { %>
+<% users.reverse().forEach((user) => {%>
+<% if(!loggedInUser.blockedUserId.includes(user._id.toString()) &&  !loggedInUser.blockedBy.includes(user._id.toString())){ %>
+    <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
+   <% user.post.reverse().forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "image") {%>
+  
+    <div class="masonry-item upgraded-card">
+  <!-- Top Left Round Profile -->
+  <div class="user-avatar">
+     <a class="profileRefrence" href="/otherusersprofile/<%= user._id %>">   <img src="<%= user.profileImage %> " alt="User Avatar" /> </a>
+    <a class="profileRefrence2" href="/otherusersprofile/<%= user._id %>">@<%= user.username %></a>
+  </div>
+
+  <!-- Main Image -->
+  <img src="<%= eachPost.mediaUrl %>" alt="<%= eachPost.postdata %>" class="main-image" />
+
+  <!-- Post Text -->
+  <p class="post-text"><%= eachPost.postdata %></p>
+
+  <!-- Action Buttons -->
+  <div class="post-actions">
+    
+
+ <button data-src="<%= eachPost._id %>" class="like-btn">
+<% if (eachPost.likes.includes(loggedInUser._id.toString())) { %>
+    ❤️ Liked <%= eachPost.likes.length %>
+  <% } else {%>
+  Likes <%= eachPost.likes.length %>
+<%  }  %>
+ </button>
+  
+  
+    
+    <form action="/pins/savepin" method="post" style="display:inline;">
+      <input hidden type="text" name="image" value="<%= eachPost.mediaUrl %>"  required/>
+     <input hidden type="text" name="text" value="<%= eachPost.postdata %>"     required/>
+      <button class="save-btn">📌 Save</button>
+    </form>
+  </div>
+</div>
+<% } else { %>
+<% } %>
+      <% }) %>
+    <% } else { %>
+    <% } %>
+    <% } %>
+  <% }) %>
+<% } else { %>
+<% } %>
+
+
+</div>
+</div>
+
+  <!-- For videos--> 
+  <div class="container2">
+      <div class="video-container">
+<% if(users.length > 0) { %>
+<% users.reverse().forEach((user) => {%>
+<% if(!loggedInUser.blockedUserId.includes(user._id.toString()) &&  !loggedInUser.blockedBy.includes(user._id.toString())){ %>
+    <% if(user.post && user.post.length > 0 && user.accountVisibility === "Public") { %>
+   <% user.post.forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "video") {%>
+
+  <div data-postid="<%= eachPost._id %>" class="video">
+  <video src="<%=eachPost.mediaUrl %>"  ></video>
+ <div class="follow-container-video">
+  <div class="follow-user">
+  
+ <a href="/otherusersprofile/<%= user._id %>" ><img src="<%=user.profileImage %>"></a>
+  <div class="user-data">
+    <h1><%= user.fullname %></h1>
+    <h2>@<%=user.username %></h2>
+  </div>
+  <% if(user._id.toString() === loggedInUser._id.toString()){ %>
+        <button data-src="<%= user._id %>" class="you-btn" type="submit">You </button>
+    <% } else if(user.followers.includes(loggedInUser._id.toString())) {%>
+    <button data-src="<%= user._id %>" class="follow" type="submit">    <p>Followed </p> <i class="fas fa-user-plus"></i></button>
+  <% } else { %>
+   <button data-src="<%= user._id %>" class="follow" type="submit">Follow </button>
+  <% } %>
+  
+
+    
+</div>
+</div>
+
+<div style="overflow:hidden;font-weight:600;padding:6px; overflow: hidden; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical;" class="video-title"><%= eachPost.postdata %> #reelNest</div>
+<div class="video-action">
+<div class="play-pause" >
+  <i class="fa-solid fa-play"></i>
+</div>
+  <div class="column-action">
+<div  class="like-video">
+<% if(eachPost.likes.includes(loggedInUser._id.toString())){ %>
+<i data-src="<%= eachPost._id%>" class="heart fa-solid fa-heart" style="color: red;"></i>
+<% } else { %>
+  <i  data-src="<%= eachPost._id%>" class="heart fa-regular fa-heart"></i> 
+<% } %>
+
+  <p class="show-video-likes"><%= eachPost.likes.length %></p>
+</div>
+
+ <div class="comment-video">
+  <i class="fa-solid fa-comment-dots"></i>
+  <P><%= eachPost.comments.length%></P>
+</div>
+
+
+<div class="share-video">
+  <i  data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>" class="share-icon fa-solid fa-share-nodes"></i>
+  <p>Share</p>
+</div>
+
+</div>
+
+<div class="post-data">
+<div class="text">
+  <p><%= eachPost.postdata%> #reelNest</p>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="bar"></div>
+</div>
+
+    <div class="comments-container">
+  <div class="heading">
+  <h1>Comments</h1> <i class="crossIcon fa fa-times"></i>
+</div>
+<div class="divider-line"></div>
+<div class="inner">
+<textarea data-src="<%=eachPost._id %>" placeholder="Share your thought's..." class="commentInput" name="message" rows="5" cols="30"></textarea>
+  <i class="send fa-solid fa-paper-plane"></i>
+    <div class="loader"></div>
+</div>
+<div class="wrapper">
+<div class="actual-comments-box">
+  
+</div>
+</div>
+  </div>
+ </div>
+</div>  
+
+
+<% } else { %>
+<% } %>
+      <% }) %>
+    <% } else { %>
+    <% } %>
+    <% } %>
+  <% }) %>
+<% } else { %>
+<% } %>
+
+
+</div>
+ </div>
+
+<div class="paginationLoader visibility">
+ 
+</div>
+
+      <%- include("partials/footer") %>
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  
+  <script src="/javascripts/followUsersInVideosLogic.js"></script>
+  
+  
+
+
+
+
+ <script type="module" src="/javascripts/videoControllers.mjs"></script> 
+
+<script type="module" src="/javascripts/searchLogic.mjs"></script> 
+<script type="module" src="/javascripts/imagesVideosToggleSectionFeedPage.mjs"></script> 
+
+<script src="/javascripts/likeImages.js"></script>
+
+</body>
+</html>

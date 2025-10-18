@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedChat - Chat List</title>
+  <link rel="stylesheet" href="/stylesheets/showmsgbyotherusers.css" />
+</head>
+<body>
+  <div class="chat-list-container">
+    <div class="chat-list-header">RedChat</div>
+
+
+    <div class="chat-users" id="chatUsers">
+      <!-- User Chat Cards -->
+<% if(user.followers.length > 0) { %>
+<% user.followers.forEach((eachFollowerForMsg) => { %>
+<div class="chat-user">
+        <div class="avatar"  data-src="<%= eachFollowerForMsg._id %>"><img src="<%= eachFollowerForMsg.profileImage %>" alt=""></div>
+        <div class="chat-info">
+          <h4><%= eachFollowerForMsg.fullname %></h4>
+          <p>Last message here...</p>
+        </div>
+        <div class="time">12:45 PM</div>
+      </div>
+
+<% }) %>
+ <% } %> 
+      <!-- Add more users dynamically if needed -->
+    </div>
+  </div>
+
+  <script src="/javascripts/inboxMsgPage.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon">
+  <title>Email Input</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background-color: #000;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .form-container {
+      background: rgba(255, 0, 0, 0.1);
+      border: 2px solid red;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px red;
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: red;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #111;
+      color: #fff;
+      border: 1px solid red;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input[type="email"]:focus {
+      box-shadow: 0 0 10px red;
+    }
+
+    button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff4444;
+      box-shadow: 0 0 10px red;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <form class="form-container" action="/auth/local/getVerificationEmail" method="POST">
+    <h2>Enter Your Email</h2>
+    <input type="email" name="email" placeholder="example@domain.com" required />
+    <button type="submit">Next →</button>
+  </form>
+  <script src="/javascripts/enterEmailForOTP.js"></script>
+</body>
+</html>

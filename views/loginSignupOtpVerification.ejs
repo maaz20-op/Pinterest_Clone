@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enter OTP - ReelNest</title>
+   <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/stylesheets/loginSignupOtpVerification.css" />
+</head>
+<body>
+  <div class="otp-container">
+    <h2>Enter OTP</h2>
+    <p>Please enter the one-time password sent to your email.</p>
+
+    <form action="/auth/local/forgotpassword" method="POST">
+      <div class="otp-inputs">
+      <input type="text" maxlength="1" name="val1" required />
+      <input type="text" maxlength="1" name="val2" required/>
+      <input type="text" maxlength="1" name="val3" required/>
+      <input type="text" maxlength="1" name="val4" required/>
+      </div>
+    <button class="verify-btn">Verify</button>
+    </form>
+ <p data-src="<%= email %>" class="resend-code">Resend code </p>
+   
+  </div>
+ <script src="/javascripts/loginSignupOTPVerication.js"></script>
+  </body>
+</html>

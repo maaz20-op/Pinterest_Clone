@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Meta Tags for SEO -->
+<meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
+<meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
+<meta name="author" content="Maaz Javed">
+
+
+  <title>ReelNest || <%= user.fullname %> Profile</title>
+ <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/stylesheets/profilePage.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <%- include("partials/flash") %>
+  <%- include("partials/header2") %>
+
+  <!-- Profile Section -->
+  <header class="profile-header">
+    <a href="/msginbox">  <i class="msgicon fa-solid fa-comment-dots"></i></a>
+    <div class="profileImage">
+      <img src="<%= user.profileImage %>" alt="Profile" class="profile-pic" />
+      <span class="editicon"><i class="fas fa-pencil-alt"></i></span>
+    </div>
+    <h1 class="fullname"><%= user.fullname %></h1>
+    <h1 class="username">@<%= user.username %></h1>
+    
+    
+    <div class="containerFollowers">
+  
+  <a href="/showfollowers/<%= user._id %>" class="followers"> <span>Followers</span> <span class="count2">|&nbsp; <%= user.followers.length %> &nbsp;|</span></a>
+  <a href="/showfollowing/<%= user._id %>" class="following"> <span>Following</span> <span class="count1">|&nbsp; <%= user.following.length %> &nbsp;|</span></a>
+  
+  
+</div>
+    
+    
+    <div class="containerBio"><p class="bio"><%= user.bio %></p><i class="showMore fa-solid fa-circle-chevron-down show-more-icon"></i></div>
+
+    <!-- Profile Pic Upload Form -->
+    <form class="editForm" hidden action="/users/editprofpic" method="post" enctype="multipart/form-data">
+      <input type="file" name="profileImage" required />
+      <button type="submit"></button>
+    </form>
+
+
+    <!-- showing follwers and follwing   -->
+
+
+
+
+
+
+    <!-- Post Upload Form and accoubt settings  -->
+    
+  <div class="btn-action">
+      <a id="settingBtn" href="/showaccountsettings" class="account-settings" type="submit">
+        <p>Account Settings</p><i class="fas fa-cog"></i>
+      </a>
+
+
+      <a href="/createpost" class="create-post" type="submit">
+        <p>Create Post</p> <i class="fas fa-upload"></i>
+      </a>
+      </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- Pins Grid -->
+  
+  <h1 class="pin-heading">Your Pins:</h1>
+  <section class="pin-section">
+          <a href="/showpins">
+    <div class="pin">
+      <img src="https://iili.io/FrUhTYu.png" alt="Saved Posts Section" />
+<p class="category">Saved Posts <%= user.pins.length %></p></a>
+    </div>
+    </a>
+  </section>
+
+  <h1 style="font-family: 'Montserrat', sans-serif;" class="your-img">Your Posts:</h1>
+  
+  
+  
+  <div class="sections">
+<ul>
+  <li class="images">Images</li>
+  <li class="videos">Videos</li>
+</ul>
+</div>
+  
+  <div class="container masonry">
+  
+
+
+<% if(user.post.length > 0 ) { %>
+   <% user.post.reverse().forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "image") {%>
+      <div class="masonry-item upgraded-card">
+  <!-- Top Left Round Profile -->
+  <div class="user-avatar">
+  <img src="<%= user.profileImage %>" />
+   <a> @<%=user.username %></a>
+  </div>
+
+  <!-- Main Image -->
+  <img src="<%= eachPost.mediaUrl %>" alt="<%= eachPost.postdata %>" class="main-image" />
+
+  <!-- Post Text -->
+  <p class="post-text"><%= eachPost.postdata %></p>
+
+  <!-- Action Buttons -->
+  <div class="post-actions">
+    
+
+ <button data-src="<%= eachPost._id %>" class="like-btn">
+<% if (eachPost.likes.includes(user._id.toString())) { %>
+    ❤️ Liked <%= eachPost.likes.length %>
+  <% } else {%>
+  Likes <%= eachPost.likes.length %>
+<%  }  %>
+ </button>
+  
+  
+    
+  <button type="submit" class="delete-icon" title="Delete">
+    <i data-src="<%=eachPost._id%>" class="delete-post fas fa-trash"></i>
+  </button>
+
+  </div>
+</div>
+<% } else { %>
+
+<% } %>
+      <% }) %>
+    <% } else { %> 
+
+    <% } %>
+</div>
+
+  <div class="container2 ">
+      <div class="video-container">
+      <% if(user.post.length > 0 ){  %>
+   <% user.post.forEach((eachPost) => { %>
+  <% if(eachPost.mediaType.toLowerCase() === "video") {%>
+  <div data-postid="<%= eachPost._id %>" class="video">
+  <video src="<%=eachPost.mediaUrl %>"  ></video>
+  
+        <button  class="delete-icon-video" title="Delete">
+    <i data-src="<%=eachPost._id%>" class="delete-video fas fa-trash"></i>
+  </button>
+<div class="follow-container-video">
+<div class="follow-user">
+  <img src="<%=user.profileImage %>">
+  <div class="user-data">
+    <h1><%= user.fullname %></h1>
+    <h2>@<%=user.username %></h2>
+  </div>
+      <button  class="follow" type="submit">You
+      </button>
+
+</div>
+</div>
+
+<div class="video-title"><%= eachPost.postdata %> #reelNest</div>
+<div class="video-action">
+<div class="play-pause" >
+  <i class="fa-solid fa-play"></i>
+</div>
+  <div class="column-action">
+<div  class="like-video">
+<% if(eachPost.likes.includes(user._id.toString())){ %>
+<i data-src="<%= eachPost._id%>" class="heart fa-solid fa-heart" style="color: red;"></i>
+<% } else { %>
+  <i  data-src="<%= eachPost._id%>" class="heart fa-regular fa-heart"></i> 
+<% } %>
+
+  <p class="show-video-likes"><%= eachPost.likes.length %></p>
+</div>
+
+ <div class="comment-video">
+  <i class="fa-solid fa-comment-dots"></i>
+  <P><%= eachPost.comments.length%></P>
+</div>
+
+
+<div class="share-video">
+  <i  data-url="https://reelnest-official.vercel.app/feed?postId=<%= eachPost._id %>"  class="share-icon fa-solid fa-share-nodes"></i>
+  <p>Share</p>
+</div>
+
+</div>
+
+<div class="post-data">
+<div class="text">
+  <p><%= eachPost.postdata%> #reelNest</p>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="bar"></div>
+</div>
+
+    <div class="comments-container">
+  <div class="heading">
+  <h1>Comments</h1> <i class="crossIcon fa fa-times"></i>
+</div>
+<div class="divider-line"></div>
+<div class="inner">
+<textarea data-src="<%=eachPost._id %>" placeholder="Share your thought's..." class="commentInput" name="message" rows="5" cols="30"></textarea>
+
+  <i class="send fa-solid fa-paper-plane"></i>
+      <div class="loader"></div>
+</div>
+<div class="wrapper">
+<div class="actual-comments-box">
+  
+</div>
+</div>
+  </div>
+ </div>
+</div>  
+
+<% } else {%>
+    
+<% } %>
+      <% }) %>
+    <% } else { %>
+        
+<% } %>
+
+
+
+
+</div>
+ </div>
+
+
+
+
+  
+   
+   
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  
+  <!-- follow User Logic -->
+
+<!-- like post -->
+<script src="/javascripts/likeImages.js"></script>
+<!-- images and videos section toggle -->
+<script src="/javascripts/imagevideoSectionToggle.js"></script> 
+
+<!-- Toogle User bio -->
+ <script src="/javascripts/toggleUserBio.js"></script>
+  
+  <!-- edit Profile pic -->
+  <script src="/javascripts/editProfilePic.js"></script>
+  
+  <!-- Delete post -->
+    <script src="/javascripts/deletePost.js"></script>
+    
+    <!-- video controls -->
+  <script type="module" src="/javascripts/videoControllers.mjs"></script>
+      <%- include("partials/footer") %>
+  
+</body>
+</html>

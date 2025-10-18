@@ -1,0 +1,171 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+html,body {
+  height:100vh;
+  width:100vw;
+  background-color:black;
+  color:white;
+  font-size:16px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+user-select: none;     /* Internet Explorer/Edge */
+
+}
+
+header{
+  min-height:55px;
+  width:100%;
+}
+.back-btn {
+  padding:12px 14px;
+  outline:none;
+  border:none;
+  margin:12px 0px 12px 0.5cm;
+  font-size:1.5rem;
+}
+
+.heading {
+  font-size:1.6rem;
+  text-align:center;
+  margin-top:40px;
+}
+
+.container {
+  min-height:100vh;
+  width:90%;
+  margin-left:0.5cm;
+  margin-top:1cm;
+}
+
+.card {
+  height:123px;
+  width:100%;
+  background-color: #1a1a1a;
+  display: flex;
+  margin-top:1cm;
+  border-radius:12px;
+  align-items: center;
+  border:0.7px solid red;
+}
+
+.card:hover {
+  border:1px solid red;
+box-shadow: 5px 5px 12px  red;
+}
+
+img{
+  height:60px;
+  width:60px;
+  background-color: red;
+  border-radius:50%;
+  margin-bottom:16px;
+  border:none;
+  margin-left:12px;
+  object-fit: cover;
+}
+
+.identityBox {
+  display:flex;
+  column-gap:9px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  margin-left:18px;
+}
+
+.fname, .uname{
+      overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+h1 {
+  font-size:1rem;
+  margin-top:28px;
+  width:150px;
+}
+h2 {
+  font-size:0.8rem;
+}
+
+h3 {
+  font-size:0.7rem;
+  margin-top:32px;
+}
+
+.action-btns{
+  display: flex;
+  margin-top:20px;
+}
+
+.unfollow{
+  color:white;
+  text-decoration: none;
+  font-size:0.6rem;
+-webkit-tap-highlight-color: transparent;
+  background: linear-gradient(135deg, #ff0055, #ff3366);
+  padding:6px 10px;
+  border-radius:10px;
+  font-weight:600;
+  margin-bottom:9px;
+  margin-left:12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.view-user-profile{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+  text-decoration: none;
+  font-size:0.6rem;
+  margin-left:83px;
+-webkit-tap-highlight-color: transparent;
+  background: linear-gradient(135deg, #ff0055, #ff3366);
+  padding:5px 8px;
+  border-radius:10px;
+  font-weight:600;
+  margin-bottom:9px;
+}
+.unfollow:hover , .view-user-profile:hover {
+background: red;
+}
+
+@media  (min-width:600px) {
+    .card {
+    width: 50%;
+    margin-left: 360px;
+    position: relative;
+  }
+  .action-btns {
+    position: absolute;
+    top: 0;
+    right: 8px;
+  }
+
+  h1 {
+    position: absolute;
+    top:8px;
+  }
+  h2 {
+    position: absolute;
+    top:61px;
+  }
+  .uname {
+    width: 100px;
+    position: absolute;
+    top:7px;
+    left: 30%;
+  }
+}

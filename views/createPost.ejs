@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReelNest || Create Post</title>
+  <link rel="stylesheet" href="/stylesheets/createPost.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body style="background-color: #000; color: #fff; font-family: 'Poppins', sans-serif;">
+
+  <%- include("partials/header2") %>
+
+  <div class="container">
+    <div class="wrapper">
+      <div class="loadingText"></div>
+      <div class="loader"></div>
+    </div>
+  </div>
+
+  <div class="create-post-container">
+    <h2 style="color: #ff003c;">Create New Post</h2>
+
+    <form class="upload-box" action="/posts/upload" method="post" enctype="multipart/form-data">
+
+      <!-- 🔹 Preview Section -->
+      <div class="previewImgCont">
+        <img id="preview" src="" style="display: none;">
+        <video id="videoPreview" controls style="display: none; max-width: 100%; height: auto;"></video>
+      </div>
+
+      <!-- 🔹 Hidden File Input for local user storage upload  -->
+      <input type="file" hidden name="media" accept="image/*,video/*" id="fileInput" />
+       <!-- 🔹 to upload ai generated image  -->
+      <input type="text" class='isAIimg' hidden name="AIimg"  />
+      <!-- 🔹 Post Description -->
+      <h1>Write description or Title :</h1>
+      <div class="upload-section">
+        <i class="upload-btn2 fas fa-camera"></i>
+        <textarea name="postdata" required placeholder="What's in your mind?" class="input"></textarea>
+      </div>
+
+      <!-- 🔹 AI Generation Button -->
+      <div class="ai-trigger">
+        <button type="button" id="openAiBtn" class="ai-generate-btn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Generate with AI
+        </button>
+      </div>
+
+      <!-- 🔹 Upload Button -->
+      <button class="upload-btn" type="submit" id="uploadBtn">
+        <p>Upload</p> <i class="fas fa-upload"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- 🔹 AI GENERATION POPUP -->
+  <div class="ai-overlay" id="aiOverlay">
+    <div class="ai-box">
+      <h3><i class="fa-solid fa-robot"></i> Generate Image with AI</h3>
+
+      <input type="text" id="aiPrompt" placeholder="Describe your image idea..." />
+
+      <button id="generateBtn">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+      </button>
+
+      <div id="aiPreviewContainer">
+        <img id="aiPreview" style="display: none;" />
+      </div>
+
+      <div class="ai-actions">
+        <button type="button" id="useImageBtn" class="use-btn">
+          <i class="fa-solid fa-check"></i> Use Image
+        </button>
+        <button type="button" id="closeAiBox" class="close-btn">
+          <i class="fa-solid fa-xmark"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Scripts -->
+  <script src="/javascripts/uploadPostLogic.js"></script>
+  <script src="/javascripts/aiImageGeneration.js"></script>
+
+</body>
+</html>
