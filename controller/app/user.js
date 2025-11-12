@@ -4,7 +4,7 @@ const pinModel = require("../../models/pin-model");
 const cloudinary = require("../../config/cloudinary");
 const upload = require("../../config/multerConfig");
 const mongoose = require("mongoose");
-
+const redis = require("../../config/redisClient");
 
 module.exports.editprofpic = async function(req){
 try{
@@ -42,7 +42,7 @@ console.log(req.body)
 
 
     if (Object.keys(updatedData).length === 0) throw new Error("You did'nt make any Changes!");
-    const updatedUser = await userModel.findByIdAndUpdate(req.user?.id, updatedData);
+const updatedUser = await userModel.findByIdAndUpdate(req.user?.id, updatedData, { new: true })
 
    return [updatedUser]
   } catch (err) {

@@ -6,7 +6,7 @@ const upload  = require('../../config/multerConfig.js');
 const commentModel = require("../../models/comment-model.js");
 const pinModel = require("../../models/pin-model.js");
 const util = require('util');
-
+const redis = require("../../config/redisClient.js");
 // index routes (SSR using ejs)
 
 module.exports.register = function (req, res){
@@ -33,11 +33,15 @@ module.exports.forgotpassword = function (req, res) {
 }
 
 module.exports.profile =  async function(req,res){
-let user = await userModel.findOne({email:req.user?.email})
+ try {
+    let {email} = req.user;
+ let user = await userModel.findOne({email:email})
 .populate("post")
 .populate("pins");
-
   res.render("profile",{user})
+ } catch (err) {
+  console.log("loading profile route error", err);
+ }
 }
 
 module.exports.createpost = function(req,res){

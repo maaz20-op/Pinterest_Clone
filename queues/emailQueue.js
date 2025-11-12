@@ -1,7 +1,5 @@
 const {Queue, Worker} = require("bullmq")
-const IORedis = require("ioredis")
-const redisConnection =  new IORedis("rediss://default:AUuHAAIncDIxOWU0ZmFiMDUzYzg0YzRhYjNhMzZiNzk2MWY3MjYyZXAyMTkzMzU@stable-seasnail-19335.upstash.io:6379", {maxRetriesPerRequest: null
-})
+const redisConnection = require("../config/redisClient");
 const sendWelcomeEmail = require("../emails/signupWelcome");
 const loginEmailQueue = new Queue("login-email", {connection: redisConnection});
 

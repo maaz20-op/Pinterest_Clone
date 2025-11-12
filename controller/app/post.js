@@ -35,6 +35,7 @@ let folderName;
 let optimizeUrl = file.path?.replace("/upload/", "/upload/q_auto,f_auto/") || file;
 
 
+
   let post = await postModel.create({
     mediaUrl:optimizeUrl,
     mediaType:type,
