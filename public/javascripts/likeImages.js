@@ -1,8 +1,8 @@
 const container = document.querySelector(".container");
   container.addEventListener("click", async function(e) {
-  if (e.target.classList.contains("like-btn")) {
+    const likebtn = e.target.classList.contains("like-btn")
+  if (likebtn) {
     const id = e.target.getAttribute("data-src");
-    
 
     try {
       const response = await fetch("api/v1/posts/like", {
@@ -14,12 +14,13 @@ const container = document.querySelector(".container");
       });
 
       const data = await response.json();
-
-      if (data.post && data.loggedInUser) {
-        if (data.post.likes.includes(data.loggedInUser._id.toString())) {
-          e.target.innerHTML = `❤️ Liked ${data.post.likes.length}`;
+     
+      if (data.success && data.data[0] && data.data[1]) {
+        if (data.data[0].likes.includes(data.data[1]._id.toString())) {
+          e.target.innerHTML = `❤️ Liked ${data.data[0].likes.length}`;
+       
         } else {
-          e.target.innerHTML = `Likes ${data.post.likes.length}`;
+         e.target.innerHTML = `Likes ${data.data[0].likes.length}`;
         }
       }
     } catch (err) {

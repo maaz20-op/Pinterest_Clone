@@ -4,191 +4,525 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Meta Tags for SEO -->
   <meta name="description" content="MaazPins - Explore and share creative pins like images, designs, and ideas. Created by Maaz Javed.">
   <meta name="keywords" content="Pinterest Clone, MaazPins, Creative Pins, Images, Inspiration, Maaz Javed">
   <meta name="author" content="Maaz Javed">
 
-  <!-- ✅ OG Meta Tags for WhatsApp / Facebook Preview -->
   <meta property="og:title" content="ReelNest - Login / Signup" />
   <meta property="og:description" content="Join ReelNest to explore and share videos, pins, and creativity. Designed by Maaz Javed." />
   <meta property="og:image" content="https://iili.io/Fu1JY6F.png" />
-  <meta property="og:title" content="ReelNest - Login / Signup" />
-<meta property="og:description" content="Join ReelNest to explore and share videos, pins, and creativity. Designed by Maaz Javed." />
-<meta property="og:image" content="https://iili.io/Fu1JY6F.png" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://reelnest-official.vercel.app" />
   <meta property="og:type" content="website" />
 
-  <!-- ✅ Favicon -->
   <link rel="icon" href="/images/uploads/favicon.ico" type="image/x-icon" />
 
-  <title>ReelNest || Create Account / Login Page</title>
+  <title>ReelNest || Welcome</title>
 
-  <!-- Your existing internal CSS -->
-    <style>  
-    * {  
-      box-sizing: border-box;  
-      margin: 0;  
-      padding: 0;  
-  font-family: 'Segoe UI', sans-serif;  
-    }  body {  
-  background-color: #000;  
-  color: #fff;  
-  display: flex;  
-  align-items: center;  
-  justify-content: center;  
-  flex-direction: column;  
-  min-height: 100vh;  
-  padding: 20px;  
-}  
-
-.container {  
-  background: #111;  
-  padding: 30px 25px;  
-  border-radius: 20px;  
-  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);  
-  width: 100%;  
-  max-width: 400px;  
-  transition: all 0.4s ease;  
-}  
-
-h2 {  
-  text-align: center;  
-  color: #ff0033;  
-  margin-bottom: 20px;  
-}  
-
-.form-group {  
-  margin-bottom: 18px;  
-}  
-
-.form-group label {  
-  display: block;  
-  font-size: 15px;  
-  margin-bottom: 5px;  
-  color: #ff4b5c;  
-}  
-
-.form-group input {  
-  width: 100%;  
-  padding: 10px;  
-  border: 2px solid #ff0033;  
-  background: transparent;  
-  color: white;  
-  border-radius: 8px;  
-  outline: none;  
-  transition: 0.3s;  
-}  
-
-.form-group input:focus {  
-  border-color: #ff4b5c;  
-}  
-
-.btn {  
-  width: 100%;  
-  padding: 12px;  
-  background-color: #ff0033;  
-  color: white;  
-  border: none;  
-  border-radius: 8px;  
-  cursor: pointer;  
-  font-size: 16px;  
-  font-weight: bold;  
-  transition: 0.3s;  
-}  
-
-.btn:hover {  
-  background-color: #cc0029;  
-}  
-
-.toggle-link {  
-  text-align: center;  
-  margin-top: 15px;  
-  font-size: 14px;  
-}  
-
-.toggle-link a {  
-  color: #ff0033;  
-  text-decoration: underline;  
-  font-weight: bold;  
-}  
-
-.toggle-link a:hover {  
-  text-decoration: underline;  
-}  
-
-.hidden {  
-  display: none;  
-}
-
-#redirect {
-color: #fff;
-
-}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0f 50%, #0f0a1a 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(220, 20, 60, 0.15) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      border-radius: 50%;
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.12) 0%, transparent 70%);
+      bottom: -150px;
+      left: -150px;
+      border-radius: 50%;
+      animation: pulse 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(220, 20, 60, 0.3);
+    }
+
+    .logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(220, 20, 60, 0.5);
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #dc143c 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      background: rgba(20, 20, 25, 0.8);
+      backdrop-filter: blur(20px);
+      padding: 40px 35px;
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 440px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 10;
+      animation: slideIn 0.8s ease-out 0.2s both;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #dc143c, #ff4757, transparent);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .container:hover {
+      box-shadow: 
+        0 25px 70px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(220, 20, 60, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 28px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      animation: slideIn 0.5s ease-out both;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.15s; }
+    .form-group:nth-child(3) { animation-delay: 0.2s; }
+    .form-group:nth-child(4) { animation-delay: 0.25s; }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #e0e0e0;
+      letter-spacing: 0.3px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px 14px 45px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(30, 30, 35, 0.6);
+      color: white;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-group input::placeholder {
+      color: #777;
+    }
+
+    .form-group input:focus {
+      border-color: rgba(220, 20, 60, 0.6);
+      background: rgba(40, 40, 45, 0.8);
+      box-shadow: 
+        0 0 0 4px rgba(220, 20, 60, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-group input:focus + i {
+      color: #dc143c;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #dc143c 0%, #ff4757 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 6px 20px rgba(220, 20, 60, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 30px rgba(220, 20, 60, 0.5),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      margin: 24px 0;
+    }
+
+    .social-login {
+      margin: 20px 0;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-bottom: 12px;
+    }
+
+    .social-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-btn i {
+      font-size: 18px;
+    }
+
+    .forgot-password {
+      display: inline-block;
+      color: #dc143c;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 12px 0;
+      transition: all 0.3s ease;
+    }
+
+    .forgot-password:hover {
+      color: #ff4757;
+      text-decoration: underline;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .toggle-link a {
+      color: #dc143c;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .toggle-link a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #dc143c, #ff4757);
+      transition: width 0.3s ease;
+    }
+
+    .toggle-link a:hover::after {
+      width: 100%;
+    }
+
+    .toggle-link a:hover {
+      color: #ff4757;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 30px 25px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .logo-text {
+        font-size: 24px;
+      }
+
+      .form-group input {
+        padding: 12px 14px 12px 40px;
+      }
+
+      .btn {
+        padding: 14px;
+        font-size: 15px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-  
 
+  <%- include("partials/flash") %>
 
-<%- include("partials/flash") %>
+  <div class="logo-container">
+    <div class="logo">
+      <img src="/images/uploads/favicon.ico" alt="ReelNest Logo" />
+      <span class="logo-text">ReelNest</span>
+    </div>
+  </div>
+
   <div class="container">
     <form action="/auth/local/register" method="post" id="signupForm">
       <h2>Create Account</h2>
+      
       <div class="form-group">
         <label>Full Name</label>
-        <input id="fullName" type="text" placeholder="Enter full name" name="fullname" required />
+        <div class="input-wrapper">
+          <input id="fullName" type="text" placeholder="Enter your full name" name="fullname" required />
+          <i class="fas fa-user"></i>
+        </div>
       </div>
+
       <div class="form-group">
         <label>Username</label>
-        <input type="text" placeholder="Choose a username" name="username" required />
+        <div class="input-wrapper">
+          <input type="text" placeholder="Choose a unique username" name="username" required />
+          <i class="fas fa-at"></i>
+        </div>
       </div>
+
       <div class="form-group">
         <label>Email</label>
-        <input type="email" placeholder="Enter your email" name="email" required />
+        <div class="input-wrapper">
+          <input type="email" placeholder="Enter your email address" name="email" required />
+          <i class="fas fa-envelope"></i>
+        </div>
       </div>
+
       <div class="form-group">
         <label>Password</label>
-        <input type="password" placeholder="Create a password" name="password" required />
+        <div class="input-wrapper">
+          <input type="password" placeholder="Create a strong password" name="password" required />
+          <i class="fas fa-lock"></i>
+        </div>
       </div>
-      <button type="submit" id="account-creation-btn"class="btn">Create Account</button>
+
+      <button type="submit" id="account-creation-btn" class="btn">Create Account</button>
+
       <div class="toggle-link">
-        Already have an account? <a href="#" class="toggle-login">Login</a>
+        Already have an account? <a href="#" class="toggle-login">Sign In</a>
       </div>
     </form>
 
     <form action="/auth/local/login" method="post" id="loginForm" class="hidden">
-      <h2>Login</h2>
+      <h2>Welcome Back</h2>
+
       <div class="form-group">
         <label>Email</label>
-     <input type="email" placeholder="Enter your email" name="email" required />
+        <div class="input-wrapper">
+          <input type="email" placeholder="Enter your email address" name="email" required />
+          <i class="fas fa-envelope"></i>
+        </div>
       </div>
+
       <div class="form-group">
         <label>Password</label>
-        <input type="password" placeholder="Enter your password" name="password" required />
+        <div class="input-wrapper">
+          <input type="password" placeholder="Enter your password" name="password" required />
+          <i class="fas fa-lock"></i>
+        </div>
       </div>
-      <button type="submit" class="btn">Login</button>
+
+      <button type="submit" class="btn">Sign In</button>
+
       <div class="divider"></div>
-      
-      <a id="redirect" href="/auth/google">login with google </a> <br>
-        <a id="redirect" href="/enterEmailForOTP">Forgot Password? </a>
+
+      <div class="social-login">
+        <a href="/auth/google" class="social-btn">
+          <i class="fab fa-google"></i>
+          Continue with Google
+        </a>
+        
+        <a href="/enterEmailForOTP" class="forgot-password">
+          <i class="fas fa-key"></i> Forgot Password?
+        </a>
+      </div>
+
       <div class="toggle-link">
         Don't have an account? <a href="#" class="toggle-login">Create One</a>
       </div>
     </form>
   </div>
 
- 
-  
   <script src="/javascripts/createAccount.js"></script>
-<% if (error && error.length > 0) { %>
-<script src="/javascripts/errorInCreateAccount.js"></script>
+  <% if (error && error.length > 0) { %>
+  <script src="/javascripts/errorInCreateAccount.js"></script>
   <% } %>
-  
+
 </body>
 </html>

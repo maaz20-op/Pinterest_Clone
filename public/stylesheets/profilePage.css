@@ -212,10 +212,9 @@ a:hover {
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
-  padding: var(--space-sm);
+  padding: 2vw;
   border-radius: var(--radius-md);
   background: var(--bg-card);
-  flex: 1;
   transition: all var(--transition-fast);
   cursor: pointer;
 }
@@ -232,6 +231,8 @@ a:hover {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--accent-primary);
+  width: 100px;
+  margin-left: 74px;
 }
 
 /* Bio Section */
@@ -432,32 +433,72 @@ a:hover {
    IMAGE/VIDEO SECTION TOGGLE
    ============================================ */
 
+/* ========== SECTIONS (Images/Videos Toggle) ========== */
 .sections {
+  height: 60px;
+  width: 100%;
+  margin: 20px 0;
   display: flex;
   justify-content: center;
-  margin: var(--space-lg) 0;
+  align-items: center;
 }
 
 .sections ul {
   display: flex;
-  gap: var(--space-xl);
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .sections li {
-  font-size: 1.1rem;
+  color: #999;
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--text-secondary);
-  padding-bottom: 0.5rem;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all var(--transition-fast);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.sections li:hover,
+.sections li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #dc143c 0%, #ff4757 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.sections li:hover {
+  color: white;
+  background: rgba(220, 20, 60, 0.1);
+}
+
+.sections li:hover::after,
+.sections li.active::after {
+  width: 80%;
+}
+
 .sections li.active {
-  color: var(--text-primary);
-  border-bottom-color: var(--accent-primary);
+  color: white;
+}
+
+@media (min-width: 769px) {
+  .sections {
+    margin-top: 40px;
+  }
+
+  .sections li {
+    font-size: 18px;
+  }
 }
 
 /* ============================================
@@ -664,7 +705,7 @@ a:hover {
   
   object-fit: cover;
   border-radius: var(--radius-md);
-  background-color: red;
+  background-color: #343131;
 }
 
 /* Video Controls */

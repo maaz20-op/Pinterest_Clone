@@ -3,7 +3,6 @@
 
 
 export function videoControlsSetup(){
-  
 let currentActionBar = null;
 let currentPlayPause = null;
 let currentActionVideo = null;
@@ -19,12 +18,17 @@ let clickedDiv = null;
 let commentContainer = null;
 
 
+// check is current video is in search container 
+let videoContainer = null;
 
-let videoContainer = document.querySelector(".container2");
+
+
+if(document.querySelector(".searchVideo")) videoContainer = document.querySelector(".searchVideo");
+else if(document.querySelector(".container2")) videoContainer = document.querySelector(".container2");
 
 if(!videoContainer.classList.contains("attached-bubling")) {
 videoContainer.addEventListener("click", function(e) {
-  clickedDiv = e.target.closest(".video");
+  clickedDiv = e.target.closest(".video") 
 
   // Run if video is clicked
   if (clickedDiv) {
@@ -126,11 +130,9 @@ async function setupFunctionality(e) {
       });
 
       const json = await res.json();
-      console.log(json)
       let data = json.data;
       let post = data[0];
       let loggedInUser = data[1];
-      console.log(post, loggedInUser)
       if (post && loggedInUser) {
         likeCountEl.textContent = post.likes.length;
 

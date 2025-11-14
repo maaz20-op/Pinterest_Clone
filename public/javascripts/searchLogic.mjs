@@ -12,7 +12,7 @@ const user = JSON.parse(userDataDiv.dataset.user);
 window.loggedInUser = user;
   // search logic 
   const sendData = async () => {
-
+    container.classList.add("searchVideo")
     const searchedValue = document.querySelector(".search").value.trim();
     if (!searchedValue) {
       alert("Please enter something to search.");
@@ -25,32 +25,30 @@ container.style.display = "block"
 
     try {
       
-      const response = await fetch("/posts/search", {
-        method: "POST",
+      const response = await fetch(`api/v1/posts?text=${searchedValue }`, {
+        method:"GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          inputValue: searchedValue,
-        }),
       });
 
-      if (!response.ok) throw new Error("Server Error");
+    
 
       const posts = await response.json();
-      if(!posts)  return
+      if(!posts.success || Array.isArray(posts) )  return  
       
-    
+    console.log(posts)
       feedBtn.classList.remove("normal")
     feedBtn.classList.add("style")
       container.innerHTML = ""; // Clear after successful fetch
-
-      if (posts.length > 0) {
-       posts.forEach((eachPost) => {
+  console.log(posts.data)
+      if (posts.data[0].length > 0) {
+       posts.data[0].forEach((eachPost) => {
+      
            // protect from null post
            if(eachPost.user ===null){
              return console.log("err")
-           }
+           } 
    // Optional: Double-check postdata matches fallback
    
   const div = document.createElement("div");
@@ -192,6 +190,7 @@ searchBtn.addEventListener("click", function(){
 
 
   feedBtn.addEventListener("click", function () {
+        container.classList.remove("searchVideo")
     window.location.href = "/";
   });
   

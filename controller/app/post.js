@@ -6,7 +6,7 @@ const upload = require("../../config/multerConfig");
 const mongoose = require("mongoose");
 const {deleteimgFromCloudinary} = require("../../utils/deleteImageFromCloudinary.js");
 
-module.exports.uploadPost = async function(req,res){
+module.exports.uploadPost = async function(req){
   try {
    let {AIimg} = req.body
    console.log("base ai img",AIimg)
@@ -52,9 +52,9 @@ return [post, user];
 }
 }
 
-module.exports.deletePost = async function(req, res) {
+module.exports.deletePost = async function(req) {
   const id = req.params.id;
-
+  console.log(id)
   if (!id) {
      throw new Error("something went Wrong!");
   }
@@ -110,15 +110,15 @@ return [post, loggedInUser]
 
 module.exports.searchPosts = async  function(req){
   try {
-    let input = req.body.inputValue;
+    let input = req.query.text;
+    console.log(input)
 if (!input) {
   throw new Error("something went Wrong!")
 }
 
 
 let posts = await postModel.find(
-  { $text: { $search: input } },
-  { score: { $meta: "textScore" } }
+ { postdata: { $regex: input, $options: 'i' }}
 )
 .populate({
   path: "user",
@@ -128,7 +128,7 @@ let posts = await postModel.find(
   },
   select: "-post -bio"
 })
-.sort({ score: { $meta: "textScore" } })
+
 
 
 posts = posts.filter((post)=>{
@@ -226,7 +226,7 @@ const posts = await postModel.aggregate([
 
 
 console.log("video length",posts)
-
+console.log(posts)
 return [posts,loggedInUser]
   } catch (err) {
   throw err;

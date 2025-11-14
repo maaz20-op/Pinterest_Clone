@@ -11,8 +11,8 @@ let id = deleteBtn.getAttribute("data-src");
 
 try {
   
-let response =  await fetch(`/posts/delete/post/${id}`,{
-    method:"GET",
+let response =  await fetch(`/api/v1/posts/${id}`,{
+    method:"DELETE",
     headers:{
       'Content-Type':'application/json'
     }
@@ -23,7 +23,7 @@ const postCard =
   e.target.closest(".masonry-item") || e.target.closest(".video");
 if(!data) return 
 
-if(data.message === "success" && response.status === 200){
+if(data.success){
 postCard.style.cssText = "opacity:0.5;transition: opacity 0.4s ease;"
 
 setTimeout(function(){
